@@ -1,0 +1,17 @@
+{
+  "passcode": "admin123",
+  "allowedAdmins": [
+    "you@example.com"
+  ],
+  "SUPABASE_URL": "",
+  "SUPABASE_ANON_KEY": "",
+  "FIREBASE_CONFIG": {
+    "apiKey": "",
+    "projectId": "",
+    "authDomain": "",
+    "storageBucket": "",
+    "messagingSenderId": "",
+    "appId": ""
+  },
+  "API_BASE": ""
+}

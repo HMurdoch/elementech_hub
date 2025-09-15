@@ -1,0 +1,181 @@
+[
+  {
+    "tech": "react",
+    "slug": "vanilla-js-example",
+    "title": "Vanilla JS Example",
+    "description": "Sample overview of Vanilla Javascript",
+    "homepageUrl": "https://elementech-technology-vanilla-js.onrender.com/",
+    "repoUrl": "https://github.com/HMurdoch/elementech-technology-vanilla_js/tree/master",
+    "tags": [ "FinTech", "Microservices" ],
+    "files": [
+      {
+        "type": "folder",
+        "name": "vanilla_js",
+        "path": "technologies/vanilla_js",
+        "children": [
+          {
+            "type": "folder",
+            "name": "src",
+            "path": "technologies/vanilla_js/src",
+            "children": [
+              {
+                "type": "file",
+                "name": "main.js",
+                "path": "technologies/vanilla_js/src/main.js",
+                "language": "javascript",
+                "code": "import './style.css'\nimport javascriptLogo from './javascript.svg'\nimport viteLogo from '/vite.svg'\nimport { setupCounter } from './counter.js'\n\ndocument.querySelector('#app').innerHTML = `\n  <div>\n    <a href=\"https://vite.dev\" target=\"_blank\">\n      <img src=\"${viteLogo}\" class=\"logo\" alt=\"Vite logo\" />\n    </a>\n    <a href=\"https://developer.mozilla.org/en-US/docs/Web/JavaScript\" target=\"_blank\">\n      <img src=\"${javascriptLogo}\" class=\"logo vanilla\" alt=\"JavaScript logo\" />\n    </a>\n    <h1>Hello Vite!</h1>\n    <div class=\"card\">\n      <button id=\"counter\" type=\"button\"></button>\n    </div>\n    <p class=\"read-the-docs\">\n      Click on the Vite logo to learn more\n    </p>\n  </div>\n`\n\nsetupCounter(document.querySelector('#counter'))"
+              },
+              {
+                "type": "file",
+                "name": "main.js",
+                "path": "technologies/vanilla_js/src/styles.css",
+                "language": "css",
+                "code": ":root {\n  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;\n  line-height: 1.5;\n  font-weight: 400;\n\n  color-scheme: light dark;\n  color: rgba(255, 255, 255, 0.87);\n  background-color: #242424;\n\n  font-synthesis: none;\n  text-rendering: optimizeLegibility;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n\na {\n  font-weight: 500;\n  color: #646cff;\n  text-decoration: inherit;\n}\na:hover {\n  color: #535bf2;\n}\n\nbody {\n  margin: 0;\n  display: flex;\n  place-items: center;\n  min-width: 320px;\n  min-height: 100vh;\n}\n\nh1 {\n  font-size: 3.2em;\n  line-height: 1.1;\n}\n\n#app {\n  max-width: 1280px;\n  margin: 0 auto;\n  padding: 2rem;\n  text-align: center;\n}\n\n.logo {\n  height: 6em;\n  padding: 1.5em;\n  will-change: filter;\n  transition: filter 300ms;\n}\n.logo:hover {\n  filter: drop-shadow(0 0 2em #646cffaa);\n}\n.logo.vanilla:hover {\n  filter: drop-shadow(0 0 2em #f7df1eaa);\n}\n\n.card {\n  padding: 2em;\n}\n\n.read-the-docs {\n  color: #888;\n}\n\nbutton {\n  border-radius: 8px;\n  border: 1px solid transparent;\n  padding: 0.6em 1.2em;\n  font-size: 1em;\n  font-weight: 500;\n  font-family: inherit;\n  background-color: #1a1a1a;\n  cursor: pointer;\n  transition: border-color 0.25s;\n}\nbutton:hover {\n  border-color: #646cff;\n}\nbutton:focus,\nbutton:focus-visible {\n  outline: 4px auto -webkit-focus-ring-color;\n}\n\n@media (prefers-color-scheme: light) {\n  :root {\n    color: #213547;\n    background-color: #ffffff;\n  }\n  a:hover {\n    color: #747bff;\n  }\n  button {\n    background-color: #f9f9f9;\n  }\n}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "file",
+        "name": "index.html",
+        "path": "technologies/vanilla_js/index.html",
+        "language": "html",
+        "code": "<!DOCTYPE html>\n<html>\n<head>\n    <title>Vanilla JavaScript</title>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"stylesheet\" href=\"styles.css\" />\n    <script src=\"index.js\" type=\"module\"></script>\n</head>\n\n<body>\n<header>\n    <img src=\"js-logo-xs.png\" alt=\"JavaScript logo\" />\n    <div>\n        <h1>Vanilla JavaScript</h1>\n        <p>i.e., JavaScript without any (UI) framework or library</p>\n    </div>\n</header>\n\n<div id=\"tabs\">\n    <menu>\n        <button id=\"btn-why-react\" class=\"active\">Why React?</button>\n        <button id=\"btn-core-features\">Core Features</button>\n        <button id=\"btn-resources\">Related Resources</button>\n    </menu>\n    <div id=\"tab-content\"></div>\n</div>\n</body>\n</html>"
+      },
+      {
+        "type": "file",
+        "name": "index.js",
+        "path": "technologies/vanilla_js/index.js",
+        "language": "javascript",
+        "code": "const content = [\n    [\n        \"React is extremely popular\",\n        \"It makes building complex, interactive UIs a breeze\",\n        \"It's powerful & flexible\",\n        \"It has a very active and versatile ecosystem\"\n    ],\n    [\n        \"Components, JSX & Props\",\n        \"State\",\n        \"Hooks (e.g., useEffect())\",\n        \"Dynamic rendering\"\n    ],\n    [\n        \"Official web page (react.dev)\",\n        \"Next.js (Fullstack framework)\",\n        \"React Native (build native mobile apps with React)\"\n    ]\n];\n\nconst btnWhyReact = document.getElementById(\"btn-why-react\");\nconst btnCoreFeature = document.getElementById(\"btn-core-features\");\nconst btnResources = document.getElementById(\"btn-resources\");\nconst tabContent = document.getElementById(\"tab-content\");\n\nfunction displayContent(items) {\n    let listContent = \"\";\n    for (const item of items) {\n        listContent += `<li>${item}</li>`;\n    }\n    const list = document.createElement(\"ul\");\n    tabContent.innerHTML = \"\"; // clear existing content\n    list.innerHTML = listContent; // insert new content\n    tabContent.append(list);\n}\n\nfunction highlightButton(btn) {\n    // Clear all existing styling / highlights\n    btnWhyReact.className = \"\";\n    btnCoreFeature.className = \"\";\n    btnResources.className = \"\";\n    btn.className = \"active\"; // set new style / highlight\n}\n\nfunction handleClick(event) {\n    const btnId = event.target.id;\n    highlightButton(event.target);\n    if (btnId === \"btn-why-react\") {\n        displayContent(content[0]);\n    } else if (btnId === \"btn-core-features\") {\n        displayContent(content[1]);\n    } else {\n        displayContent(content[2]);\n    }\n}\n\ndisplayContent(content[0]); // initially show this content\n\nbtnWhyReact.addEventListener(\"click\", handleClick);\nbtnCoreFeature.addEventListener(\"click\", handleClick);\nbtnResources.addEventListener(\"click\", handleClick);"
+      },
+      {
+        "type": "file",
+        "name": "styles.css",
+        "path": "technologies/vanilla_js/styles.css",
+        "language": "css",
+        "code": "* {\n    box-sizing: border-box;\n}\n\nbody {\n    font-family: sans-serif;\n    background-color: #181c1f;\n    color: #bdd1d4;\n    margin: 2rem;\n}\n\nheader {\n    margin: 2rem 0;\n    display: flex;\n    gap: 1.5rem;\n    align-items: center;\n}\n\nheader img {\n    width: 3rem;\n    object-fit: contain;\n}\n\nheader h1 {\n    margin: 0;\n    color: #f3e248;\n}\n\nheader p {\n    margin: 0;\n    color: #dbd7b1;\n}\n\n#tabs {\n    max-width: 32rem;\n    margin: 2rem 0;\n    overflow: hidden;\n}\n\n#tabs menu {\n    margin: 0;\n    padding: 0;\n    display: flex;\n    gap: 0.25rem;\n}\n\n#tabs button {\n    font: inherit;\n    font-size: 0.85rem;\n    background-color: #282f33;\n    border: none;\n    border-bottom-color: #f3e248;\n    color: #e0eff1;\n    border-radius: 4px 4px 0 0;\n    padding: 0.75rem 1rem;\n    cursor: pointer;\n    transition: all 0.2s ease-out;\n}\n\n#tabs button:hover,\n#tabs button.active {\n    background-color: #f3e248;\n    color: #273133;\n}\n\n#tab-content {\n    background-color: #2d3942;\n    border-radius: 0 4px 4px 4px;\n    padding: 1rem;\n}\n\n#tab-content li {\n    margin: 0.75rem 0;\n}"
+      }
+    ],
+    "screenshots": [
+      {
+        "id": "s1",
+        "src": "/images/vanilla_js/screenshot01.png",
+        "caption": "Tab 1"
+      },
+      {
+        "id": "s2",
+        "src": "/images/vanilla_js/screenshot02.png",
+        "caption": "Tab 2"
+      },
+      {
+        "id": "s3",
+        "src": "/images/vanilla_js/screenshot03.png",
+        "caption": "Tab 3"
+      }
+    ]
+  },
+  {
+    "tech": "react",
+    "slug": "react-js-example",
+    "title": "React JS Example",
+    "description": "Sample overview of React Javascript",
+    "homepageUrl": "https://elementech-technology-react-js.onrender.com",
+    "repoUrl": "https://github.com/HMurdoch/elementech-technology-react_js/tree/master",
+    "tags": [ "FinTech", "Microservices" ],
+    "files": [
+      {
+        "type": "folder",
+        "name": "react_js",
+        "path": "technologies/react_js",
+        "children": [
+          {
+            "type": "folder",
+            "name": "src",
+            "path": "technologies/react_js/src",
+            "children": [
+              {
+                "type": "file",
+                "name": "App.jsx",
+                "path": "technologies/react_js/src/App.jsx",
+                "language": "jsx",
+                "code": "SAMPLE_REACT_APP"
+              },
+              {
+                "type": "file",
+                "name": "main.jsx",
+                "path": "technologies/react_js/src/main.jsx",
+                "language": "jsx",
+                "code": "SAMPLE_REACT_MAIN"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "file",
+        "name": "index.html",
+        "path": "technologies/react_js/index.html",
+        "language": "html",
+        "code": "SAMPLE_REACT_INDEX_HTML"
+      }
+    ],
+    "screenshots": [
+      {
+        "id": "s1",
+        "src": "/images/vanilla_js/screenshot01.png",
+        "caption": "Tab 1"
+      },
+      {
+        "id": "s2",
+        "src": "/images/vanilla_js/screenshot02.png",
+        "caption": "Tab 2"
+      },
+      {
+        "id": "s3",
+        "src": "/images/vanilla_js/screenshot03.png",
+        "caption": "Tab 3"
+      }
+    ]
+  },
+  {
+    "tech": "react",
+    "slug": "react-essentials",
+    "title": "React Essentials",
+    "description": "Key React patterns & hooks",
+    "homepageUrl": "https://example.com/essentials",
+    "repoUrl": "",
+    "tags": [ "React" ],
+    "files": [
+      {
+        "type": "folder",
+        "name": "react_essentials",
+        "path": "technologies/react_essentials",
+        "children": [
+          {
+            "type": "folder",
+            "name": "src",
+            "path": "technologies/react_essentials/src",
+            "children": [
+              {
+                "type": "file",
+                "name": "Counter.jsx",
+                "path": "technologies/react_essentials/src/Counter.jsx",
+                "language": "jsx",
+                "code": "import {useState} from 'react'; export default function Counter(){const [c,setC]=useState(0); return <button onClick={()=>setC(c+1)}>Count {c}</button>;}"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "screenshots": [
+      {
+        "id": "s1",
+        "src": "/images/essentials-1.png",
+        "caption": "Counter"
+      }
+    ]
+  }
+]

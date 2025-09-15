@@ -1,0 +1,51 @@
+{
+  "details": "John Doe, johndoe@example.com, +12345678",
+  "position": "Full Stack Developer",
+  "education": [
+    {
+      "course": "BSc Computer Science",
+      "institute": "Tech University",
+      "subjects": [
+        "Programming",
+        "Databases"
+      ]
+    },
+    {
+      "course": "MSc Software Engineering",
+      "institute": "Tech University",
+      "subjects": [
+        "Cloud",
+        "Security"
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "company": "BigBank",
+      "from": "2019",
+      "to": "2021",
+      "description": "Worked on financial systems",
+      "duties": [
+        "Develop APIs"
+      ],
+      "technologies": [
+        "C#",
+        ".NET",
+        "SQL Server"
+      ]
+    },
+    {
+      "company": "CloudCorp",
+      "from": "2021",
+      "to": "2024",
+      "description": "Built cloud apps",
+      "duties": [
+        "Maintain pipelines"
+      ],
+      "technologies": [
+        "Azure",
+        "React"
+      ]
+    }
+  ]
+}

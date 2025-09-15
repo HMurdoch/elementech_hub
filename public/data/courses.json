@@ -1,0 +1,39 @@
+[
+  {
+    "id": "c1",
+    "title": "Full Stack Development",
+    "institute": "Code Academy",
+    "technologies": [
+      "React",
+      "Node"
+    ],
+    "subjects": [
+      "JS",
+      "DB",
+      "APIs"
+    ],
+    "lecturer": "Dr Smith",
+    "qualificationType": "Certification",
+    "site": "https://example.com/course1",
+    "exampleLinks": [
+      "https://github.com/example/project"
+    ]
+  },
+  {
+    "id": "c2",
+    "title": "Cloud Computing",
+    "institute": "Tech Uni",
+    "technologies": [
+      "Azure",
+      "AWS"
+    ],
+    "subjects": [
+      "Cloud Basics",
+      "Deployment"
+    ],
+    "lecturer": "Prof Johnson",
+    "qualificationType": "Diploma",
+    "site": "https://example.com/course2",
+    "exampleLinks": []
+  }
+]

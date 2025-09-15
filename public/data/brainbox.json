@@ -1,0 +1,20 @@
+[
+  {
+    "heading": "New Chatbot Feature",
+    "technologies": [
+      "AI",
+      "NLP"
+    ],
+    "overview": "Add natural language chatbot",
+    "details": "Integrate GPT for customer service automation"
+  },
+  {
+    "heading": "Enhance Reporting",
+    "technologies": [
+      "SQL",
+      "BI"
+    ],
+    "overview": "Better dashboards",
+    "details": "Use PowerBI embedded for analytics"
+  }
+]

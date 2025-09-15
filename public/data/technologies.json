@@ -1,0 +1,56 @@
+[
+  "Azure",
+  {
+    "name": "Azure",
+    "summary": "Azure Summary",
+    "examples": [
+      {
+        "label": "Playground",
+        "url": "https://play.tailwindcss.com/"
+      }
+    ]
+  },
+  "C# and .NET",
+  {
+    "name": "C# and .NET",
+    "summary": "C# and .NET Summary",
+    "examples": [
+      {
+        "label": "Playground",
+        "url": "https://play.tailwindcss.com/"
+      }
+    ]
+  },
+  "Node.js",
+  {
+    "name": "Node.js",
+    "summary": "Node.js Summary",
+    "examples": [
+      {
+        "label": "Playground",
+        "url": "https://play.tailwindcss.com/"
+      }
+    ]
+  },
+  "React",
+  {
+    "name": "React",
+    "summary": "SPAs with hooks and components",
+    "examples": [
+      { "label": "Vanilla JS Example" },
+      { "label": "React JS Example" },
+      { "label": "React Essentials" }
+    ]
+  },
+  "SQL (RDBS) Systems",
+  {
+    "name": "SQL",
+    "summary": "Utility-first CSS framework",
+    "examples": [
+      {
+        "label": "Playground",
+        "url": "https://play.tailwindcss.com/"
+      }
+    ]
+  }
+]
