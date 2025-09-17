@@ -50,7 +50,7 @@ export default function App() {
     return (
         <div className="app-bg min-h-screen text-white">
             <Nav />
-            <main className="relative z-10 mx-auto max-w-6xl px-4 py-6">
+            <main className="relative z-10 mx-auto max-w-[1400px] px-4 py-6">
                 <Suspense fallback={<Fallback />}>
                     <Routes>
                         {/* NEW landing route */}

@@ -1,6 +1,28 @@
 ﻿import React, { useState } from "react";
 
-export default function ScreenshotGallery({ shots = [] }) {
+import technologiesVanillaJSScreenshot01 from '../images/vanilla_js/screenshot-01.png'; 
+import technologiesVanillaJSScreenshot02 from '../images/vanilla_js/screenshot-02.png';
+import technologiesVanillaJSScreenshot03 from '../images/vanilla_js/screenshot-03.png'; 
+
+const vanillaJSScreenshots = [
+    {
+        id: 1,
+        src: technologiesVanillaJSScreenshot01,
+        caption: "Initial UI",
+    },
+    {
+        id: 2,
+        src: technologiesVanillaJSScreenshot02,
+        caption: "Tabs example",
+    },
+    {
+        id: 3,
+        src: technologiesVanillaJSScreenshot03,
+        caption: "Dynamic content",
+    },
+];
+
+export default function ScreenshotGallery({ shots = [vanillaJSScreenshots] }) {
     const [active, setActive] = useState(null);
     const panel = "rounded-2xl border border-zinc-800/70 bg-zinc-900/70 backdrop-blur p-3";
 

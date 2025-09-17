@@ -7,6 +7,23 @@
     "homepageUrl": "https://elementech-technology-vanilla-js.onrender.com/",
     "repoUrl": "https://github.com/HMurdoch/elementech-technology-vanilla_js/tree/master",
     "tags": [ "FinTech", "Microservices" ],
+    "screenshots": [
+      {
+        "id": 1,
+        "src": "/images/vanilla_js/screenshot-01.png",
+        "caption": "Initial UI"
+      },
+      {
+        "id": 2,
+        "src": "/images/vanilla_js/screenshot-02.png",
+        "caption": "Tabs example"
+      },
+      {
+        "id": 3,
+        "src": "/images/vanilla_js/screenshot-03.png",
+        "caption": "Dynamic content"
+      }
+    ],
     "files": [
       {
         "type": "folder",
@@ -57,23 +74,6 @@
         "language": "css",
         "code": "* {\n    box-sizing: border-box;\n}\n\nbody {\n    font-family: sans-serif;\n    background-color: #181c1f;\n    color: #bdd1d4;\n    margin: 2rem;\n}\n\nheader {\n    margin: 2rem 0;\n    display: flex;\n    gap: 1.5rem;\n    align-items: center;\n}\n\nheader img {\n    width: 3rem;\n    object-fit: contain;\n}\n\nheader h1 {\n    margin: 0;\n    color: #f3e248;\n}\n\nheader p {\n    margin: 0;\n    color: #dbd7b1;\n}\n\n#tabs {\n    max-width: 32rem;\n    margin: 2rem 0;\n    overflow: hidden;\n}\n\n#tabs menu {\n    margin: 0;\n    padding: 0;\n    display: flex;\n    gap: 0.25rem;\n}\n\n#tabs button {\n    font: inherit;\n    font-size: 0.85rem;\n    background-color: #282f33;\n    border: none;\n    border-bottom-color: #f3e248;\n    color: #e0eff1;\n    border-radius: 4px 4px 0 0;\n    padding: 0.75rem 1rem;\n    cursor: pointer;\n    transition: all 0.2s ease-out;\n}\n\n#tabs button:hover,\n#tabs button.active {\n    background-color: #f3e248;\n    color: #273133;\n}\n\n#tab-content {\n    background-color: #2d3942;\n    border-radius: 0 4px 4px 4px;\n    padding: 1rem;\n}\n\n#tab-content li {\n    margin: 0.75rem 0;\n}"
       }
-    ],
-    "screenshots": [
-      {
-        "id": "s1",
-        "src": "/images/vanilla_js/screenshot01.png",
-        "caption": "Tab 1"
-      },
-      {
-        "id": "s2",
-        "src": "/images/vanilla_js/screenshot02.png",
-        "caption": "Tab 2"
-      },
-      {
-        "id": "s3",
-        "src": "/images/vanilla_js/screenshot03.png",
-        "caption": "Tab 3"
-      }
     ]
   },
   {
@@ -84,6 +84,23 @@
     "homepageUrl": "https://elementech-technology-react-js.onrender.com",
     "repoUrl": "https://github.com/HMurdoch/elementech-technology-react_js/tree/master",
     "tags": [ "FinTech", "Microservices" ],
+    "screenshots": [
+      {
+        "id": 1,
+        "src": "/images/vanilla_js/screenshot-01.png",
+        "caption": "Initial UI"
+      },
+      {
+        "id": 2,
+        "src": "/images/vanilla_js/screenshot-02.png",
+        "caption": "Tabs example"
+      },
+      {
+        "id": 3,
+        "src": "/images/vanilla_js/screenshot-03.png",
+        "caption": "Dynamic content"
+      }
+    ],
     "files": [
       {
         "type": "folder",
@@ -119,23 +136,6 @@
         "path": "technologies/react_js/index.html",
         "language": "html",
         "code": "SAMPLE_REACT_INDEX_HTML"
-      }
-    ],
-    "screenshots": [
-      {
-        "id": "s1",
-        "src": "/images/vanilla_js/screenshot01.png",
-        "caption": "Tab 1"
-      },
-      {
-        "id": "s2",
-        "src": "/images/vanilla_js/screenshot02.png",
-        "caption": "Tab 2"
-      },
-      {
-        "id": "s3",
-        "src": "/images/vanilla_js/screenshot03.png",
-        "caption": "Tab 3"
       }
     ]
   },
