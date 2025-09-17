@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react"
-import { motion } from "framer-motion"
-import GlowPanel from "../components/GlowPanel"
-import GradientButton from "../components/GradientButton"
-import { setOverride, clearOverride } from "../data/loaders"
+// src/pages/CMS.jsx
+import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import GlowPanel from "../components/GlowPanel";
+import GradientButton from "../components/GradientButton";
+import { setOverride, clearOverride } from "../data/loaders";
+import CMSCVPanel from "../components/cms/CMSCVPanel";
 
 const FILES = [
     { key: "technologies", path: "/data/technologies.json", title: "Technologies" },
@@ -10,42 +12,63 @@ const FILES = [
     { key: "courses", path: "/data/courses.json", title: "Courses" },
     { key: "cv", path: "/data/cv.json", title: "Curriculum Vitae" },
     { key: "brainbox", path: "/data/brainbox.json", title: "Brain Box (seed)" },
-]
+];
 
 export default function CMS() {
-    const [active, setActive] = useState(FILES[0].key)
-    const [text, setText] = useState("{}")
-    const [status, setStatus] = useState("")
-    const file = FILES.find(f => f.key === active)
+    const [active, setActive] = useState(FILES[0].key);
+    const [text, setText] = useState("{}");
+    const [status, setStatus] = useState("");
+    const file = FILES.find((f) => f.key === active);
 
     const load = async () => {
-        setStatus("Loading…")
+        setStatus("Loading…");
         try {
-            const r = await fetch(file.path, { cache: "no-cache" })
-            const data = await r.json()
-            setText(JSON.stringify(data, null, 2))
-            setStatus("Loaded from server file")
+            const r = await fetch(file.path, { cache: "no-cache" });
+            const data = await r.json();
+            setText(JSON.stringify(data, null, 2));
+            setStatus("Loaded from server file");
         } catch (e) {
-            setStatus("Failed to load: " + e.message)
+            setStatus("Failed to load: " + e.message);
         }
-    }
-    useEffect(() => { load() }, [active])
+    };
+    useEffect(() => {
+        load();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [active]);
 
     const validate = () => {
-        try { JSON.parse(text); setStatus("Valid JSON ✔️") }
-        catch (e) { setStatus("Invalid JSON: " + e.message) }
-    }
+        try {
+            JSON.parse(text);
+            setStatus("Valid JSON ✔️");
+        } catch (e) {
+            setStatus("Invalid JSON: " + e.message);
+        }
+    };
     const saveRuntime = () => {
-        try { setOverride(active, JSON.parse(text)); setStatus("Saved runtime override (localStorage). Refresh pages to see changes.") }
-        catch (e) { setStatus("Invalid JSON: " + e.message) }
-    }
-    const clear = () => { clearOverride(active); setStatus("Cleared runtime override. Reload to use server file.") }
+        try {
+            setOverride(active, JSON.parse(text));
+            setStatus("Saved runtime override (localStorage). Refresh pages to see changes.");
+        } catch (e) {
+            setStatus("Invalid JSON: " + e.message);
+        }
+    };
+    const clear = () => {
+        clearOverride(active);
+        setStatus("Cleared runtime override. Reload to use server file.");
+    };
     const download = () => {
-        const a = document.createElement("a")
-        const blob = new Blob([text], { type: "application/json" })
-        a.href = URL.createObjectURL(blob); a.download = `${active}.json`; a.click(); URL.revokeObjectURL(a.href)
-    }
-    const onUpload = file => { const fr = new FileReader(); fr.onload = () => setText(fr.result); fr.readAsText(file) }
+        const a = document.createElement("a");
+        const blob = new Blob([text], { type: "application/json" });
+        a.href = URL.createObjectURL(blob);
+        a.download = `${active}.json`;
+        a.click();
+        URL.revokeObjectURL(a.href);
+    };
+    const onUpload = (file) => {
+        const fr = new FileReader();
+        fr.onload = () => setText(fr.result);
+        fr.readAsText(file);
+    };
 
     return (
         <motion.div
@@ -55,9 +78,10 @@ export default function CMS() {
             transition={{ duration: 0.45, ease: "easeOut" }}
             className="space-y-4"
         >
+            {/* Primary JSON editor (unchanged) */}
             <GlowPanel title="CMS Editor">
                 <div className="mb-3 flex flex-wrap gap-2">
-                    {FILES.map(f => (
+                    {FILES.map((f) => (
                         <button
                             key={f.key}
                             onClick={() => setActive(f.key)}
@@ -77,27 +101,65 @@ export default function CMS() {
                     <div className="md:col-span-2">
                         <textarea
                             value={text}
-                            onChange={e => setText(e.target.value)}
+                            onChange={(e) => setText(e.target.value)}
                             rows={24}
                             className="w-full rounded-lg border border-zinc-700 bg-zinc-900 p-3 font-mono text-sm"
                         />
                     </div>
                     <div className="space-y-2">
-                        <button onClick={load} className="w-full rounded border border-zinc-700 bg-zinc-800 px-3 py-2 hover:border-red-700">Reload from server</button>
-                        <button onClick={validate} className="w-full rounded border border-zinc-700 bg-zinc-800 px-3 py-2 hover:border-red-700">Validate JSON</button>
-                        <GradientButton onClick={saveRuntime}>Save runtime override</GradientButton>
-                        <button onClick={clear} className="w-full rounded border border-zinc-700 bg-zinc-800 px-3 py-2 hover:border-red-700">Clear override</button>
-                        <button onClick={download} className="w-full rounded border border-zinc-700 bg-zinc-800 px-3 py-2 hover:border-red-700">Download JSON</button>
+                        <button
+                            onClick={load}
+                            className="w-full rounded border border-zinc-700 bg-zinc-800 px-3 py-2 hover:border-red-700"
+                        >
+                            Reload from server
+                        </button>
+                        <button
+                            onClick={validate}
+                            className="w-full rounded border border-zinc-700 bg-zinc-800 px-3 py-2 hover:border-red-700"
+                        >
+                            Validate JSON
+                        </button>
+                        <button
+                            onClick={saveRuntime}
+                            className="w-full rounded border border-zinc-700 bg-zinc-800 px-3 py-2 hover:border-red-700"
+                        >
+                            Save Runtime Override
+                        </button>
+                        <button
+                            onClick={clear}
+                            className="w-full rounded border border-zinc-700 bg-zinc-800 px-3 py-2 hover:border-red-700"
+                        >
+                            Clear Override
+                        </button>
+                        <button
+                            onClick={download}
+                            className="w-full rounded border border-zinc-700 bg-zinc-800 px-3 py-2 hover:border-red-700"
+                        >
+                            Download JSON
+                        </button>
                         <label className="w-full inline-flex items-center justify-center gap-2 rounded border border-zinc-700 bg-zinc-800 px-3 py-2 hover:border-red-700 cursor-pointer">
                             Upload JSON
-                            <input type="file" accept="application/json" className="hidden" onChange={e => e.target.files?.[0] && onUpload(e.target.files[0])} />
+                            <input
+                                type="file"
+                                accept="application/json"
+                                className="hidden"
+                                onChange={(e) => e.target.files?.[0] && onUpload(e.target.files[0])}
+                            />
                         </label>
-                        <p className="text-xs text-zinc-400 pt-2">
-                            Saving to server files requires a backend. Runtime overrides are stored locally and applied immediately.
+                        <p className="pt-2 text-xs text-zinc-400">
+                            Saving to server files requires a backend. Runtime overrides are stored locally and
+                            applied immediately.
                         </p>
                     </div>
                 </div>
             </GlowPanel>
+
+            {/* CV live editor appears only when the CV tab is selected */}
+            {active === "cv" && (
+                <GlowPanel title="Curriculum Vitae — Live Editor">
+                    <CMSCVPanel />
+                </GlowPanel>
+            )}
         </motion.div>
-    )
+    );
 }

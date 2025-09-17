@@ -37,7 +37,7 @@ function normalizeAndDedup(list) {
 }
 
 function TechRow({ tech }) {
-    const [open, setOpen] = useState(false)
+    const [open, setOpen] = useState(true)
     const nav = useNavigate()
 
     return (

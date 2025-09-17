@@ -15,6 +15,11 @@ export default function BrainBox() {
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.45, ease: "easeOut" }}
         >
+
+            <div align="center">
+                <img src="/images/under_construction.svg" className="w-1/2 h-auto" />
+            </div>
+
             <GlowPanel title="Brain Box — Ideas">
                 <div className="space-y-3">
                     {ideas.map((idea, i) => (

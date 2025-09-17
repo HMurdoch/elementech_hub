@@ -15,6 +15,11 @@ export default function Projects() {
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.45, ease: "easeOut" }}
         >
+
+            <div align="center">
+                <img src="/images/under_construction.svg" className="w-1/2 h-auto" />
+            </div>
+            
             <GlowPanel title="Projects">
                 <div className="space-y-3">
                     {projects.map(p => (

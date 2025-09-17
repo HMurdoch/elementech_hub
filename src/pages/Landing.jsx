@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import { motion } from "framer-motion";
 
 export default function Landing() {
@@ -8,7 +8,7 @@ export default function Landing() {
             <div className="pointer-events-none absolute inset-0 -z-20 bg-gradient-to-b from-red-900/40 via-black/80 to-black" />
 
             {/* optional ambient radial glows */}
-            <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(80rem_30rem_at_10%_-10%,rgba(239,68,68,0.25),transparent_55%),radial-gradient(60rem_30rem_at_110%_-20%,rgba(239,68,68,0.22),transparent_60%)]" />
+            <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(80rem_50rem_at_10%_-10%,rgba(239,68,68,0.25),transparent_55%),radial-gradient(60rem_30rem_at_110%_-20%,rgba(239,68,68,0.22),transparent_60%)]" />
 
             {/* top red beam */}
             <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-40 bg-gradient-to-b from-red-600/50 to-transparent blur-2xl" />
@@ -19,7 +19,11 @@ export default function Landing() {
                 transition={{ duration: 0.6, ease: "easeOut" }}
                 className="mb-3 text-center text-4xl font-semibold"
             >
-                <span className="neon-text">Welcome</span> � Portfolio Hub
+                <span className="neon-text">Welcome</span><br/>
+                <span className="bg-gradient-to-r from-red-500 via-red-400 to-red-600 bg-clip-text text-transparent">Hugh Murdoch</span>
+                <span className="ml-2 text-zinc-400">- </span>
+                <span className="bg-gradient-to-r from-red-500 via-red-400 to-red-600 bg-clip-text text-transparent">Full‑Stack Developer</span><br />
+                <span className="neon-text">Portfolio Hub</span>
             </motion.h1>
 
             <motion.p
