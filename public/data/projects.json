@@ -87,17 +87,22 @@
     "screenshots": [
       {
         "id": 1,
-        "src": "/images/vanilla_js/screenshot-01.png",
+        "src": "/images/react_js/screenshot-01.png",
         "caption": "Initial UI"
       },
       {
         "id": 2,
-        "src": "/images/vanilla_js/screenshot-02.png",
+        "src": "/images/react_js/screenshot-02.png",
         "caption": "Tabs example"
       },
       {
         "id": 3,
-        "src": "/images/vanilla_js/screenshot-03.png",
+        "src": "/images/react_js/screenshot-03.png",
+        "caption": "Dynamic content"
+      },
+      {
+        "id": 4,
+        "src": "/images/react_js/screenshot-03.png",
         "caption": "Dynamic content"
       }
     ],
@@ -117,25 +122,25 @@
                 "name": "App.jsx",
                 "path": "technologies/react_js/src/App.jsx",
                 "language": "jsx",
-                "code": "SAMPLE_REACT_APP"
+                "code": "import { useState } from \"react\";\nimport \"./styles.css\";\n\nconst content = [\n    [\n        \"React is extremely popular\",\n        \"It makes building complex, interactive UIs a breeze\",\n        \"It's powerful & flexible\",\n        \"It has a very active and versatile ecosystem\",\n    ],\n    [\n        \"Components, JSX & Props\",\n        \"State\",\n        \"Hooks (e.g., useEffect())\",\n        \"Dynamic rendering\",\n    ],\n    [\n        \"Official web page (react.dev)\",\n        \"Next.js (Fullstack framework)\",\n        \"React Native (build native mobile apps with React)\",\n    ],\n    [\n        \"Vanilla JavaScript requires imperative programming\",\n        \"Imperative Programming: You define all the steps needed to achieve a result\",\n        \"React on the other hand embraces declarative programming\",\n        \"With React, you define the goal and React figures out how to get there\",\n    ],\n];\n\nexport default function App() {\n    const [activeContentIndex, setActiveContentIndex] = useState(0);\n\n    return (\n        <div>\n            <header>\n                <img src=\"react-logo-xs.png\" alt=\"React logo\" />\n                <div>\n                    <h1>React.js</h1>\n                    <p>i.e., using the React library for rendering the UI</p>\n                </div>\n            </header>\n\n            <div id=\"tabs\">\n                <menu>\n                    <button\n                        className={activeContentIndex === 0 ? \"active\" : \"\"}\n                        onClick={() => setActiveContentIndex(0)}\n                    >\n                        Why React?\n                    </button>\n                    <button\n                        className={activeContentIndex === 1 ? \"active\" : \"\"}\n                        onClick={() => setActiveContentIndex(1)}\n                    >\n                        Core Features\n                    </button>\n                    <button\n                        className={activeContentIndex === 2 ? \"active\" : \"\"}\n                        onClick={() => setActiveContentIndex(2)}\n                    >\n                        Related Resources\n                    </button>\n                    <button\n                        className={activeContentIndex === 3 ? \"active\" : \"\"}\n                        onClick={() => setActiveContentIndex(3)}\n                    >\n                        React vs Vanilla\n                    </button>\n                </menu>\n                <div id=\"tab-content\">\n                    <ul>\n                        {content[activeContentIndex].map((item) => (\n                            <li key={item}>{item}</li>\n                        ))}\n                    </ul>\n                </div>\n            </div>\n        </div>\n    );\n}"
               },
               {
                 "type": "file",
-                "name": "main.jsx",
-                "path": "technologies/react_js/src/main.jsx",
+                "name": "index.js",
+                "path": "technologies/react_js/src/index.js",
                 "language": "jsx",
-                "code": "SAMPLE_REACT_MAIN"
+                "code": "import { StrictMode } from \"react\";\nimport { createRoot } from \"react-dom/client\";\n\nimport App from \"./App.js\";\n\nconst rootElement = document.getElementById(\"root\");\nconst root = createRoot(rootElement);\n\nroot.render(\n    <StrictMode>\n        <App />\n    </StrictMode>\n);"
+              },
+              {
+                "type": "file",
+                "name": "styles.css",
+                "path": "technologies/react_js/src/styles.css",
+                "language": "css",
+                "code": "* {\n    box-sizing: border-box;\n}\n\nbody {\n    font-family: sans-serif;\n    background-color: #181c1f;\n    color: #bdd1d4;\n    margin: 2rem;\n}\n\nheader {\n    margin: 2rem 0;\n    display: flex;\n    gap: 1.5rem;\n    align-items: center;\n}\n\nheader img {\n    width: 3rem;\n    object-fit: contain;\n}\n\nheader h1 {\n    margin: 0;\n    color: #48d9f3;\n}\n\nheader p {\n    margin: 0;\n    color: #82c2ce;\n}\n\n#tabs {\n    max-width: 32rem;\n    margin: 2rem 0;\n    overflow: hidden;\n}\n\n#tabs menu {\n    margin: 0;\n    padding: 0;\n    display: flex;\n    gap: 0.25rem;\n}\n\n#tabs button {\n    font: inherit;\n    font-size: 0.85rem;\n    background-color: #282f33;\n    border: none;\n    border-bottom-color: #48d9f3;\n    color: #e0eff1;\n    border-radius: 4px 4px 0 0;\n    padding: 0.75rem 1rem;\n    cursor: pointer;\n    transition: all 0.2s ease-out;\n}\n\n#tabs button:hover,\n#tabs button.active {\n    background-color: #48d9f3;\n    color: #273133;\n}\n\n#tab-content {\n    background-color: #2d3942;\n    border-radius: 0 4px 4px 4px;\n    padding: 1rem;\n}\n\n#tab-content li {\n    margin: 0.75rem 0;\n}"
               }
             ]
           }
         ]
-      },
-      {
-        "type": "file",
-        "name": "index.html",
-        "path": "technologies/react_js/index.html",
-        "language": "html",
-        "code": "SAMPLE_REACT_INDEX_HTML"
       }
     ]
   },

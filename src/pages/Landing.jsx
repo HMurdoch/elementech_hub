@@ -1,12 +1,16 @@
-import React from "react"
-import { motion } from "framer-motion"
+import React from "react";
+import { motion } from "framer-motion";
 
 export default function Landing() {
     return (
         <div className="relative overflow-hidden">
-            {/* soft ambient glows */}
+            {/* full-page red-to-black fade backdrop */}
+            <div className="pointer-events-none absolute inset-0 -z-20 bg-gradient-to-b from-red-900/40 via-black/80 to-black" />
+
+            {/* optional ambient radial glows */}
             <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(80rem_30rem_at_10%_-10%,rgba(239,68,68,0.25),transparent_55%),radial-gradient(60rem_30rem_at_110%_-20%,rgba(239,68,68,0.22),transparent_60%)]" />
-            {/* top red beam (pairs nicely with .app-bg::before you already have) */}
+
+            {/* top red beam */}
             <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-40 bg-gradient-to-b from-red-600/50 to-transparent blur-2xl" />
 
             <motion.h1
@@ -35,7 +39,6 @@ export default function Landing() {
                 transition={{ delay: 0.25, duration: 0.6, ease: "easeOut" }}
                 className="mx-auto flex max-w-3xl items-center justify-center rounded-2xl border border-red-900/40 bg-black/60 p-4 shadow-[0_0_45px_rgba(239,68,68,0.45)]"
             >
-                {/* Put any image at public/images/landing-hero.png */}
                 <img
                     src="/images/elementech_landing.png"
                     alt="Landing hero"
@@ -43,5 +46,5 @@ export default function Landing() {
                 />
             </motion.div>
         </div>
-    )
+    );
 }

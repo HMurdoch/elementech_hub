@@ -52,7 +52,7 @@ function TechRow({ tech }) {
                         <div className="text-sm text-zinc-400">{tech.summary}</div>
                     ) : null}
                 </div>
-                <span className="text-zinc-400">{open ? "–" : "+"}</span>
+                <span className="text-zinc-400">{open ? "-" : "+"}</span>
             </button>
 
             {open && (
