@@ -1,7 +1,7 @@
 import React, { Suspense } from "react"
 import { Routes, Route, NavLink, useNavigate } from "react-router-dom"
-import Landing from "./pages/Landing"         // NEW
-import Home from "./pages/Home"               // (Technologies)
+import Landing from "./pages/Landing"         
+import Technologies from "./pages/Technologies"               
 import Projects from "./pages/Projects"
 import Courses from "./pages/Courses"
 import CV from "./pages/CV"
@@ -57,7 +57,7 @@ export default function App() {
                         <Route path="/" element={<Landing />} />
 
                         {/* Technologies moved to /technologies */}
-                        <Route path="/technologies" element={<Home />} />
+                        <Route path="/technologies" element={<Technologies />} />
                         <Route path="/tech/:tech/:project" element={<ProjectWorkspace />} />
                         <Route path="/projects/*" element={<Projects />} />
                         <Route path="/courses" element={<Courses />} />

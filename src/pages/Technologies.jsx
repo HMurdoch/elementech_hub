@@ -87,7 +87,7 @@ function TechRow({ tech }) {
     )
 }
 
-export default function Home() {
+export default function Technologies() {
     const [techs, setTechs] = useState([])
 
     useEffect(() => {

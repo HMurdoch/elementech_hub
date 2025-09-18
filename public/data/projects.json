@@ -6,7 +6,7 @@
     "description": "Sample overview of Vanilla Javascript",
     "homepageUrl": "https://elementech-technology-vanilla-js.onrender.com/",
     "repoUrl": "https://github.com/HMurdoch/elementech-technology-vanilla_js/tree/master",
-    "tags": [ "FinTech", "Microservices" ],
+    "tags": [ "JavaScript", "Basics" ],
     "screenshots": [
       {
         "id": 1,
@@ -83,7 +83,7 @@
     "description": "Sample overview of React Javascript",
     "homepageUrl": "https://elementech-technology-react-js.onrender.com",
     "repoUrl": "https://github.com/HMurdoch/elementech-technology-react_js/tree/master",
-    "tags": [ "FinTech", "Microservices" ],
+    "tags": [ "React", "SPA", "Hooks" ],
     "screenshots": [
       {
         "id": 1,
@@ -151,7 +151,7 @@
     "description": "Key React patterns & hooks",
     "homepageUrl": "https://example.com/essentials",
     "repoUrl": "",
-    "tags": [ "React" ],
+    "tags": [ "React", "Patterns" ],
     "files": [
       {
         "type": "folder",
