@@ -93,7 +93,7 @@ export default function CV() {
     return (
         <div className="space-y-6 print:bg-white print:text-black">
             {/* Toolbar */}
-            <div className="flex flex-wrap items-center gap-2 rounded-xl border border-red-900/40 bg-zinc-900/40 p-3">
+            <div className="flex flex-wrap items-center gap-2 rounded-xl border border-red-900/40 bg-zinc-900/40 p-3 glow-panel">
                 <input
                     value={q}
                     onChange={(e) => setQ(e.target.value)}
@@ -133,7 +133,7 @@ export default function CV() {
 
                 <button
                     onClick={handlePrint}
-                    className="ml-auto rounded-lg border border-red-900/60 bg-red-900/30 px-3 py-2 text-sm text-red-100 hover:border-red-600 hover:bg-red-900/40"
+                    className="ml-auto rounded-lg border border-red-900/60 bg-red-900/30 px-3 py-2 text-sm text-red-100 hover:border-red-600 hover:bg-red-900/40 glow-panel"
                 >
                     Download PDF
                 </button>
@@ -146,8 +146,8 @@ export default function CV() {
                 viewport={{ once: true, margin: "-80px" }}
                 transition={{ duration: 0.45, ease: "easeOut" }}
             >
-                <GlowPanel title="Details">
-                    <div className="text-zinc-200">
+                <GlowPanel title="Details" className="glow-panel glow-item">
+                    <div className="glow-item">
                         {isLoading ? "Loading…" : details || "—"}
                     </div>
                 </GlowPanel>
@@ -160,8 +160,8 @@ export default function CV() {
                 viewport={{ once: true, margin: "-80px" }}
                 transition={{ duration: 0.45, ease: "easeOut", delay: 0.05 }}
             >
-                <GlowPanel title="Position Looking For">
-                    <div className="text-zinc-200">
+                <GlowPanel title="Position Looking For" className="glow-panel glow-item">
+                    <div className="glow-item">
                         {isLoading ? "Loading…" : position || "—"}
                     </div>
                 </GlowPanel>
@@ -175,13 +175,13 @@ export default function CV() {
                     viewport={{ once: true, margin: "-80px" }}
                     transition={{ duration: 0.45, ease: "easeOut", delay: 0.1 }}
                 >
-                    <GlowPanel title={`Education & Academic Record (${isLoading ? 0 : filteredEducation.length})`}>
+                    <GlowPanel title={`Education & Academic Record (${isLoading ? 0 : filteredEducation.length})`} className="glow-panel">
                         <div className="space-y-3">
                             {isLoading && <div className="text-zinc-400">Loading…</div>}
                             {!isLoading &&
                                 filteredEducation.map((e, i) => (
-                                    <GlowItem key={i}>
-                                        <div className="flex flex-wrap items-baseline justify-between gap-2">
+                                    <GlowItem key={i} className="glow-item">
+                                        <div className="flex flex-wrap items-baseline justify-between gap-2 glow-item">
                                             <div className="truncate">
                                                 <span className="font-semibold">{e.course}</span>
                                                 {e.institute && (
@@ -223,7 +223,7 @@ export default function CV() {
                     viewport={{ once: true, margin: "-80px" }}
                     transition={{ duration: 0.45, ease: "easeOut", delay: 0.15 }}
                 >
-                    <GlowPanel title={`Work Experience (${isLoading ? 0 : filteredExperience.length})`}>
+                    <GlowPanel title={`Work Experience (${isLoading ? 0 : filteredExperience.length})`} className="glow-panel">
                         <div className="space-y-3">
                             {isLoading && <div className="text-zinc-400">Loading…</div>}
                             {!isLoading &&

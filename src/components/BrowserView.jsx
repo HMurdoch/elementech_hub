@@ -5,7 +5,7 @@ export default function BrowserView({ url }) {
     useEffect(() => setSrc(url), [url]);
 
     return (
-        <div className="overflow-hidden rounded-2xl border border-red-900/40 bg-zinc-950/80 shadow-[0_0_25px_rgba(239,68,68,0.45)]">
+        <div className="overflow-hidden rounded-2xl border border-red-900/40 bg-zinc-950/80 shadow-[0_0_25px_rgba(239,68,68,0.45)] glow-panel">
             <div className="flex items-center justify-between border-b border-zinc-800 px-3 py-2 text-xs text-zinc-400">
                 <div className="flex items-center gap-2">
                     <span className="inline-block h-2 w-2 rounded-full bg-red-500" />

@@ -1,54 +1,56 @@
-﻿import React from "react";
-import { motion } from "framer-motion";
+﻿// src/pages/Landing.jsx
+import React, { useMemo } from "react";
+
+/**
+ * Reads the current theme from <html data-theme="..."> if present.
+ * Falls back to "blue" (your default).
+ */
+function useTheme() {
+    return useMemo(() => {
+        const el = document.documentElement;
+        const fromAttr = el.getAttribute("data-theme");
+        if (fromAttr === "red" || fromAttr === "blue") return fromAttr;
+        return "blue";
+    }, []);
+}
 
 export default function Landing() {
+    const theme = useTheme();
+
+    // Choose hero image by theme
+    const heroSrc =
+        theme === "red"
+            ? "/images/elementech_landing_red.png"
+            : "/images/elementech_landing_blue.png";
+
     return (
-        <div className="relative overflow-hidden">
-            {/* full-page red-to-black fade backdrop */}
-            <div className="pointer-events-none absolute inset-0 -z-20 bg-gradient-to-b from-red-900/40 via-black/80 to-black" />
+        <div className="landing-wrap">
+            <section className="landing-hero">
+                <h1 className="landing-welcome">Welcome</h1>
 
-            {/* optional ambient radial glows */}
-            <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(80rem_50rem_at_10%_-10%,rgba(239,68,68,0.25),transparent_55%),radial-gradient(60rem_30rem_at_110%_-20%,rgba(239,68,68,0.22),transparent_60%)]" />
+                {/* Headline uses theme variables from your CSS (title-accent classes) */}
+                <h2 className="landing-title">
+                    <span className="title-accent-1">Hugh Murdoch</span>
+                    <span className="title-sep"> - </span>
+                    <span className="title-accent-2">Full-Stack Developer</span>
+                </h2>
 
-            {/* top red beam */}
-            <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-40 bg-gradient-to-b from-red-600/50 to-transparent blur-2xl" />
+                <p className="landing-sub">
+                    Explore technologies, projects, courses, my CV, and the Brain Box
+                    forum. Use the navigation above, or click the home icon anytime to
+                    return here.
+                </p>
 
-            <motion.h1
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
-                className="mb-3 text-center text-4xl font-semibold"
-            >
-                <span className="neon-text">Welcome</span><br/>
-                <span className="bg-gradient-to-r from-red-500 via-red-400 to-red-600 bg-clip-text text-transparent">Hugh Murdoch</span>
-                <span className="ml-2 text-zinc-400">- </span>
-                <span className="bg-gradient-to-r from-red-500 via-red-400 to-red-600 bg-clip-text text-transparent">Full‑Stack Developer</span><br />
-                <span className="neon-text">Portfolio Hub</span>
-            </motion.h1>
-
-            <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.15, duration: 0.5 }}
-                className="mx-auto mb-8 max-w-2xl text-center text-zinc-400"
-            >
-                Explore technologies, projects, courses, my CV, and the Brain Box forum. Use the
-                navigation above, or click the home icon anytime to return here.
-            </motion.p>
-
-            {/* Centered sample image */}
-            <motion.div
-                initial={{ opacity: 0, scale: 0.97 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.25, duration: 0.6, ease: "easeOut" }}
-                className="mx-auto flex max-w-3xl items-center justify-center rounded-2xl border border-red-900/40 bg-black/60 p-4 shadow-[0_0_45px_rgba(239,68,68,0.45)]"
-            >
-                <img
-                    src="/images/elementech_landing.png"
-                    alt="Landing hero"
-                    className="max-h-[55vh] w-auto rounded-lg"
-                />
-            </motion.div>
+                {/* Frame keeps the theme glow; the image itself is now 50% width */}
+                <div className="landing-image-frame">
+                    <img
+                        src={heroSrc}
+                        alt="Portfolio hero"
+                        className="landing-image"
+                        loading="eager"
+                    />
+                </div>
+            </section>
         </div>
     );
 }

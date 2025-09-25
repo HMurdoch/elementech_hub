@@ -17,7 +17,7 @@ export default function BrainBox() {
         >
 
             <div align="center">
-                <img src="/images/under_construction.svg" className="w-1/2 h-auto" />
+                <img src="/images/under_construction.svg" className="w-1/4 h-auto" />
             </div>
 
             <GlowPanel title="Brain Box — Ideas">
