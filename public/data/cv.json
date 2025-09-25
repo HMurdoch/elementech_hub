@@ -130,7 +130,7 @@
       "course": "HPP3 – High Performance People (Conflict Resolution, Performance Management)",
       "institute": "Barloworld Training, Isando",
       "years": "2010",
-      "qualificationType": "certification",
+      "qualificationType": "diploma",
       "subjects": []
     },
     {
@@ -245,7 +245,7 @@
       "technologies": [ "MS SQL", "C#", "MySQL", "PostgreSQL", "PHP", "Java", "Azure" ]
     },
     {
-      "company": "DStv – Digital Media / SuperSport / Self-Service",
+      "company": "DStv – Digital Media / SuperSport / Self-Service / Connect (SSO)",
       "title": "Senior Developer",
       "from": "2014-09",
       "to": "2019-05",
