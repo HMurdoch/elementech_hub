@@ -593,22 +593,43 @@ body:not([data-theme]) {
     font-size: clamp(1.4rem, 2.8vw, 2rem);
 }
 
+/* Headline: one rule, gradient comes from a theme var */
 .landing-title {
     font-weight: 900;
-    font-size: clamp(1.6rem, 3.2vw, 2.6rem);
-    margin: 0 0 0.9rem;
+    font-size: clamp(1.6rem, 3.2vw, 2.4rem);
+    margin: .5rem 0 1rem;
+    background-image: var(--landing-title-gradient);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
 }
 
-    .landing-title .title-accent-1,
-    .landing-title .title-accent-2 {
-        color: var(--landing-headline-accent);
-    }
+/* DEFAULT / BLUE THEME */
+:root,
+[data-theme="blue"],
+body[data-theme="blue"] {
+    --landing-title-gradient: linear-gradient(90deg, #2196f3, #00bcd4);
+}
 
-    .landing-title .title-sep {
-        opacity: .75;
-        color: var(--landing-headline-accent);
-    }
+/* RED THEME */
+[data-theme="red"],
+body[data-theme="red"] {
+    --landing-title-gradient: linear-gradient(90deg, #f44336, #e91e63);
+}
 
+
+
+/*.landing-title .title-accent-1,
+.landing-title .title-accent-2 {
+    color: var(--landing-headline-accent);
+}
+
+.landing-title .title-sep {
+    opacity: .75;
+    color: var(--landing-headline-accent);
+}
+*/
 .landing-sub {
     max-width: 900px;
     margin: 0 auto 1.25rem;
