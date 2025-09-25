@@ -7,84 +7,96 @@
       "institute": "University of Liverpool (Distance Learning)",
       "years": "2026 – 202X",
       "qualificationType": "masters",
-      "subjects": []
+      "subjects": [],
+      "sourcelink": "https://online.liverpool.ac.uk/programmes/msc-organisational-and-business-psychology"
     },
     {
       "course": "Node with React: Full-Stack Web Development",
       "institute": "Online",
       "years": "2025",
       "qualificationType": "certification",
-      "subjects": [ "Node.js", "React", "Full-stack patterns" ]
+      "subjects": [ "Node.js", "React", "Full-stack patterns" ],
+      "sourcelink": "https://www.udemy.com/course/node-with-react-fullstack-web-development/"
     },
     {
       "course": "React – The Complete Guide 2025 (incl. Next.js, Redux)",
       "institute": "Online",
       "years": "2023 – 2024",
       "qualificationType": "certification",
-      "subjects": [ "React", "Next.js", "Redux" ]
+      "subjects": [ "React", "Next.js", "Redux" ],
+      "sourcelink": "https://www.udemy.com/course/react-the-complete-guide-incl-redux/"
     },
     {
       "course": "C# Advanced / Intermediate / Basics",
       "institute": "Online",
       "years": "2023",
       "qualificationType": "certification",
-      "subjects": [ "OOP", "Interfaces", "Advanced C#" ]
+      "subjects": [ "OOP", "Interfaces", "Advanced C#" ],
+      "sourcelink": ""
     },
     {
       "course": "The Modern JavaScript Bootcamp",
       "institute": "Online",
       "years": "2020",
       "qualificationType": "certification",
-      "subjects": [ "JavaScript", "ESNext" ]
+      "subjects": [ "JavaScript", "ESNext" ],
+      "sourcelink": "https://www.udemy.com/course/modern-javascript/"
     },
     {
       "course": "The Web Developer Bootcamp",
       "institute": "Online",
       "years": "2019",
       "qualificationType": "certification",
-      "subjects": [ "HTML", "CSS", "JS", "Node" ]
+      "subjects": [ "HTML", "CSS", "JS", "Node" ],
+      "sourcelink": "https://www.udemy.com/course/the-web-developer-bootcamp/"
     },
     {
       "course": "Angular – The Complete Guide",
       "institute": "Online",
       "years": "2019",
       "qualificationType": "certification",
-      "subjects": [ "Angular", "RxJS" ]
+      "subjects": [ "Angular", "RxJS" ],
+      "sourcelink": "https://www.udemy.com/course/the-complete-guide-to-angular-2/"
     },
     {
       "course": "The Complete React Developer Course (w/ Hooks and Redux)",
       "institute": "Online",
       "years": "2018",
       "qualificationType": "certification",
-      "subjects": [ "React", "Hooks", "Redux" ]
+      "subjects": [ "React", "Hooks", "Redux" ],
+      "sourcelink": "https://www.udemy.com/course/react-2nd-edition/"
     },
     {
       "course": "React – The Complete Guide (incl. Hooks, React Router, Redux)",
       "institute": "Online",
       "years": "2018",
       "qualificationType": "certification",
-      "subjects": [ "React", "Router", "Redux" ]
+      "subjects": [ "React", "Router", "Redux" ],
+      "sourcelink": "https://www.udemy.com/course/react-the-complete-guide-incl-redux/"
     },
     {
       "course": "Ethical Hacking and Effective Counter-Measures",
       "institute": "Online",
       "years": "2016 – 2017",
       "qualificationType": "certification",
-      "subjects": [ "Security", "Pen-testing" ]
+      "subjects": [ "Security", "Pen-testing" ],
+      "sourcelink": ""
     },
     {
       "course": "Agile & Scrum – Mastering Agile Project Management",
       "institute": "Online",
       "years": "2016",
       "qualificationType": "certification",
-      "subjects": [ "Agile", "Scrum" ]
+      "subjects": [ "Agile", "Scrum" ],
+      "sourcelink": "https://www.udemy.com/topic/agile/"
     },
     {
       "course": "Body Language for Business People",
       "institute": "Online",
       "years": "2016",
       "qualificationType": "certification",
-      "subjects": []
+      "subjects": [],
+      "sourcelink": ""
     },
     {
       "course": "BSc-IT (IT Management Stream)",
@@ -117,77 +129,88 @@
         "DB Design & Implementation",
         "Strategic Planning/Implementation 3",
         "Financial Accounting Reporting"
-      ]
+      ],
+      "sourcelink": "https://www.unisa.ac.za/sites/corporate/default/Apply-for-admission/Undergraduate-qualifications/Qualifications/Bachelor-of-Science-in-Computing"
     },
     {
       "course": "Postgraduate Honours – CAR (Mgmt: Automotive Retail) NQF8",
       "institute": "Rhodes Business School",
       "years": "2011 – 2012",
       "qualificationType": "honors",
-      "subjects": [ "Personal Mastery", "Finance", "Macroeconomics", "Leadership & Management", "Business Planning", "Strategy & Change", "Action Learning" ]
+      "subjects": [ "Personal Mastery", "Finance", "Macroeconomics", "Leadership & Management", "Business Planning", "Strategy & Change", "Action Learning" ],
+      "sourcelink": "https://www.ru.ac.za/businessschool/"
     },
     {
       "course": "HPP3 – High Performance People (Conflict Resolution, Performance Management)",
       "institute": "Barloworld Training, Isando",
       "years": "2010",
       "qualificationType": "diploma",
-      "subjects": []
+      "subjects": [],
+      "sourcelink": ""
     },
     {
       "course": "PRINCE2 Practitioner/Foundation",
       "institute": "CTU (Pretoria)",
       "years": "2009",
       "qualificationType": "certification",
-      "subjects": [ "PRINCE2 Methodology" ]
+      "subjects": [ "PRINCE2 Methodology" ],
+      "sourcelink": "https://www.peoplecert.org/browse-certifications/project-programme-management/PRINCE2-7-34187"
     },
     {
       "course": "Microsoft BizTalk – Certification & Deep Dive",
       "institute": "QuickLearn / Torque-IT (Bryanston)",
       "years": "2008",
       "qualificationType": "certification",
-      "subjects": [ "BizTalk Server" ]
+      "subjects": [ "BizTalk Server" ],
+      "sourcelink": "https://www.quicklearn.com/"
     },
     {
       "course": "Macromedia Flash 8 – Advanced ActionScript & Core",
       "institute": "IntoWeb (Woodmead)",
       "years": "2007",
       "qualificationType": "certification",
-      "subjects": [ "ActionScript", "Flash" ]
+      "subjects": [ "ActionScript", "Flash" ],
+      "sourcelink": ""
     },
     {
       "course": "LAMP (Linux, Apache, MySQL, PHP)",
       "institute": "Linux Solutions (Pretoria)",
       "years": "2006",
       "qualificationType": "certification",
-      "subjects": [ "Linux", "Apache", "MySQL", "PHP" ]
+      "subjects": [ "Linux", "Apache", "MySQL", "PHP" ],
+      "sourcelink": ""
     },
     {
       "course": "MCDBA / MCSD .NET / MCAD",
       "institute": "Torque-IT (Rivonia)",
       "years": "2004",
       "qualificationType": "certification",
-      "subjects": [ ".NET", "Databases", "Development" ]
+      "subjects": [ ".NET", "Databases", "Development" ],
+      "sourcelink": "https://www.torque-it.com/"
     },
     {
       "course": "Web Design (Certificate)",
       "institute": "Bluedot Training Academy (Pretoria)",
       "years": "2001",
       "qualificationType": "certification",
-      "subjects": [ "Web Design" ]
+      "subjects": [ "Web Design" ],
+      "sourcelink": ""
     },
     {
       "course": "MCSE / MCP",
       "institute": "Training Connection (Rivonia)",
       "years": "2000",
       "qualificationType": "certification",
-      "subjects": [ "Microsoft Systems Engineering", "Microsoft Certified Professional" ]
+      "subjects": [ "Microsoft Systems Engineering", "Microsoft Certified Professional" ],
+      "sourcelink": ""
     },
     {
       "course": "Matric (Grade 12)",
       "institute": "Allen Glen High (Roodepoort)",
       "years": "1997",
       "qualificationType": "certification",
-      "subjects": []
+      "subjects": [],
+      "sourcelink": "https://www.allenglen.co.za/"
     }
   ],
   "experience": [
@@ -203,7 +226,8 @@
         "Document Origination endpoints and processes",
         "Lead Azure AI POCs (Vision API, Video Indexer; planning Document Intelligence)"
       ],
-      "technologies": [ "C#", ".NET", "REST", "Azure Cognitive Services", "DevOps", "SDLC" ]
+      "technologies": [ "C#", ".NET", "REST", "Azure Cognitive Services", "DevOps", "SDLC" ],
+      "sourcelink": "https://cloudbadger.com/"
     },
     {
       "company": "Wonderlabz",
@@ -216,7 +240,8 @@
         "Align IT strategy to business goals",
         "Knowledge sharing; Agile ceremonies (Scrum/Jira)"
       ],
-      "technologies": [ "C#", ".NET", "Node", "React", "Agile/Scrum", "Jira" ]
+      "technologies": [ "C#", ".NET", "Node", "React", "Agile/Scrum", "Jira" ],
+      "sourcelink": "https://www.wonderlabz.com/"
     },
     {
       "company": "World Sports Betting",
@@ -229,7 +254,8 @@
         "HR: hiring, career planning, performance",
         "Roadmap for ERP insourcing & team growth"
       ],
-      "technologies": [ "C#", ".NET", "SQL Server", "ERP" ]
+      "technologies": [ "C#", ".NET", "SQL Server", "ERP" ],
+      "sourcelink": "https://www.worldsportsbetting.co.za/"
     },
     {
       "company": "Cognadev",
@@ -242,7 +268,8 @@
         "Vendor management; solution selection",
         "Departmental reporting to executives"
       ],
-      "technologies": [ "MS SQL", "C#", "MySQL", "PostgreSQL", "PHP", "Java", "Azure" ]
+      "technologies": [ "MS SQL", "C#", "MySQL", "PostgreSQL", "PHP", "Java", "Azure" ],
+      "sourcelink": "https://www.cognadev.com/"
     },
     {
       "company": "DStv – Digital Media / SuperSport / Self-Service / Connect (SSO)",
@@ -255,7 +282,8 @@
         "ETL/ingest pipelines for sports data",
         "Partner REST APIs; after-hours standby support"
       ],
-      "technologies": [ "C#", "ASP.NET MVC", "Angular", "JavaScript", "SQL", "MongoDB", "REST", "Jenkins", "Git" ]
+      "technologies": [ "C#", "ASP.NET MVC", "Angular", "JavaScript", "SQL", "MongoDB", "REST", "Jenkins", "Git" ],
+      "sourcelink": "https://www.dstv.com/"
     },
     {
       "company": "Magna BC (Pty) Ltd",
@@ -268,7 +296,8 @@
         "Choose technologies & patterns",
         "QA/testing, planning, reporting"
       ],
-      "technologies": [ "C#", ".NET", "SQL", "Design Patterns" ]
+      "technologies": [ "C#", ".NET", "SQL", "Design Patterns" ],
+      "sourcelink": ""
     },
     {
       "company": "Regenesys Business School",
@@ -281,7 +310,8 @@
         "Budget/procurement; governance & reporting",
         "Team leadership across 3 functional areas"
       ],
-      "technologies": [ "Linux", "Windows Server", "MS SQL", "C#", "MySQL", "PostgreSQL", "PHP", "Java" ]
+      "technologies": [ "Linux", "Windows Server", "MS SQL", "C#", "MySQL", "PostgreSQL", "PHP", "Java" ],
+      "sourcelink": "https://www.regenesys.net/"
     },
     {
       "company": "Barloworld Motor Retail",
@@ -290,7 +320,8 @@
       "to": "2012-06",
       "description": "Researched new tech/products; feasibility, stakeholder engagement, and vendor interactions.",
       "duties": [ "R&D on solutions", "Stakeholder & vendor engagements" ],
-      "technologies": []
+      "technologies": [],
+      "sourcelink": "https://www.barloworld.com/"
     },
     {
       "company": "Barloworld Motor Retail",
@@ -303,7 +334,8 @@
         "Risk, DRP, ROI, feasibility studies",
         "Testing methodologies (A/B, UAT) & UX"
       ],
-      "technologies": [ "C#", ".NET", "SQL", "Web", "Infra" ]
+      "technologies": [ "C#", ".NET", "SQL", "Web", "Infra" ],
+      "sourcelink": "https://www.barloworld.com/"
     },
     {
       "company": "Johncom Media Investments Ltd",
@@ -312,7 +344,8 @@
       "to": "2007-08",
       "description": "Dev, maintenance, and uptime of multiple sites; performance/stress testing; migrations; access control; OS install & desktop support.",
       "duties": [ "24/7 support & ops", "Performance monitoring", "Migrations & access control" ],
-      "technologies": [ "Linux", "Windows", "Web Stack" ]
+      "technologies": [ "Linux", "Windows", "Web Stack" ],
+      "sourcelink": ""
     },
     {
       "company": "Beyond Outsourcing",
@@ -321,7 +354,8 @@
       "to": "2006-03",
       "description": "Assisted on web issues; repair and maintenance of basic systems.",
       "duties": [],
-      "technologies": [ "Web" ]
+      "technologies": [ "Web" ],
+      "sourcelink": ""
     },
     {
       "company": "RTT Logistics",
@@ -330,7 +364,8 @@
       "to": "2006-01",
       "description": "Maintained 5 web presences, portals, mobile rugged device project (GPRS/POD), data warehouse & reporting, CRM, HR systems.",
       "duties": [ "Build/maintain portals & apps", "Mobile solutions (GPRS/POD)", "DW & reporting" ],
-      "technologies": [ "ASP/.NET", "SQL Server", "Web", "Mobile/GPRS" ]
+      "technologies": [ "ASP/.NET", "SQL Server", "Web", "Mobile/GPRS" ],
+      "sourcelink": "https://www.rtt.co.za/"
     },
     {
       "company": "Standard Bank",
@@ -339,7 +374,8 @@
       "to": "2002-08",
       "description": "Head developer for new Intranet launch across business units; delivered to 10k+ users.",
       "duties": [ "Coordination across BUs", "Launch readiness" ],
-      "technologies": [ "Web", "Intranet" ]
+      "technologies": [ "Web", "Intranet" ],
+      "sourcelink": "https://www.standardbank.co.za/"
     },
     {
       "company": "Standard Bank",
@@ -348,7 +384,8 @@
       "to": "2002-05",
       "description": "Led 2 junior devs; head dev on new internet project 'Wolfgang'; site upkeep (code & graphics).",
       "duties": [ "Team supervision", "Feature delivery", "Site maintenance" ],
-      "technologies": [ "ASP", "HTML/CSS/JS" ]
+      "technologies": [ "ASP", "HTML/CSS/JS" ],
+      "sourcelink": "https://www.standardbank.co.za/"
     },
     {
       "company": "Acer South Africa",
@@ -357,7 +394,8 @@
       "to": "1999-10",
       "description": "Hardware/software support, training, UAT.",
       "duties": [],
-      "technologies": [ "Windows", "Hardware" ]
+      "technologies": [ "Windows", "Hardware" ],
+      "sourcelink": "https://www.acer.com/za-en"
     },
     {
       "company": "Upgrade Connection",
@@ -366,7 +404,8 @@
       "to": "1999-07",
       "description": "PC repairs, troubleshooting, customer interaction; promoted twice to workshop supervisor.",
       "duties": [],
-      "technologies": [ "PC Hardware", "Windows" ]
+      "technologies": [ "PC Hardware", "Windows" ],
+      "sourcelink": ""
     }
   ]
 }

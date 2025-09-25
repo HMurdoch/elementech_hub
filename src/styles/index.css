@@ -109,42 +109,42 @@ html, body, #root {
     transition: all 0.3s ease;
 }
 
-/* Hover effect */
-.glow-item:hover {
-    box-shadow: 0 0 18px var(--color-border-glow);
-    transform: translateY(-2px);
-}
+    /* Hover effect */
+    .glow-item:hover {
+        box-shadow: 0 0 18px var(--color-border-glow);
+        transform: translateY(-2px);
+    }
 
-/* Heading with dot */
-.glow-item h3,
-.glow-item h4 {
-    display: flex;
-    align-items: center;
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-}
+    /* Heading with dot */
+    .glow-item h3,
+    .glow-item h4 {
+        display: flex;
+        align-items: center;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+    }
 
-.glow-item h3::before,
-.glow-item h4::before {
-    content: "●";
-    font-size: 0.9rem;
-    margin-right: 0.5rem;
-    color: var(--color-dot);
-}
+        .glow-item h3::before,
+        .glow-item h4::before {
+            content: "●";
+            font-size: 0.9rem;
+            margin-right: 0.5rem;
+            color: var(--color-dot);
+        }
 
 
 /* Red/Black Theme */
 .theme-red {
-  --color-surface: #141414;
-  --color-border: #ff1a1a;
-  --color-border-glow: rgba(255, 26, 26, 0.6);
+    --color-surface: #141414;
+    --color-border: #ff1a1a;
+    --color-border-glow: rgba(255, 26, 26, 0.6);
 }
 
 /* Blue/White Theme */
 .theme-blue {
-  --color-surface: #ffffff;
-  --color-border: #0077cc;
-  --color-border-glow: rgba(0, 119, 204, 0.4);
+    --color-surface: #ffffff;
+    --color-border: #0077cc;
+    --color-border-glow: rgba(0, 119, 204, 0.4);
 }
 
 /* =========================================================
@@ -277,10 +277,10 @@ html, body, #root {
     transition: all 0.2s ease;
 }
 
-.example-btn:hover {
-    background: var(--glow-border, #0af);
-    color: #000;
-}
+    .example-btn:hover {
+        background: var(--glow-border, #0af);
+        color: #000;
+    }
 
 /* === Technologies: full-width two-column example grid === */
 .tech-examples {
@@ -360,32 +360,32 @@ html, body, #root {
     position: relative;
 }
 
-.has-tip:hover::after {
-    content: attr(data-tip);
-    position: absolute;
-    bottom: calc(100% + 8px);
-    left: 50%;
-    transform: translateX(-50%);
-    background: color-mix(in srgb, var(--panel-surface) 80%, black);
-    color: var(--text-100, #e5e7eb);
-    border: 1px solid var(--panel-border);
-    padding: 6px 8px;
-    border-radius: 8px;
-    white-space: nowrap;
-    font-size: 11px;
-    box-shadow: 0 10px 24px rgba(0,0,0,.35);
-    pointer-events: none;
-}
+    .has-tip:hover::after {
+        content: attr(data-tip);
+        position: absolute;
+        bottom: calc(100% + 8px);
+        left: 50%;
+        transform: translateX(-50%);
+        background: color-mix(in srgb, var(--panel-surface) 80%, black);
+        color: var(--text-100, #e5e7eb);
+        border: 1px solid var(--panel-border);
+        padding: 6px 8px;
+        border-radius: 8px;
+        white-space: nowrap;
+        font-size: 11px;
+        box-shadow: 0 10px 24px rgba(0,0,0,.35);
+        pointer-events: none;
+    }
 
-.has-tip:hover::before {
-    content: "";
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    border: 6px solid transparent;
-    border-top-color: color-mix(in srgb, var(--panel-surface) 80%, black);
-}
+    .has-tip:hover::before {
+        content: "";
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        border: 6px solid transparent;
+        border-top-color: color-mix(in srgb, var(--panel-surface) 80%, black);
+    }
 
 /* ---------- Arrow at right (theme-aware) ---------- */
 .arrow-chip {
@@ -483,8 +483,8 @@ html, body, #root {
 
 /* ---------- Landing theming (shared) ---------- */
 /*.landing-wrap {*/
-    /* Make the top area fade to the page background using theme vars */
-    /*background: radial-gradient( 1200px 420px at 50% -80px, var(--landing-top) 0%, transparent 65% );
+/* Make the top area fade to the page background using theme vars */
+/*background: radial-gradient( 1200px 420px at 50% -80px, var(--landing-top) 0%, transparent 65% );
 }
 
 .landing-hero {
@@ -551,8 +551,8 @@ html, body, #root {
 /*:root[data-theme="blue"],
 body[data-theme="blue"] {
     --landing-accent-1: #5ad3ff;*/ /* was "red" part; now blue as requested */
-    /*--landing-accent-2: #5ad3ff;*/ /* keep the right side blue as before */
-    /*--landing-top: rgba(26, 101, 129, 0.6);
+/*--landing-accent-2: #5ad3ff;*/ /* keep the right side blue as before */
+/*--landing-top: rgba(26, 101, 129, 0.6);
 }*/
 
 /* RED & BLACK: both headline accents are RED, top fade is warm red */
@@ -704,9 +704,9 @@ body[data-theme="red"] {
     transition: border-color .2s ease, box-shadow .2s ease, background .2s ease, color .2s ease;
 }
 
-.cms-tab:hover {
-    border-color: var(--accent);
-}
+    .cms-tab:hover {
+        border-color: var(--accent);
+    }
 
 .cms-tab--active {
     border-color: var(--accent-600);
@@ -747,10 +747,10 @@ body[data-theme="red"] {
     box-shadow: 0 0 10px color-mix(in srgb, var(--panel-shadow) 80%, transparent);
 }
 
-.cms-btn:hover {
-    border-color: var(--accent);
-    box-shadow: 0 0 14px var(--panel-shadow);
-}
+    .cms-btn:hover {
+        border-color: var(--accent);
+        box-shadow: 0 0 14px var(--panel-shadow);
+    }
 
 /* ---- CV: Accent checkboxes ---- */
 .cv-toolbar input[type="checkbox"] {
@@ -769,11 +769,11 @@ body[data-theme="red"] {
     transition: all .18s ease;
 }
 
-.btn-accent:hover {
-    background: color-mix(in srgb, var(--accent) 18%, transparent);
-    border-color: color-mix(in srgb, var(--accent) 70%, transparent);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent);
-}
+    .btn-accent:hover {
+        background: color-mix(in srgb, var(--accent) 18%, transparent);
+        border-color: color-mix(in srgb, var(--accent) 70%, transparent);
+        box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent);
+    }
 
 /* Full-width rows */
 .cv-item.glow-item {
@@ -827,10 +827,10 @@ body[data-theme="red"] {
     cursor: pointer;
 }
 
-.cmscv-download-btn:hover {
-    background: var(--accent);
-    color: #fff;
-}
+    .cmscv-download-btn:hover {
+        background: var(--accent);
+        color: #fff;
+    }
 
 /* Education + Work items full width */
 .cv-entry {
@@ -845,27 +845,27 @@ body[data-theme="red"] {
     width: 100%;
 }
 
-/* Left side: title + institute */
-.cv-entry .cv-title {
-    font-weight: 600;
-    color: var(--text);
-}
+    /* Left side: title + institute */
+    .cv-entry .cv-title {
+        font-weight: 600;
+        color: var(--text);
+    }
 
-/* Right side: date + qualification type */
-.cv-entry .cv-dates {
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: var(--accent);
-    text-align: right;
-    min-width: 180px; /* keeps alignment consistent */
-}
+    /* Right side: date + qualification type */
+    .cv-entry .cv-dates {
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: var(--accent);
+        text-align: right;
+        min-width: 180px; /* keeps alignment consistent */
+    }
 
-/* Work experience descriptions with dates aligned right */
-.cv-entry.work .cv-dates {
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--accent);
-}
+    /* Work experience descriptions with dates aligned right */
+    .cv-entry.work .cv-dates {
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--accent);
+    }
 
 /* ===== CV (public) ===== */
 /* Header line inside each item: title left, dates right */
@@ -909,7 +909,7 @@ body[data-theme="red"] {
 }
 
 .glow-item-full-width {
-  width: 100%;
+    width: 100%;
 }
 
 .cv-date-badge {
@@ -920,17 +920,17 @@ body[data-theme="red"] {
     font-weight: 600;
 }
 
-.cv-date-badge .cv-year {
-    color: var(--text-muted);
-    font-size: 0.9rem;
-}
+    .cv-date-badge .cv-year {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+    }
 
-.cv-date-badge .cv-type {
-    padding: 2px 8px;
-    border-radius: 8px;
-    font-size: 0.85rem;
-    text-transform: uppercase;
-}
+    .cv-date-badge .cv-type {
+        padding: 2px 8px;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+    }
 
 /* Theme colors for certification type */
 [data-theme="blue"] .cv-date-badge .cv-type {
@@ -954,3 +954,170 @@ body[data-theme="red"] {
     font-weight: bold;
     margin-left: -0.6rem;
 }
+
+/* clickable rows */
+.cv-clickable {
+    cursor: pointer;
+}
+
+/* overlay container */
+.cv-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 80;
+    display: grid;
+    place-items: center;
+}
+
+.cv-overlay-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,.55);
+    backdrop-filter: blur(2px);
+}
+
+.cv-overlay-card {
+    position: relative;
+    width: min(1100px, 96vw);
+    max-height: 92vh;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: 12px;
+    padding: 14px;
+    overflow: hidden;
+}
+
+/* header that mimics CV item layout */
+.cv-overlay-head {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: 12px;
+    align-items: center;
+}
+
+.cv-overlay-titles .cv-title-line {
+    font-size: 1rem;
+    line-height: 1.35;
+}
+
+.cv-sub {
+    font-size: .9rem;
+}
+
+.cv-badges {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.cv-year {
+    padding: 4px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--panel-border);
+    background: var(--panel-surface);
+    font-size: .8rem;
+}
+
+.cv-type {
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: .8rem;
+    border: 1px solid var(--panel-border);
+    background: var(--panel-surface);
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: .02em;
+}
+
+    .cv-type.blue {
+        background: rgba(33,150,243,.20);
+        border-color: rgba(33,150,243,.35);
+        color: rgb(167,208,255);
+    }
+
+    .cv-type.red {
+        background: rgba(239,68,68,.18);
+        border-color: rgba(239,68,68,.35);
+        color: rgb(255,178,178);
+    }
+
+.cv-overlay-close {
+    justify-self: end;
+}
+
+/* ProjectWorkspace-like browser */
+.browser-frame {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+.browser-chrome {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--panel-border);
+    background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+}
+
+    .browser-chrome .dots {
+        display: inline-flex;
+        gap: 6px;
+    }
+
+    .browser-chrome .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+        background: #666;
+        opacity: .8;
+    }
+
+        .browser-chrome .dot.red {
+            background: #ff5f56;
+        }
+
+        .browser-chrome .dot.yellow {
+            background: #ffbd2e;
+        }
+
+        .browser-chrome .dot.green {
+            background: #27c93f;
+        }
+
+    .browser-chrome .url {
+        font-size: .85rem;
+        opacity: .85;
+        padding: 6px 10px;
+        border-radius: 8px;
+        background: rgba(255,255,255,.04);
+        border: 1px solid var(--panel-border);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .browser-chrome .actions {
+        display: inline-flex;
+        gap: 8px;
+    }
+
+.btn.sm {
+    padding: 4px 8px;
+    font-size: .8rem;
+}
+
+.browser-view {
+    min-height: 60vh;
+    background: #000;
+}
+
+    .browser-view iframe {
+        width: 100%;
+        height: 100%;
+        border: 0;
+        background: #0b0b0c;
+    }
