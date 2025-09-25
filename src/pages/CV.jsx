@@ -153,6 +153,8 @@ export default function CV() {
                 </GlowPanel>
             </motion.div>
 
+            {/*{console.log("X: " + details)}*/}
+
             {/* Position */}
             <motion.div
                 initial={{ opacity: 0, y: 8 }}

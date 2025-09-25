@@ -7,10 +7,12 @@ export default function CMSCVPanel() {
     const [savedAt, setSavedAt] = useState(null);
 
     useEffect(() => {
-        loadCV().then(data => {
-            setTxt(JSON.stringify(data, null, 2));
-            setErr("");
-        }).catch(e => setErr(String(e)));
+        loadCV()
+            .then((data) => {
+                setTxt(JSON.stringify(data, null, 2));
+                setErr("");
+            })
+            .catch((e) => setErr(String(e)));
     }, []);
 
     function onSave() {
@@ -19,11 +21,12 @@ export default function CMSCVPanel() {
             setOverride("cv", parsed);
             setSavedAt(new Date().toLocaleString());
             setErr("");
-            alert("CV saved (override in localStorage). Refresh CV page to see changes.");
+            alert("CV saved (override in localStorage). Refresh the CV page to see changes.");
         } catch (e) {
             setErr("Invalid JSON: " + e.message);
         }
     }
+
     function onReset() {
         clearOverride("cv");
         setSavedAt(null);
@@ -31,38 +34,92 @@ export default function CMSCVPanel() {
     }
 
     return (
-        <div className="rounded-2xl border border-red-900/40 bg-zinc-900/40 p-3">
-            <div className="mb-2 flex items-center justify-between">
-                <h3 className="text-sm font-semibold tracking-wide text-red-300">CV Editor (JSON)</h3>
-                {savedAt && <div className="text-xs text-zinc-400">Last saved: {savedAt}</div>}
+        <div
+            className="glow-panel rounded-2xl p-3"
+            style={{
+                background: "var(--panel-surface)",
+                border: "1px solid var(--panel-border)",
+            }}
+        >
+            {/* Header */}
+            <div className="mb-3 flex items-center justify-between">
+                <h3
+                    className="text-sm font-semibold tracking-wide"
+                    style={{ color: "var(--text-primary)" }}
+                >
+                    <span
+                        style={{
+                            display: "inline-block",
+                            width: 8,
+                            height: 8,
+                            borderRadius: 999,
+                            background: "var(--accent)",
+                            boxShadow: "0 0 12px var(--accent)",
+                            marginRight: 8,
+                            verticalAlign: "middle",
+                        }}
+                    />
+                    CV Editor (JSON)
+                </h3>
+                {savedAt && (
+                    <div className="text-xs" style={{ color: "var(--text-muted)" }}>
+                        Last saved: {savedAt}
+                    </div>
+                )}
             </div>
 
+            {/* Editor */}
             <textarea
                 value={txt}
-                onChange={e => setTxt(e.target.value)}
+                onChange={(e) => setTxt(e.target.value)}
                 spellCheck={false}
-                className="h-[420px] w-full resize-y rounded-lg border border-zinc-800 bg-black/60 p-3 font-mono text-sm text-zinc-200 outline-none focus:border-red-700"
+                className="w-full rounded-lg font-mono text-sm outline-none resize-y"
+                style={{
+                    height: 420,
+                    padding: "12px",
+                    color: "var(--text-primary)",
+                    background: "color-mix(in srgb, var(--panel-surface) 85%, black)",
+                    border: "1px solid var(--panel-border)",
+                    boxShadow: "inset 0 0 0 9999px transparent",
+                }}
                 placeholder="{ /* paste your CV JSON here */ }"
             />
-            {err && <div className="mt-2 text-sm text-red-300">{err}</div>}
 
+            {err && (
+                <div className="mt-2 text-sm" style={{ color: "var(--accent)" }}>
+                    {err}
+                </div>
+            )}
+
+            {/* Actions */}
             <div className="mt-3 flex gap-2">
                 <button
                     onClick={onSave}
-                    className="rounded-lg border border-red-900/60 bg-red-900/30 px-3 py-2 text-sm text-red-100 hover:border-red-600 hover:bg-red-900/40"
+                    className="rounded-lg px-3 py-2 text-sm"
+                    style={{
+                        background: "color-mix(in srgb, var(--accent) 22%, transparent)",
+                        border: "1px solid color-mix(in srgb, var(--accent) 55%, transparent)",
+                        color: "var(--text-primary)",
+                    }}
                 >
                     Save CV
                 </button>
                 <button
                     onClick={onReset}
-                    className="rounded-lg border border-zinc-700 bg-zinc-800 px-3 py-2 text-sm text-zinc-200 hover:bg-zinc-700"
+                    className="rounded-lg px-3 py-2 text-sm"
+                    style={{
+                        background: "color-mix(in srgb, var(--panel-surface) 92%, black)",
+                        border: "1px solid var(--panel-border)",
+                        color: "var(--text-primary)",
+                    }}
                 >
                     Clear Override
                 </button>
             </div>
-            <p className="mt-2 text-xs text-zinc-400">
-                Tip: Overrides are stored client-side in <code>localStorage</code>. To persist to source control,
-                copy this JSON back into <code>public/data/cv.json</code>.
+
+            <p className="mt-2 text-xs" style={{ color: "var(--text-muted)" }}>
+                Tip: Overrides are stored client-side in <code>localStorage</code>. To persist to source
+                control, copy this JSON back into <code>public/data/cv.json</code>.
             </p>
         </div>
     );

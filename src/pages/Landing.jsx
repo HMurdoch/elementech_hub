@@ -64,7 +64,7 @@ export default function Landing() {
                 <img
                     key={imgSrc}                       // force remount when theme changes
                     src={imgSrc}
-                    alt="Developer at laptop with connected network background"
+                    alt="Elementech Hub Interactive Portfolio - Hugh Murdoch"
                     className="landing-image"
                     loading="eager"
                     decoding="sync"

@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import GlowPanel from "../components/GlowPanel";
-import GradientButton from "../components/GradientButton";
 import { setOverride, clearOverride } from "../data/loaders";
 import CMSCVPanel from "../components/cms/CMSCVPanel";
 
@@ -31,10 +30,8 @@ export default function CMS() {
             setStatus("Failed to load: " + e.message);
         }
     };
-    useEffect(() => {
-        load();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [active]);
+
+    useEffect(() => { load(); /* eslint-disable-next-line */ }, [active]);
 
     const validate = () => {
         try {
@@ -44,6 +41,7 @@ export default function CMS() {
             setStatus("Invalid JSON: " + e.message);
         }
     };
+
     const saveRuntime = () => {
         try {
             setOverride(active, JSON.parse(text));
@@ -52,10 +50,12 @@ export default function CMS() {
             setStatus("Invalid JSON: " + e.message);
         }
     };
+
     const clear = () => {
         clearOverride(active);
         setStatus("Cleared runtime override. Reload to use server file.");
     };
+
     const download = () => {
         const a = document.createElement("a");
         const blob = new Blob([text], { type: "application/json" });
@@ -64,6 +64,7 @@ export default function CMS() {
         a.click();
         URL.revokeObjectURL(a.href);
     };
+
     const onUpload = (file) => {
         const fr = new FileReader();
         fr.onload = () => setText(fr.result);
@@ -78,66 +79,42 @@ export default function CMS() {
             transition={{ duration: 0.45, ease: "easeOut" }}
             className="space-y-4"
         >
-            {/* Primary JSON editor (unchanged) */}
             <GlowPanel title="CMS Editor">
-                <div className="mb-3 flex flex-wrap gap-2">
+                {/* Tabs */}
+                <div className="cms-tabs mb-3">
                     {FILES.map((f) => (
                         <button
                             key={f.key}
                             onClick={() => setActive(f.key)}
-                            className={`px-3 py-1 rounded border ${active === f.key
-                                    ? "border-red-600 bg-red-900/30 text-red-200"
-                                    : "border-zinc-700 bg-zinc-900 text-zinc-200 hover:border-red-700"
-                                }`}
+                            className={`cms-tab ${active === f.key ? "cms-tab--active" : ""}`}
                         >
                             {f.title}
                         </button>
                     ))}
                 </div>
 
-                <div className="mb-2 text-sm text-zinc-400">{status}</div>
+                <div className="cms-status mb-2">{status}</div>
 
                 <div className="grid gap-3 md:grid-cols-3">
+                    {/* Left: JSON Editor */}
                     <div className="md:col-span-2">
                         <textarea
                             value={text}
                             onChange={(e) => setText(e.target.value)}
                             rows={24}
-                            className="w-full rounded-lg border border-zinc-700 bg-zinc-900 p-3 font-mono text-sm"
+                            className="cms-textarea"
                         />
                     </div>
+
+                    {/* Right: Actions */}
                     <div className="space-y-2">
-                        <button
-                            onClick={load}
-                            className="w-full rounded border border-zinc-700 bg-zinc-800 px-3 py-2 hover:border-red-700"
-                        >
-                            Reload from server
-                        </button>
-                        <button
-                            onClick={validate}
-                            className="w-full rounded border border-zinc-700 bg-zinc-800 px-3 py-2 hover:border-red-700"
-                        >
-                            Validate JSON
-                        </button>
-                        <button
-                            onClick={saveRuntime}
-                            className="w-full rounded border border-zinc-700 bg-zinc-800 px-3 py-2 hover:border-red-700"
-                        >
-                            Save Runtime Override
-                        </button>
-                        <button
-                            onClick={clear}
-                            className="w-full rounded border border-zinc-700 bg-zinc-800 px-3 py-2 hover:border-red-700"
-                        >
-                            Clear Override
-                        </button>
-                        <button
-                            onClick={download}
-                            className="w-full rounded border border-zinc-700 bg-zinc-800 px-3 py-2 hover:border-red-700"
-                        >
-                            Download JSON
-                        </button>
-                        <label className="w-full inline-flex items-center justify-center gap-2 rounded border border-zinc-700 bg-zinc-800 px-3 py-2 hover:border-red-700 cursor-pointer">
+                        <button onClick={load} className="cms-btn">Reload from server</button>
+                        <button onClick={validate} className="cms-btn">Validate JSON</button>
+                        <button onClick={saveRuntime} className="cms-btn">Save Runtime Override</button>
+                        <button onClick={clear} className="cms-btn">Clear Override</button>
+                        <button onClick={download} className="cms-btn">Download JSON</button>
+
+                        <label className="cms-btn cursor-pointer">
                             Upload JSON
                             <input
                                 type="file"
@@ -146,7 +123,8 @@ export default function CMS() {
                                 onChange={(e) => e.target.files?.[0] && onUpload(e.target.files[0])}
                             />
                         </label>
-                        <p className="pt-2 text-xs text-zinc-400">
+
+                        <p className="text-xs cms-status">
                             Saving to server files requires a backend. Runtime overrides are stored locally and
                             applied immediately.
                         </p>
@@ -154,7 +132,6 @@ export default function CMS() {
                 </div>
             </GlowPanel>
 
-            {/* CV live editor appears only when the CV tab is selected */}
             {active === "cv" && (
                 <GlowPanel title="Curriculum Vitae — Live Editor">
                     <CMSCVPanel />
