@@ -1155,3 +1155,337 @@ body[data-theme="red"] {
 .cv-link-btn:hover {
     box-shadow: 0 0 0 1px var(--accent) inset;
 }
+
+/* --- CV hero line (Details) --- */
+.cv-hero {
+    position: relative;
+    padding: 10px 12px;
+    border: 1px solid var(--panel-border);
+    background: linear-gradient( 180deg, color-mix(in srgb, var(--panel-surface) 94%, transparent), var(--panel-surface) );
+    border-radius: 10px;
+    box-shadow: 0 0 24px rgba(0,0,0,0.25) inset, 0 0 18px color-mix(in srgb, var(--accent) 20%, transparent);
+}
+
+.cv-hero-row {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    line-height: 1.6;
+    font-weight: 500;
+    letter-spacing: .15px;
+}
+
+.cv-hero-char {
+    display: inline-block;
+    color: var(--text-strong, #e6edf3);
+    text-shadow: 0 0 6px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+/* --- Positions block --- */
+.cv-positions {
+    padding: 10px 12px;
+    border: 1px solid var(--panel-border);
+    background: linear-gradient( 180deg, color-mix(in srgb, var(--panel-surface) 96%, transparent), var(--panel-surface) );
+    border-radius: 10px;
+}
+
+.cv-positions ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.cv-pos-item {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    padding: 6px 0;
+    border-bottom: 1px dashed color-mix(in srgb, var(--panel-border) 70%, transparent);
+}
+
+.cv-pos-item:last-child {
+    border-bottom: 0;
+}
+
+.cv-pos-bullet {
+    color: var(--accent);
+    font-weight: 700;
+    text-shadow: 0 0 6px color-mix(in srgb, var(--accent) 30%, transparent);
+}
+
+/* Optional: unified small title & line container */
+.section-title {
+    margin-bottom: .5rem;
+    font-weight: 600;
+    opacity: .9;
+}
+
+.panel-line {
+    /* keeps layout consistent with the rest of the CV panels */
+}
+
+/* ==== CV headings + glow ==== */
+.cv-heading {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    padding: .45rem .9rem;
+    border-radius: 10px;
+    font-weight: 700;
+    letter-spacing: .4px;
+    text-transform: none; /* stays like your yellow header */
+    font-size: clamp(1.05rem, 1.2rem + .3vw, 1.45rem);
+    color: var(--accent-color);
+    /* soft inner panel + outline to feel like the yellow heading bar */
+    background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.00));
+    border: 1px solid var(--panel-border);
+    box-shadow: 0 0 0 1px rgba(255,255,255,.03) inset, 0 12px 24px rgba(0,0,0,.35);
+    animation: cvHeadingGlow 8s ease-in-out infinite;
+}
+
+.cv-heading-dot {
+    width: .42rem;
+    height: .42rem;
+    border-radius: 999px;
+    background: var(--accent-color);
+    box-shadow: 0 0 10px var(--accent-color);
+}
+
+/* pulsing glow */
+@keyframes cvHeadingGlow {
+    0%, 100% {
+        text-shadow: 0 0 0 rgba(0,0,0,0);
+        box-shadow: 0 0 0 1px rgba(255,255,255,.03) inset, 0 12px 24px rgba(0,0,0,.35), 0 0 0 rgba(0,0,0,0);
+    }
+
+    50% {
+        text-shadow: 0 0 12px color-mix(in oklab, var(--accent-color) 60%, transparent);
+        box-shadow: 0 0 0 1px rgba(255,255,255,.03) inset, 0 12px 24px rgba(0,0,0,.35), 0 0 28px color-mix(in oklab, var(--accent-color) 40%, transparent);
+    }
+}
+
+/* ==== Details list ==== */
+.cv-details-list {
+    list-style: none;
+    margin: .6rem 0 0;
+    padding: 0;
+}
+
+.cv-detail-row {
+    display: grid;
+    grid-template-columns: 1.6rem max-content 1fr;
+    align-items: center;
+    gap: .65rem;
+    padding: .45rem .75rem;
+    border-radius: .6rem;
+    background: var(--panel-surface);
+    border: 1px solid var(--panel-border);
+    box-shadow: 0 2px 10px rgba(0,0,0,.25);
+    font-size: clamp(.95rem, 1rem + .15vw, 1.15rem);
+    color: var(--text-1, #eaeef6);
+    opacity: 0;
+    transform: translateY(-14px);
+    animation: cvDetailFall .8s ease forwards;
+}
+
+/* stagger: add via inline style animation-delay */
+@keyframes cvDetailFall {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.cv-detail-ico {
+    display: grid;
+    place-items: center;
+    line-height: 1;
+    font-size: 1.05rem;
+    filter: drop-shadow(0 0 6px color-mix(in oklab, var(--accent-color) 35%, transparent));
+}
+
+.cv-detail-label {
+    color: color-mix(in oklab, var(--accent-color) 85%, #b2c1d6);
+    font-weight: 700;
+}
+
+.cv-detail-val {
+    word-break: break-word;
+    opacity: .92;
+}
+
+/* a thin separator so the list breathes */
+.cv-details-list .cv-detail-row + .cv-detail-row {
+    margin-top: .5rem;
+}
+
+/* ==== Section titles: one style for all (Details, Position, Education, Experience) ==== */
+.cv-title {
+    display: inline-flex;
+    align-items: center;
+    gap: .60rem;
+    font-weight: 800;
+    letter-spacing: .35px;
+    color: var(--accent-color);
+    font-size: clamp(1.1rem, 1.2rem + .35vw, 1.6rem); /* a little bigger */
+    animation: cvTitlePulse 8s ease-in-out infinite;
+}
+
+.cv-title-dot {
+    width: .46rem;
+    height: .46rem;
+    border-radius: 999px;
+    background: var(--accent-color);
+    box-shadow: 0 0 10px color-mix(in oklab, var(--accent-color) 65%, transparent);
+}
+
+/* When we need a bar to look like the green header bar */
+.cv-title-bar {
+    display: flex;
+    align-items: center;
+    gap: .60rem;
+    padding: .5rem .9rem;
+    border-radius: .7rem;
+    background: var(--panel-surface);
+    border: 1px solid var(--panel-border);
+    box-shadow: 0 8px 26px rgba(0,0,0,.35);
+}
+
+/* soft glow that fades in/out over 8s */
+@keyframes cvTitlePulse {
+    0%, 100% {
+        text-shadow: none;
+    }
+
+    50% {
+        text-shadow: 0 0 12px color-mix(in oklab, var(--accent-color) 55%, transparent);
+    }
+}
+
+/* ==== Details list (from the previous step) ==== */
+.cv-details-list {
+    list-style: none;
+    margin: .6rem 0 0;
+    padding: 0;
+}
+
+.cv-detail-row {
+    display: grid;
+    grid-template-columns: 1.6rem max-content 1fr;
+    align-items: center;
+    gap: .65rem;
+    padding: .45rem .75rem;
+    border-radius: .6rem;
+    background: var(--panel-surface);
+    border: 1px solid var(--panel-border);
+    box-shadow: 0 2px 10px rgba(0,0,0,.25);
+    font-size: clamp(.95rem, 1rem + .15vw, 1.15rem);
+    color: var(--text-1, #eaeef6);
+    opacity: 0;
+    transform: translateY(-14px);
+    animation: cvDetailFall .8s ease forwards;
+}
+
+@keyframes cvDetailFall {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.cv-detail-ico {
+    display: grid;
+    place-items: center;
+    line-height: 1;
+    font-size: 1.05rem;
+}
+
+.cv-detail-label {
+    color: color-mix(in oklab, var(--accent-color) 85%, #b2c1d6);
+    font-weight: 700;
+}
+
+.cv-detail-val {
+    word-break: break-word;
+    opacity: .92;
+}
+
+.cv-details-list .cv-detail-row + .cv-detail-row {
+    margin-top: .5rem;
+}
+
+/* ---------------------------
+   CV – Section Headings (pulsing)
+   --------------------------- */
+
+.cv-section-title {
+    /* visually match your blue/red chip-style headings,
+     but as a block that can sit above any panel content */
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-weight: 800;
+    letter-spacing: .3px;
+    /* slightly bigger than before */
+    font-size: clamp(8px, 1.9vw, 13px);
+    color: var(--text-strong);
+    background: linear-gradient( 180deg, color-mix(in oklab, var(--accent) 22%, transparent) 0%, transparent 100% );
+    border: 1px solid var(--panel-border);
+    box-shadow: 0 0 0 0 rgba(0,0,0,0), inset 0 0 0 0 rgba(0,0,0,0);
+    animation: cvPulseGlow 8s ease-in-out infinite;
+}
+
+@keyframes cvPulseGlow {
+    0%, 100% {
+        box-shadow: 0 0 0 rgba(0,0,0,0), 0 0 0 rgba(0,0,0,0), 0 0 10px 0 rgba(var(--accent-rgb, 14 165 233) / 0.0);
+    }
+
+    50% {
+        box-shadow: 0 0 20px 4px rgba(var(--accent-rgb, 14 165 233) / 0.20), inset 0 0 12px 2px rgba(var(--accent-rgb, 14 165 233) / 0.10);
+    }
+}
+
+/* Optional little dot to the left (purely visual) */
+.cv-section-title::before {
+    content: "";
+    width: .4rem;
+    height: .4rem;
+    border-radius: 999px;
+    background: var(--accent);
+    box-shadow: 0 0 8px 2px rgba(var(--accent-rgb, 14 165 233) / 0.5);
+}
+
+/* ---------------------------
+   CV – Keep entry rows NORMAL size
+   (prevents headings styling from inflating list items)
+   --------------------------- */
+
+/* The title line of each education/experience/tech row */
+.cv-entry,
+.cv-entry .cv-title,
+.cv-row,
+.cv-title {
+    font-size: clamp(13px, 1.2vw, 10px);
+    font-weight: 600;
+}
+
+/* Chips on the right (year/type) keep compact size */
+.cv-year,
+.cv-type {
+    font-size: 12px;
+}
+
+/* Details rows text (a touch larger than entries but smaller than headings) */
+.cv-details .cv-detail-label {
+    font-weight: 700;
+}
+
+.cv-details .cv-detail-value {
+    font-weight: 600;
+}
+
+.cv-details .cv-detail-row {
+    font-size: clamp(14px, 1.35vw, 16px);
+}

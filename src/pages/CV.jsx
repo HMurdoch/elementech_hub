@@ -1,6 +1,6 @@
-// src/pages/CV.jsx
+﻿// src/pages/CV.jsx
 import React, { useEffect, useMemo, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import GlowPanel from "../components/GlowPanel";
 import GlowItem from "../components/GlowItem";
 import { loadCV } from "../data/loaders";
@@ -30,6 +30,57 @@ function useTheme() {
 
     return theme;
 }
+
+// Extract neat values from your details line
+function parseDetailsLine(str = "") {
+    // Name = everything before first ":" or " - "
+    const nameMatch = str.match(/^\s*([^:-]+)/);
+    const name = (nameMatch && nameMatch[1] ? nameMatch[1].trim() : "").replace(/\s+$/, "");
+
+    const email = (str.match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i) || [])[0];
+    const dob = (str.match(/\b(19|20)\d{2}[-/](0\d|1[0-2])[-/](0\d|[12]\d|3[01])\b/) || [])[0];
+    const phone = (str.match(/(\+\d[\d\s()/-]{6,})/) || [])[0];
+    const nationality = (str.match(/\bSouth African\b/i) || [])[0];
+
+    const rows = [];
+    if (name) rows.push({ label: "Name", val: name, ico: "👤" });
+    if (nationality) rows.push({ label: "Nationality", val: nationality, ico: "🌍" });
+    if (dob) rows.push({ label: "DOB", val: dob, ico: "📅" });
+    if (phone) rows.push({ label: "Mobile", val: phone, ico: "📱" });
+    if (email) rows.push({ label: "Email", val: email, ico: "✉️" });
+    return rows;
+}
+
+// retrigger the fall-in every 8s
+function useEightSecondCycle() {
+    const [k, setK] = React.useState(0);
+    React.useEffect(() => {
+        const id = setInterval(() => setK((n) => n + 1), 8000);
+        return () => clearInterval(id);
+    }, []);
+    return k;
+}
+
+// A small section title that looks like your green headings (and glows)
+function SectionTitleBar({ children }) {
+    return (
+        <div className="cv-title-bar">
+            <span className="cv-title-dot" />
+            <span className="cv-title">{children}</span>
+        </div>
+    );
+}
+
+// A text-only title (for putting *inside* GlowPanel titles so all titles glow the same)
+function TitleText({ children }) {
+    return (
+        <span className="cv-title">
+            <span className="cv-title-dot" />
+            {children}
+        </span>
+    );
+}
+
 
 export default function CV() {
     const [cv, setCv] = useState(null);
@@ -119,6 +170,148 @@ export default function CV() {
         window.print();
     }
 
+    // --- MATRIX / CASCADE TEXT HELPERS ---------------------------------
+
+    function FallingText({ text, gap = 1.5, delayPerChar = 0.03 }) {
+        const chars = useMemo(() => (text ?? "").split(""), [text]);
+        const [runId, setRunId] = useState(0);
+
+        useEffect(() => {
+            const id = setInterval(() => setRunId((n) => n + 1), 14000);
+            return () => clearInterval(id);
+        }, []);
+
+        return (
+            <div className="cv-hero">
+                <AnimatePresence mode="sync">
+                    <motion.span
+                        key={runId} // force re-run animation
+                        className="cv-hero-row"
+                        initial="hidden"
+                        animate="show"
+                        exit="hidden"
+                        variants={{
+                            show: { transition: { staggerChildren: delayPerChar } },
+                        }}
+                    >
+                        {chars.map((ch, i) => (
+                            <motion.span
+                                key={`${runId}-${i}`}
+                                className="cv-hero-char"
+                                variants={{
+                                    hidden: { y: -28, opacity: 0, filter: "blur(3px)" },
+                                    show: {
+                                        y: 0,
+                                        opacity: 1,
+                                        filter: "blur(0px)",
+                                        transition: { type: "spring", damping: 20, stiffness: 260 },
+                                    },
+                                }}
+                                style={{ marginRight: ch === " " ? gap : undefined }}
+                            >
+                                {ch}
+                            </motion.span>
+                        ))}
+                    </motion.span>
+                </AnimatePresence>
+            </div>
+        );
+    }
+
+    // Simple parse for your details line
+    function parseDetailsLine(str = "") {
+        const email = (str.match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i) || [])[0];
+        const dob = (str.match(/\b(19|20)\d{2}[-/](0\d|1[0-2])[-/](0\d|[12]\d|3[01])\b/) || [])[0];
+        const phone = (str.match(/(\+\d[\d\s()/-]{6,})/) || [])[0];
+        const name = (str.split(" - ")[0] || "").trim();
+        const nationality = (str.match(/\bSouth African\b/i) || [])[0];
+
+        const rows = [];
+        if (name) rows.push({ label: "Name", val: name, ico: "👤" });
+        if (nationality) rows.push({ label: "Nationality", val: nationality, ico: "🌍" });
+        if (dob) rows.push({ label: "DOB", val: dob, ico: "📅" });
+        if (phone) rows.push({ label: "Mobile", val: phone, ico: "📱" });
+        if (email) rows.push({ label: "Email", val: email, ico: "✉️" });
+        return rows;
+    }
+
+    function SectionHeading({ children }) {
+        return (
+            <div className="cv-heading">
+                <span className="cv-heading-dot" />
+                <span>{children}</span>
+            </div>
+        );
+    }
+
+
+    // tiny pulser to retrigger the "fall" every 8s
+    function useEightSecondCycle() {
+        const [t, setT] = React.useState(0);
+        React.useEffect(() => {
+            const id = setInterval(() => setT((n) => n + 1), 8000);
+            return () => clearInterval(id);
+        }, []);
+        return t;
+    }
+
+
+    /**
+     * PositionsList
+     * Shows each target role on its own line with a cascading slide/fade.
+     * Retriggers every 8s.
+     */
+    function PositionsList({ items }) {
+        const cleaned = useMemo(() => {
+            if (!items) return [];
+            if (Array.isArray(items)) return items.filter(Boolean);
+            // your data is a slash-separated line — split on " / "
+            return String(items)
+                .split(" / ")
+                .map((s) => s.trim())
+                .filter(Boolean);
+        }, [items]);
+
+        const [runId, setRunId] = useState(0);
+        useEffect(() => {
+            const id = setInterval(() => setRunId((n) => n + 1), 8000);
+            return () => clearInterval(id);
+        }, []);
+
+        return (
+            <div className="cv-positions">
+                <motion.ul
+                    key={runId}
+                    initial="hidden"
+                    animate="show"
+                    variants={{
+                        show: { transition: { staggerChildren: 0.05 } },
+                    }}
+                >
+                    {cleaned.map((role, i) => (
+                        <motion.li
+                            key={`${runId}-${i}-${role}`}
+                            className="cv-pos-item"
+                            variants={{
+                                hidden: { y: -12, opacity: 0, filter: "blur(3px)" },
+                                show: {
+                                    y: 0,
+                                    opacity: 1,
+                                    filter: "blur(0px)",
+                                    transition: { type: "spring", damping: 22, stiffness: 280 },
+                                },
+                            }}
+                        >
+                            <span className="cv-pos-bullet" aria-hidden="true">▸</span>
+                            {role}
+                        </motion.li>
+                    ))}
+                </motion.ul>
+            </div>
+        );
+    }
+
+
     return (
         <div className="space-y-6 print:bg-white print:text-black">
             {/* Toolbar */}
@@ -130,7 +323,7 @@ export default function CV() {
                     <input
                         value={q}
                         onChange={(e) => setQ(e.target.value)}
-                        placeholder="Search Education & Experience�"
+                        placeholder="Search Education & Experience…"
                         className="min-w-[220px] flex-1 rounded-lg border bg-black/20 px-3 py-2 text-sm outline-none ring-0"
                         style={{ borderColor: "var(--panel-border)", color: "var(--text-primary)" }}
                     />
@@ -165,29 +358,51 @@ export default function CV() {
             {/* Details */}
             <motion.div initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }}
                 transition={{ duration: 0.45, ease: "easeOut" }}>
-                <GlowPanel title="Details">
-                    <div>{isLoading ? "Loading�" : details || "�"}</div>
-                </GlowPanel>
+                <GlowItem>
+                    <div className="cv-section-title">Details</div>
+                    <div className="cv-details glow-panel mt-3">
+                        {/* ===== Details ===== */}
+                        {/*<SectionTitleBar>Details</SectionTitleBar>*/}
+                        {(() => {
+                            const detailRows = parseDetailsLine(details);
+                            const cycle = useEightSecondCycle();
+                            return (
+                                <ul key={cycle} className="cv-details-list">
+                                    {detailRows.map((r, i) => (
+                                        <li className="cv-detail-row" key={r.label} style={{ animationDelay: `${i * 90}ms` }}>
+                                            <span className="cv-detail-ico" aria-hidden>{r.ico}</span>
+                                            <span className="cv-detail-label">{r.label}</span>
+                                            <span className="cv-detail-val">{r.val}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            );
+                        })()}
+
+                    </div>
+                </GlowItem>
             </motion.div>
 
             {/* Position Looking For */}
             <motion.div initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }}
                 transition={{ duration: 0.45, ease: "easeOut", delay: 0.05 }}>
-                <GlowPanel title="Position Looking For">
-                    <div>{isLoading ? "Loading�" : position || "�"}</div>
-                </GlowPanel>
+                <GlowItem>
+                    <div className="cv-section-title">Perfect Positions</div>
+                    {/*<SectionTitleBar>Perfect Positions</SectionTitleBar>*/}
+                    <div className="panel-line glow-panel mt-3 cv-details">
+                        <PositionsList items={data.positionLookingFor || position} />
+                    </div>
+                </GlowItem>
             </motion.div>
 
             {/* Education */}
             {showEdu && (
                 <motion.div initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }}
                     transition={{ duration: 0.45, ease: "easeOut", delay: 0.1 }}>
-                    <GlowPanel
-                        title={`Education & Academic Record (${isLoading ? 0 : filteredEducation.length})`}
-                        className="glow-panel"
-                    >
-                        <div className="space-y-3">
-                            {isLoading && <div className="text-zinc-400">Loading�</div>}
+                    <GlowItem>
+                        <div className="cv-section-title">Education & Academic Record ({isLoading ? 0 : filteredEducation.length})</div>
+                        <div className="space-y-3 panel-line glow-panel mt-3 cv-details">
+                            {isLoading && <div className="text-zinc-400">Loading…</div>}
 
                             {!isLoading &&
                                 filteredEducation.map((e, i) => {
@@ -215,7 +430,7 @@ export default function CV() {
 
                                                         <div className="cv-right flex items-center gap-2">
                                                             {(e.years || e.qualificationType) && (
-                                                                <div className="cv-date text-sm font-semibold" style={{ color: "var(--accent)" }}>
+                                                                <div className="cv-date text-sm" style={{ color: "var(--accent)" }}>
                                                                     {e.years && <span className="cv-type">{e.years}</span>}
                                                                     {e.qualificationType && (
                                                                         <>
@@ -268,20 +483,18 @@ export default function CV() {
                                     );
                                 })}
                         </div>
-                    </GlowPanel>
+                    </GlowItem>
                 </motion.div>
             )}
 
             {/* Work Experience */}
             {showExp && (
-                <motion.div initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }}
+                <motion.div initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }} //////// {`Work Experience (${isLoading ? 0 : filteredExperience.length})`}
                     transition={{ duration: 0.45, ease: "easeOut", delay: 0.15 }}>
-                    <GlowPanel
-                        title={`Work Experience (${isLoading ? 0 : filteredExperience.length})`}
-                        className="glow-panel"
-                    >
-                        <div className="space-y-3">
-                            {isLoading && <div className="text-zinc-400">Loading�</div>}
+                    <GlowItem>
+                        <div className="cv-section-title">{`Work Experience (${isLoading ? 0 : filteredExperience.length})`}</div>
+                        <div className="space-y-3 panel-line glow-panel mt-3 cv-details">
+                            {isLoading && <div className="text-zinc-400">Loading…</div>}
 
                             {!isLoading &&
                                 filteredExperience.map((w, i) => {
@@ -353,7 +566,7 @@ export default function CV() {
                                     );
                                 })}
                         </div>
-                    </GlowPanel>
+                    </GlowItem>
                 </motion.div>
             )}
         </div>
