@@ -1,70 +1,120 @@
-﻿import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+﻿// src/components/NavBar.jsx
+import React, { useEffect, useMemo, useState } from "react";
+import { NavLink } from "react-router-dom";
 
-const THEMES = [
-    { key: "blue", label: "Blue & Black" },   // default
-    { key: "red", label: "Red & Black" },
+const LINKS = [
+    { to: "/", label: "Home" },
+    { to: "/technologies", label: "Technologies" },
+    { to: "/projects", label: "Projects" },
+    { to: "/courses", label: "Courses" },
+    { to: "/cv", label: "CV" },
+    { to: "/brainbox", label: "Brain Box" },
+    { to: "/cms", label: "CMS" },
 ];
 
-function setTheme(key) {
-    const root = document.documentElement;
-    if (key === "blue") {
-        root.removeAttribute("data-theme"); // default theme
-    } else {
-        root.setAttribute("data-theme", key);
-    }
-    localStorage.setItem("theme", key);
+// One global 20s cycle that is shared by all links.
+// We split it into equal “segments” (one per link), so the blue streak
+// travels left→right once every 20 seconds.
+// Total cycle = fast streak (3s) + idle (10s) = 13s
+const STREAK_DURATION_MS = 3000;   // 3 seconds sweep
+const IDLE_DURATION_MS = 10000;  // 10 seconds wait
+const CYCLE_MS = STREAK_DURATION_MS + IDLE_DURATION_MS;
+const TICK_MS = 60; // smooth but cheap
+
+function useCycleClock() {
+    const [, setTick] = useState(0);
+    useEffect(() => {
+        const id = setInterval(() => setTick((n) => n + 1), TICK_MS);
+        return () => clearInterval(id);
+    }, []);
+    return Date.now();
 }
 
-export default function NavBar() {
-    const [open, setOpen] = useState(false);
-    const [theme, setThemeState] = useState(localStorage.getItem("theme") || "blue");
-    const location = useLocation();
+function StreakText({ text, index, total }) {
+    const now = useCycleClock();
+    const chars = useMemo(() => text.split(""), [text]);
 
-    useEffect(() => {
-        setTheme(theme);
-    }, [theme]);
+    // global phase [0..1)
+    const phase = (now % CYCLE_MS) / CYCLE_MS;
 
-    useEffect(() => {
-        // close dropdown on route change
-        setOpen(false);
-    }, [location.pathname]);
+    // active only during the first STREAK_DURATION_MS
+    const active = (now % CYCLE_MS) < STREAK_DURATION_MS;
+
+    // slice for this link
+    const slice = 1 / total;
+    const start = index * slice;
+    const end = start + slice;
+
+    // Is the global phase currently inside THIS link’s slice?
+    const inSlice = phase >= start && phase < end;
+
+    // normalize localT within the active window [0..1)
+    const localT = active ? (now % STREAK_DURATION_MS) / STREAK_DURATION_MS : null;
+
+    // Move a 4-char window across the label when inSlice
+    let from = -999, to = -999;
+    if (localT !== null) {
+        const span = chars.length + 5;
+        const head = Math.floor(localT * span);
+        from = head - 4;
+        to = head;
+    }
 
     return (
-        <header className="sticky top-0 z-40 backdrop-blur border-b border-[var(--border)] bg-[color-mix(in_srgb,var(--panel)_75%,transparent)]">
-            <nav className="mx-auto flex max-w-[1400px] items-center justify-between px-4 py-2">
-                <div className="flex items-center gap-4 nav-bar-font">
-                    <Link to="/" className="inline-flex items-center gap-2 text-[var(--fg-soft)] hover:text-[var(--fg)]">
-                        <span className="i-house w-5 h-5">🏠</span>&nbsp;&nbsp;
-                        <span className="font-medium">Home</span>
-                    </Link>
-                    <Link className="text-[var(--fg-soft)] hover:text-[var(--fg)]" to="/technologies">Technologies</Link>
-                    <Link className="text-[var(--fg-soft)] hover:text-[var(--fg)]" to="/projects">Projects</Link>
-                    <Link className="text-[var(--fg-soft)] hover:text-[var(--fg)]" to="/courses">Courses</Link>
-                    <Link className="text-[var(--fg-soft)] hover:text-[var(--fg)]" to="/cv">CV</Link>
-                    <Link className="text-[var(--fg-soft)] hover:text-[var(--fg)]" to="/brainbox">Brain Box</Link>
-                    <Link className="text-[var(--fg-soft)] hover:text-[var(--fg)]" to="/cms">CMS</Link>
-                </div>
-
-                <div className="relative">
-                    <button className="btn-soft" onClick={() => setOpen(v => !v)} aria-label="Theme settings">
-                        <span className="mr-2">⚙️</span> Theme
-                    </button>
-                    {open && (
-                        <div className="absolute right-0 mt-2 w-52 rounded-xl border border-[var(--border)] bg-[var(--panel)] p-2 shadow-[0_8px_30px_rgba(0,0,0,.35)]">
-                            {THEMES.map(t => (
-                                <button
-                                    key={t.key}
-                                    onClick={() => setThemeState(t.key)}
-                                    className={`w-full text-left rounded-md px-3 py-2 text-sm hover:text-[var(--fg)] hover:border-[var(--accent)] border ${theme === t.key ? "border-[var(--accent)] text-[var(--fg)]" : "border-transparent text-[var(--fg-soft)]"}`}
+        <span className="nav-streak-text">
+            {chars.map((ch, i) => {
+                const on = inSlice && i >= from && i <= to;
+                return (
+                    <span key={i} className={on ? "nav-streak-on" : "nav-streak-off"}>
+                        {ch}
+                    </span>
+                );
+            })}
+        </span>
+    );
+}
+export default function NavBar() {
+    return (
+        <nav className="nav-wrap">
+            <ul className="nav-list">
+                {LINKS.map((link, i) => (
+                    <li key={link.to} className="nav-li">
+                        <NavLink
+                            to={link.to}
+                            end={link.to === "/"}
+                            className={({ isActive }) =>
+                                "nav-a" + (isActive ? " is-active" : "")
+                            }
+                        >
+                            {/* home icon only for the first item */}
+                            {i === 0 && (
+                                <svg
+                                    className="nav-home-ico"
+                                    width="14"
+                                    height="14"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    aria-hidden="true"
                                 >
-                                    {t.label}
-                                </button>
-                            ))}
-                        </div>
-                    )}
-                </div>
-            </nav>
-        </header>
+                                    <path d="M3 10.5L12 3l9 7.5" />
+                                    <path d="M9 21V12h6v9" />
+                                </svg>
+                            )}
+
+                            {/* animated label */}
+                            <StreakText
+                                text={link.label}
+                                index={i}
+                                total={LINKS.length}
+                            />
+                        </NavLink>
+                    </li>
+                ))}
+            </ul>
+        </nav>
     );
 }
