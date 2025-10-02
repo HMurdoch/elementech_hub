@@ -1,6 +1,6 @@
 ﻿// src/components/NavBar.jsx
 import React, { useEffect, useMemo, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 const LINKS = [
     { to: "/", label: "Home" },
@@ -8,64 +8,53 @@ const LINKS = [
     { to: "/projects", label: "Projects" },
     { to: "/courses", label: "Courses" },
     { to: "/cv", label: "CV" },
-    { to: "/brainbox", label: "Brain Box" },
+    { to: "/brainbox", label: "BrainBox" },
     { to: "/cms", label: "CMS" },
 ];
 
-// One global 20s cycle that is shared by all links.
-// We split it into equal “segments” (one per link), so the blue streak
-// travels left→right once every 20 seconds.
-// Total cycle = fast streak (3s) + idle (10s) = 13s
-const STREAK_DURATION_MS = 3000;   // 3 seconds sweep
-const IDLE_DURATION_MS = 10000;  // 10 seconds wait
-const CYCLE_MS = STREAK_DURATION_MS + IDLE_DURATION_MS;
-const TICK_MS = 60; // smooth but cheap
+/** Pixel-burst label (reverse firework that coalesces into the word).
+ * Triggers:
+ *  • on first mount
+ *  • on hover/focus
+ *  • when route changes (so active item pops once)
+ */
+// inside NavBar.jsx (leave everything you already have)
+// only change the return of PixelBurstLabel to include <span className="streak" />
 
-function useCycleClock() {
-    const [, setTick] = useState(0);
-    useEffect(() => {
-        const id = setInterval(() => setTick((n) => n + 1), TICK_MS);
-        return () => clearInterval(id);
-    }, []);
-    return Date.now();
-}
+function PixelBurstLabel({ text, burstSeed }) {
+    const chars = React.useMemo(() => text.split(""), [text]);
+    const [burstKey, setBurstKey] = React.useState(0);
 
-function StreakText({ text, index, total }) {
-    const now = useCycleClock();
-    const chars = useMemo(() => text.split(""), [text]);
+    React.useEffect(() => setBurstKey(k => k + 1), []);
+    React.useEffect(() => setBurstKey(k => k + 1), [burstSeed]);
 
-    // global phase [0..1)
-    const phase = (now % CYCLE_MS) / CYCLE_MS;
-
-    // active only during the first STREAK_DURATION_MS
-    const active = (now % CYCLE_MS) < STREAK_DURATION_MS;
-
-    // slice for this link
-    const slice = 1 / total;
-    const start = index * slice;
-    const end = start + slice;
-
-    // Is the global phase currently inside THIS link’s slice?
-    const inSlice = phase >= start && phase < end;
-
-    // normalize localT within the active window [0..1)
-    const localT = active ? (now % STREAK_DURATION_MS) / STREAK_DURATION_MS : null;
-
-    // Move a 4-char window across the label when inSlice
-    let from = -999, to = -999;
-    if (localT !== null) {
-        const span = chars.length + 5;
-        const head = Math.floor(localT * span);
-        from = head - 4;
-        to = head;
-    }
+    const rng = (i) => {
+        let x = (burstKey * 9301 + (i + 1) * 49297 + 233280) % 233280;
+        return x / 233280;
+    };
 
     return (
-        <span className="nav-streak-text">
+        <span
+            className="pixel-word"
+            onMouseEnter={() => setBurstKey(k => k + 1)}
+            onFocus={() => setBurstKey(k => k + 1)}
+        >
+            {/* the animated blue streak passes over the letters */}
+            <span className="streak" aria-hidden="true" />
+
             {chars.map((ch, i) => {
-                const on = inSlice && i >= from && i <= to;
+                const angle = rng(i) * Math.PI * 2;
+                const radius = 18 + rng(i + 11) * 28;
+                const dx = Math.cos(angle) * radius;
+                const dy = Math.sin(angle) * radius;
+                const delay = Math.round(rng(i + 7) * 180);
+
                 return (
-                    <span key={i} className={on ? "nav-streak-on" : "nav-streak-off"}>
+                    <span
+                        key={`${burstKey}-${i}`}
+                        className="pixel-word__ch"
+                        style={{ "--dx": `${dx}px`, "--dy": `${dy}px`, "--delay": `${delay}ms` }}
+                    >
                         {ch}
                     </span>
                 );
@@ -73,9 +62,54 @@ function StreakText({ text, index, total }) {
         </span>
     );
 }
-export default function NavBar() {
+
+
+// Simple Blue/Red toggle on the far right (persists)
+function ThemeToggle() {
+    const [theme, setTheme] = useState(
+        () => localStorage.getItem("theme") || "blue"
+    );
+
+    useEffect(() => {
+        document.documentElement.setAttribute("data-theme", theme);
+        localStorage.setItem("theme", theme);
+    }, [theme]);
+
     return (
-        <nav className="nav-wrap">
+        <div className="theme-toggle">
+            <button
+                className={`theme-chip ${theme === "blue" ? "is-active" : ""}`}
+                onClick={() => setTheme("blue")}
+                aria-label="Blue theme"
+                title="Blue theme"
+            >
+                Blue
+            </button>
+            <button
+                className={`theme-chip ${theme === "red" ? "is-active" : ""}`}
+                onClick={() => setTheme("red")}
+                aria-label="Red theme"
+                title="Red theme"
+            >
+                Red
+            </button>
+        </div>
+    );
+}
+
+export default function NavBar() {
+    // class enables the global “streak across all items” you already have in CSS
+    useEffect(() => {
+        document.body.classList.add("nav-run");
+        return () => document.body.classList.remove("nav-run");
+    }, []);
+
+    // when route changes, we nudge the active item’s burst once
+    const location = useLocation();
+    const burstSeed = location.pathname;
+
+    return (
+        <nav className="site-nav">
             <ul className="nav-list">
                 {LINKS.map((link, i) => (
                     <li key={link.to} className="nav-li">
@@ -83,13 +117,13 @@ export default function NavBar() {
                             to={link.to}
                             end={link.to === "/"}
                             className={({ isActive }) =>
-                                "nav-a" + (isActive ? " is-active" : "")
+                                "nav-link" + (isActive ? " nav-link--active" : "")
                             }
                         >
-                            {/* home icon only for the first item */}
+                            {/* Home icon on first item */}
                             {i === 0 && (
                                 <svg
-                                    className="nav-home-ico"
+                                    className="nav-ico"
                                     width="14"
                                     height="14"
                                     viewBox="0 0 24 24"
@@ -105,15 +139,16 @@ export default function NavBar() {
                                 </svg>
                             )}
 
-                            {/* animated label */}
-                            <StreakText
-                                text={link.label}
-                                index={i}
-                                total={LINKS.length}
-                            />
+                            {/* Label: pixel-burst (restored) */}
+                            <PixelBurstLabel text={link.label} burstSeed={burstSeed} />
                         </NavLink>
                     </li>
                 ))}
+
+                {/* Theme selector on the far right */}
+                <li className="nav-li nav-li--end">
+                    <ThemeToggle />
+                </li>
             </ul>
         </nav>
     );

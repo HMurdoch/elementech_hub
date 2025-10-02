@@ -2138,3 +2138,193 @@ body[data-theme="red"] {
     text-shadow: 0 0 10px color-mix(in srgb, var(--accent) 60%, transparent);
     transition: color .08s linear, text-shadow .08s linear;
 }
+
+/* === Simultaneous 1-char blue streak === */
+.nav-streak-text {
+    display: inline-flex;
+    gap: 0.02em;
+    line-height: 1;
+}
+
+    .nav-streak-text .nav-streak-off {
+        transition: color .15s ease;
+    }
+
+    .nav-streak-text .nav-streak-on {
+        color: var(--accent); /* bright blue/red per theme */
+        text-shadow: 0 0 6px color-mix(in srgb, var(--accent) 50%, transparent), 0 0 12px color-mix(in srgb, var(--accent) 35%, transparent);
+        filter: saturate(120%);
+    }
+
+/* Ensure nav layout still looks like yours */
+.site-nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+.nav-list {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .35rem .6rem;
+}
+
+.nav-li {
+    position: relative;
+}
+
+.nav-li--end {
+    margin-left: auto;
+}
+/* push theme toggle to the right */
+
+.nav-link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .45rem .7rem;
+    font-weight: 600;
+    font-size: clamp(.92rem, .7rem + .6vw, 1.05rem);
+    line-height: 1;
+    color: var(--fg-soft);
+    text-decoration: none;
+    border-radius: .6rem;
+    transition: color .2s ease, background .2s ease, filter .2s ease;
+}
+
+    .nav-link:hover {
+        color: var(--fg);
+    }
+
+/* your “currently active” styling */
+.nav-link--active {
+    color: var(--accent);
+    text-shadow: 0 0 6px color-mix(in srgb, var(--accent) 40%, transparent);
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
+    border-radius: .6rem;
+}
+
+/* === Small theme chips on the right === */
+.theme-toggle {
+    display: flex;
+    gap: .4rem;
+}
+
+.theme-chip {
+    padding: .28rem .55rem;
+    border-radius: .55rem;
+    border: 1px solid var(--panel-border, color-mix(in srgb, var(--accent) 35%, transparent));
+    background: color-mix(in srgb, var(--panel-bg, #0f0f11) 90%, #000);
+    color: var(--fg);
+    font-size: .8rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+}
+
+    .theme-chip:hover {
+        border-color: var(--accent);
+    }
+
+    .theme-chip.is-active {
+        border-color: color-mix(in srgb, var(--accent) 70%, transparent);
+        box-shadow: 0 0 16px color-mix(in srgb, var(--accent) 35%, transparent);
+    }
+
+
+/* Keep the pixel-burst always visible over the streak pass */
+.nav-link .pixel-word {
+    position: relative;
+    z-index: 1; /* over ::after streak */
+}
+
+/* The global streak you already have runs on ::after.
+   Make sure it sits under the label but above the link bg */
+.nav-link::after {
+    z-index: 0;
+}
+
+/* Nicer hover color while pixel-burst plays */
+.nav-link:hover .pixel-word__ch {
+    filter: drop-shadow(0 0 .25rem color-mix(in srgb, var(--accent) 35%, transparent));
+}
+
+/* Place near your existing pixel-burst styles */
+
+/* ensure the word is a stacking context */
+.pixel-word {
+    position: relative;
+    display: inline-block;
+}
+
+/* characters must sit ABOVE the streak */
+.pixel-word__ch {
+    position: relative; /* create a positioned element */
+    z-index: 2; /* above the streak */
+}
+
+/* the streak should sit BELOW the characters */
+.pixel-word .streak {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 1ch;
+    height: 1.15em;
+    transform: translate(-1ch, -50%);
+    pointer-events: none;
+    z-index: 1; /* below the characters */
+
+    background: radial-gradient(circle at 50% 50%, var(--accent, #25c6ff) 0%, color-mix(in srgb, var(--accent, #25c6ff) 40%, transparent) 55%, transparent 75%);
+    filter: blur(0.6px) drop-shadow(0 0 4px color-mix(in srgb, var(--accent, #25c6ff) 70%, transparent));
+    mix-blend-mode: screen;
+    animation: word-streak 10s linear infinite;
+}
+
+/* keep letters above any link pseudo background as well */
+.nav-link .pixel-word {
+    z-index: 1;
+}
+
+.nav-link::after {
+    z-index: 0;
+}
+
+/* The sweep travels across the word and then disappears */
+@keyframes word-streak {
+    0% {
+        opacity: .95;
+        transform: translate(-1ch, -50%);
+    }
+    /* ~1.8s into a 10s cycle ≈ 18% */
+    18% {
+        opacity: .95;
+        transform: translate(calc(100% + 1ch), -50%);
+    }
+    /* fade quickly and stay off until next cycle */
+    22% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+/* Keep the letters above the link ::after (if you keep that) */
+.nav-link .pixel-word {
+    z-index: 1;
+}
+
+.nav-link::after {
+    z-index: 0;
+}
+
+/* Respect motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    .pixel-word .streak {
+        animation: none;
+        opacity: 0;
+    }
+}
