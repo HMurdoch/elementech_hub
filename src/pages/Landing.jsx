@@ -114,8 +114,17 @@ function ParticleTextHero({ theme, text = "HUGH MURDOCH\nAI WEBMASTER" }) {
             const startY = midY - blockH / 2 + lineHeight / 2;
 
             lines.forEach((line, i) => {
-                ctx.fillText(line, midX, startY + i * lineHeight);
+                const y = startY + i * lineHeight;
+
+                // Fill text (mask)
+                ctx.fillText(line, midX, y);
+
+                // Outline stroke in theme color
+                ctx.strokeStyle = theme === "red" ? "#ED413C" : "#00B7FF";
+                ctx.lineWidth = 1;
+                ctx.strokeText(line, midX, y);
             });
+
             ctx.restore();
         };
 
