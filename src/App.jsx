@@ -9,6 +9,7 @@ import BrainBox from "./pages/BrainBox";
 import CMS from "./pages/CMS";
 import ProjectWorkspace from "./pages/ProjectWorkspace";
 import NavBar from "./components/NavBar";
+import ParticlesBackground from "./components/ParticlesBackground";
 
 function Fallback() {
     return <div className="p-4 text-[var(--fg-soft)]">Loading…</div>;
@@ -29,7 +30,9 @@ export default function App() {
     }, []);
 
     return (
-        <div className="min-h-screen app-bg">
+        <div className="min-h-screen relative app-bg">
+            <>
+            <ParticlesBackground />
             <NavBar />
             <main className="relative z-10 mx-auto max-w-[1400px] px-4 py-6">
                 <Suspense fallback={<Fallback />}>
@@ -46,6 +49,8 @@ export default function App() {
                     </Routes>
                 </Suspense>
             </main>
+            </>
         </div>
+
     );
 }

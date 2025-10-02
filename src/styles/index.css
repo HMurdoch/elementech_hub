@@ -1816,21 +1816,32 @@ body[data-theme="red"] {
 }
 
 /* ——— Pixel burst word —————————————————————————————— */
-.pixel-word {
+/*.pixel-word {
     display: inline-flex;
-    gap: 0.02em; /* tiny spacing so the “pixels” feel separate */
-    position: relative;
+    gap: 0.02em;*/ /* tiny spacing so the “pixels” feel separate */
+    /*position: relative;
     line-height: 1;
     transform: translateZ(0);
 }
 
 .pixel-word__ch {
-    display: inline-block;
+    display: inline-block;*/
     /* Kick off the “coalesce” animation whenever the burstKey changes */
-    animation: coalesce 620ms cubic-bezier(.22,.75,.24,1) both;
+    /*animation: coalesce 620ms cubic-bezier(.22,.75,.24,1) both;
     animation-delay: var(--delay, 0ms);
     will-change: transform, opacity, filter;
     filter: drop-shadow(0 0 0.25rem color-mix(in srgb, var(--accent) 35%, transparent));
+}*/
+
+.pixel-word,
+.pixel-word__ch,
+.pixel-word .streak {
+    pointer-events: none; /* let clicks go through */
+}
+
+.nav-link {
+    position: relative;
+    z-index: 1; /* ensure link stays above animations */
 }
 
 @keyframes coalesce {
@@ -2327,4 +2338,110 @@ body[data-theme="red"] {
         animation: none;
         opacity: 0;
     }
+}
+
+/* Particle theme colors */
+:root {
+    /* default: Blue theme */
+    --particle-color: #3cc7ff; /* matches your glow blue */
+}
+
+/* When you set data-theme="red" on <html> or <body> */
+[data-theme="red"] {
+    --particle-color: #ff4a4a; /* matches your red theme */
+}
+
+/* Full-viewport background layer */
+#particles-js {
+    position: fixed; /* stay put while scrolling */
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0; /* keep it behind all content */
+    pointer-events: none; /* don’t block clicks */
+    opacity: 0.55; /* subtle; tweak to taste */
+}
+
+/* Make sure your app content sits above */
+#root, .app-root, body > *:not(#particles-js) {
+    position: relative;
+    z-index: 1;
+}
+
+/* Hide the demo counter badge (keep if you like it) */
+.count-particles {
+    display: none !important;
+}
+
+/* Default to blue unless overridden by data-theme */
+:root {
+    --particle-color: #3cc7ff;
+}
+
+[data-theme="red"] {
+    --particle-color: #ff4a4a;
+}
+
+/* Full-screen background layer behind everything */
+#particles-js {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0; /* keep it behind */
+    pointer-events: none; /* don't block clicks */
+    opacity: 0.55; /* subtle; tweak to taste */
+}
+
+/* Ensure your app content stays above the canvas */
+#root, .app-root, body > *:not(#particles-js) {
+    position: relative;
+    z-index: 1;
+}
+
+/* Hide demo counter (optional) */
+.count-particles {
+    display: none !important;
+}
+
+/* particles full-screen canvas behind everything */
+#particles-js {
+    position: fixed; /* full viewport */
+    inset: 0;
+    z-index: -1; /* sit behind app UI */
+    pointer-events: none; /* don’t block clicks */
+    background-color: #000; /* your dark base */
+}
+
+:root,
+[data-theme="blue"],
+body[data-theme="blue"] {
+    --accent: #38bdf8;
+    --accent-600: #0891b2;
+    --accent-rgb: 56 189 248; /* RGB for blue */
+}
+
+[data-theme="red"],
+body[data-theme="red"] {
+    --accent: #ef4444;
+    --accent-600: #b91c1c;
+    --accent-rgb: 239 68 68; /* RGB for red */
+}
+
+/* Particles background must never block clicks */
+.particles-root,
+.particles-root canvas {
+    pointer-events: none !important;
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+}
+
+/* Particles background must never block clicks */
+.particles-root,
+.particles-root canvas {
+    pointer-events: none !important;
+    position: fixed;
+    inset: 0;
+    z-index: -1;
 }

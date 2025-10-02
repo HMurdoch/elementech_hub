@@ -1,5 +1,5 @@
 ﻿// src/components/NavBar.jsx
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 
 const LINKS = [
@@ -12,22 +12,19 @@ const LINKS = [
     { to: "/cms", label: "CMS" },
 ];
 
-/** Pixel-burst label (reverse firework that coalesces into the word).
- * Triggers:
- *  • on first mount
- *  • on hover/focus
- *  • when route changes (so active item pops once)
+/** Reverse firework that coalesces into the word.
+ * Pops on: mount, hover/focus, and route change (see burstSeed).
  */
-// inside NavBar.jsx (leave everything you already have)
-// only change the return of PixelBurstLabel to include <span className="streak" />
-
 function PixelBurstLabel({ text, burstSeed }) {
     const chars = React.useMemo(() => text.split(""), [text]);
     const [burstKey, setBurstKey] = React.useState(0);
 
+    // on first mount
     React.useEffect(() => setBurstKey(k => k + 1), []);
+    // when route changes (active link pops once)
     React.useEffect(() => setBurstKey(k => k + 1), [burstSeed]);
 
+    // tiny deterministic RNG so letters “burst” from different offsets each time
     const rng = (i) => {
         let x = (burstKey * 9301 + (i + 1) * 49297 + 233280) % 233280;
         return x / 233280;
@@ -39,7 +36,7 @@ function PixelBurstLabel({ text, burstSeed }) {
             onMouseEnter={() => setBurstKey(k => k + 1)}
             onFocus={() => setBurstKey(k => k + 1)}
         >
-            {/* the animated blue streak passes over the letters */}
+            {/* blue streak under the letters */}
             <span className="streak" aria-hidden="true" />
 
             {chars.map((ch, i) => {
@@ -63,7 +60,6 @@ function PixelBurstLabel({ text, burstSeed }) {
     );
 }
 
-
 // Simple Blue/Red toggle on the far right (persists)
 function ThemeToggle() {
     const [theme, setTheme] = useState(
@@ -73,13 +69,17 @@ function ThemeToggle() {
     useEffect(() => {
         document.documentElement.setAttribute("data-theme", theme);
         localStorage.setItem("theme", theme);
+        // notify listeners (ParticlesBackground)
+        window.dispatchEvent(new CustomEvent("theme-changed", { detail: theme }));
     }, [theme]);
+
+    const apply = (t) => setTheme(t);
 
     return (
         <div className="theme-toggle">
             <button
                 className={`theme-chip ${theme === "blue" ? "is-active" : ""}`}
-                onClick={() => setTheme("blue")}
+                onClick={() => apply("blue")}
                 aria-label="Blue theme"
                 title="Blue theme"
             >
@@ -87,7 +87,7 @@ function ThemeToggle() {
             </button>
             <button
                 className={`theme-chip ${theme === "red" ? "is-active" : ""}`}
-                onClick={() => setTheme("red")}
+                onClick={() => apply("red")}
                 aria-label="Red theme"
                 title="Red theme"
             >
@@ -98,13 +98,13 @@ function ThemeToggle() {
 }
 
 export default function NavBar() {
-    // class enables the global “streak across all items” you already have in CSS
+    // keeps your “streak across all items” CSS enabled
     useEffect(() => {
         document.body.classList.add("nav-run");
         return () => document.body.classList.remove("nav-run");
     }, []);
 
-    // when route changes, we nudge the active item’s burst once
+    // route change “nudges” the active item’s burst once
     const location = useLocation();
     const burstSeed = location.pathname;
 
@@ -138,14 +138,12 @@ export default function NavBar() {
                                     <path d="M9 21V12h6v9" />
                                 </svg>
                             )}
-
-                            {/* Label: pixel-burst (restored) */}
                             <PixelBurstLabel text={link.label} burstSeed={burstSeed} />
                         </NavLink>
                     </li>
                 ))}
 
-                {/* Theme selector on the far right */}
+                {/* theme chips on far right */}
                 <li className="nav-li nav-li--end">
                     <ThemeToggle />
                 </li>
