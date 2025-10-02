@@ -2445,3 +2445,48 @@ body[data-theme="red"] {
     inset: 0;
     z-index: -1;
 }
+
+/* ===== ParticleTitle (landing hero) ===== */
+.particle-title {
+    position: relative;
+    width: min(1100px, 92vw);
+    height: clamp(160px, 22vw, 260px);
+    margin: 0 auto 0.75rem auto;
+    pointer-events: none; /* never block clicks */
+    z-index: 0;
+}
+
+/* Canvas stack */
+.particle-title canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    image-rendering: optimizeSpeed;
+    pointer-events: none;
+}
+
+/* Theme variables used by the component */
+:root {
+    --hero-bg: #111111;
+    --hero-text-mask: #111111;
+    --particle-1: #5cc3ff; /* default blue */
+    --particle-2: #2ea3ff;
+    --particle-link: #54b8ff;
+}
+
+html[data-theme="blue"] {
+    --hero-bg: #0c121a;
+    --hero-text-mask: #0c121a;
+    --particle-1: #5cc3ff;
+    --particle-2: #2ea3ff;
+    --particle-link: #54b8ff;
+}
+
+html[data-theme="red"] {
+    --hero-bg: #111111;
+    --hero-text-mask: #111111;
+    --particle-1: #ff5e4c; /* matches your red theme */
+    --particle-2: #ed413c;
+    --particle-link: #ff6e60;
+}
