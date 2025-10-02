@@ -33,9 +33,9 @@ export default function NavBar() {
     return (
         <header className="sticky top-0 z-40 backdrop-blur border-b border-[var(--border)] bg-[color-mix(in_srgb,var(--panel)_75%,transparent)]">
             <nav className="mx-auto flex max-w-[1400px] items-center justify-between px-4 py-2">
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-4 nav-bar-font">
                     <Link to="/" className="inline-flex items-center gap-2 text-[var(--fg-soft)] hover:text-[var(--fg)]">
-                        <span className="i-house w-5 h-5">🏠</span>
+                        <span className="i-house w-5 h-5">🏠</span>&nbsp;&nbsp;
                         <span className="font-medium">Home</span>
                     </Link>
                     <Link className="text-[var(--fg-soft)] hover:text-[var(--fg)]" to="/technologies">Technologies</Link>

@@ -1489,3 +1489,328 @@ body[data-theme="red"] {
 .cv-details .cv-detail-row {
     font-size: clamp(14px, 1.35vw, 16px);
 }
+
+/* ===== Landing: Aurora headline (scoped, clipped to the name) ===== */
+
+.landing-title {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: .35rem;
+}
+
+.landing-role {
+    background-image: var(--landing-title-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+}
+
+/* The name wrapper – clips the effect to the word only */
+.aurora-title {
+    position: relative;
+    display: inline-block;
+    overflow: hidden; /* <- keeps blobs inside the text box */
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    font-size: clamp(1.8rem, 4.5vw, 3.25rem);
+    line-height: 1.05;
+    color: #fff; /* base is white; the overlay tints it */
+    isolation: isolate; /* more predictable blend behavior */
+    padding-inline: .05em; /* tiny pad so blobs can cross glyph edges */
+}
+
+    /* Animated blobs container, clipped by the parent above */
+    .aurora-title .aurora {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        mix-blend-mode: darken; /* nice color-on-white vibe */
+        pointer-events: none;
+    }
+
+/* Use EM sizing so the effect scales with text and stays small */
+:root {
+    --aurora-size: clamp(9em, 18vw, 14em);
+    --aurora-blur: .6em;
+}
+
+/* “Northern lights” blobs */
+.aurora-title .aurora__item {
+    position: absolute;
+    width: var(--aurora-size);
+    height: var(--aurora-size);
+    border-radius: 37% 29% 27% 27% / 28% 25% 41% 37%;
+    filter: blur(var(--aurora-blur));
+    mix-blend-mode: overlay;
+    background-color: var(--accent); /* theme-aware */
+    animation: aurora-border 6s ease-in-out infinite;
+    z-index: 2;
+    overflow: hidden;
+}
+
+    /* Blob #1 */
+    .aurora-title .aurora__item:nth-of-type(1) {
+        top: -40%;
+        left: 10%;
+        animation: aurora-border 6s ease-in-out infinite, aurora-1 12s ease-in-out infinite alternate;
+    }
+
+    /* Blob #2 – warm hue */
+    .aurora-title .aurora__item:nth-of-type(2) {
+        right: -25%;
+        top: -10%;
+        background-color: color-mix(in srgb, var(--accent) 20%, #ffc640);
+        animation: aurora-border 6s ease-in-out infinite, aurora-2 12s ease-in-out infinite alternate;
+    }
+
+    /* Blob #3 – cool hue */
+    .aurora-title .aurora__item:nth-of-type(3) {
+        left: -20%;
+        bottom: -10%;
+        background-color: color-mix(in srgb, var(--accent) 25%, #33ff8c);
+        animation: aurora-border 6s ease-in-out infinite, aurora-3 8s ease-in-out infinite alternate;
+    }
+
+    /* Blob #4 – magenta hint */
+    .aurora-title .aurora__item:nth-of-type(4) {
+        right: -35%;
+        bottom: -40%;
+        background-color: color-mix(in srgb, var(--accent) 25%, #e54cff);
+        animation: aurora-border 6s ease-in-out infinite, aurora-4 24s ease-in-out infinite alternate;
+    }
+
+/* Paths stay expressed in % of the clipped box */
+@keyframes aurora-1 {
+    0% {
+        top: -10%;
+        right: 0;
+    }
+
+    50% {
+        top: 80%;
+        right: 60%;
+    }
+
+    75% {
+        top: 60%;
+        right: 30%;
+    }
+
+    100% {
+        top: -10%;
+        right: 0;
+    }
+}
+
+@keyframes aurora-2 {
+    0% {
+        top: -30%;
+        left: 10%;
+    }
+
+    60% {
+        top: 80%;
+        left: 60%;
+    }
+
+    85% {
+        top: 70%;
+        left: 30%;
+    }
+
+    100% {
+        top: -30%;
+        left: 10%;
+    }
+}
+
+@keyframes aurora-3 {
+    0% {
+        bottom: -10%;
+        left: 0;
+    }
+
+    40% {
+        bottom: 80%;
+        left: 60%;
+    }
+
+    65% {
+        bottom: 40%;
+        left: 40%;
+    }
+
+    100% {
+        bottom: -10%;
+        left: 0;
+    }
+}
+
+@keyframes aurora-4 {
+    0% {
+        bottom: -40%;
+        right: 0;
+    }
+
+    50% {
+        bottom: 10%;
+        right: 35%;
+    }
+
+    90% {
+        bottom: 45%;
+        right: 20%;
+    }
+
+    100% {
+        bottom: -40%;
+        right: 0;
+    }
+}
+
+/* Organic morphing */
+@keyframes aurora-border {
+    0% {
+        border-radius: 37% 29% 27% 27% / 28% 25% 41% 37%;
+    }
+
+    25% {
+        border-radius: 47% 29% 39% 49% / 61% 19% 66% 26%;
+    }
+
+    50% {
+        border-radius: 57% 23% 47% 72% / 63% 17% 66% 33%;
+    }
+
+    75% {
+        border-radius: 28% 49% 29% 100% / 93% 20% 64% 25%;
+    }
+
+    100% {
+        border-radius: 37% 29% 27% 27% / 28% 25% 41% 37%;
+    }
+}
+
+.aurora-text {
+    font-size: clamp(3rem, 8vw, 7rem);
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    position: relative;
+    background: linear-gradient( 270deg, #00c2ff, #33ff8c, #ffc640, #e54cff, #00c2ff );
+    background-size: 600% 600%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+    animation: aurora-flow 12s ease infinite;
+}
+
+@keyframes aurora-flow {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.subtitle {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-top: 0.5rem;
+    color: #00c2ff;
+}
+
+/* === Aurora text for Landing title === */
+:root {
+    /* You can tweak these per theme if you like */
+    --aurora-clr1: #00c2ff;
+    --aurora-clr2: #33ff8c;
+    --aurora-clr3: #ffc640;
+    --aurora-clr4: #e54cff;
+}
+
+/* === Aurora text for Landing title (crisp & always filled) === */
+.aurora-text {
+    position: relative;
+    display: inline-block;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    /* Clip the animated background to the glyphs */
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    /* very subtle outline for readability on dark bg */
+    -webkit-text-stroke: 0.5px rgba(255,255,255,.12);
+    /* ✅ Bottom-most layer = never transparent (prevents “outline only”) */
+    /* You can tune these two base colors to your theme */
+    --aurora-base1: #69e5ff;
+    --aurora-base2: #9f6bff;
+    background-image:
+    /* moving blobs (now with larger coverage: transparent at 75%) */
+                    radial-gradient(40% 60% at 15% 30%, var(--aurora-clr1) 0%, transparent 75%), radial-gradient(45% 55% at 85% 25%, var(--aurora-clr3) 0%, transparent 75%), radial-gradient(45% 55% at 20% 80%, var(--aurora-clr2) 0%, transparent 75%), radial-gradient(55% 65% at 80% 85%, var(--aurora-clr4) 0%, transparent 75%),
+    /* base gradient – non-transparent, always fills the text */
+                    linear-gradient(90deg, var(--aurora-base1), var(--aurora-base2));
+    /* give the blobs more room to overlap; base stays 100% */
+    background-size: 200% 200%, 200% 200%, 200% 200%, 200% 200%, 100% 100%;
+    background-position: 10% 20%, 90% 10%, 10% 90%, 90% 85%, 50% 50%;
+    /* animate only the first 4 layers (the blobs) */
+    animation: auroraShift 12s ease-in-out infinite alternate;
+    /* rendering hints */
+    will-change: background-position;
+    -webkit-font-smoothing: antialiased;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+}
+
+
+/* Keep the “Hugh Murdoch — Full-Stack Developer” line height tidy */
+.landing-title .aurora-text {
+    line-height: 1.3;
+}
+
+.landing-subtitle {
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: 1.3;
+}
+
+/* Make the aurora softly move around */
+@keyframes auroraShift {
+    0% {
+        background-position: 10% 20%, 90% 10%, 10% 90%, 90% 85%;
+    }
+
+    50% {
+        background-position: 35% 10%, 70% 20%, 25% 80%, 65% 70%;
+    }
+
+    100% {
+        background-position: 60% 30%, 20% 15%, 40% 60%, 30% 75%;
+    }
+}
+
+/* Gentle breathing glow (very subtle, no flicker) */
+@keyframes auroraGlow {
+    0%,100% {
+        text-shadow: 0 0 10px rgba(0, 195, 255, .10);
+    }
+
+    50% {
+        text-shadow: 0 0 16px rgba(0, 195, 255, .16);
+    }
+}
+
+/* (Optional) size tuning just for this title on large screens */
+@media (min-width: 900px) {
+    .landing-title .aurora-text {
+        font-size: clamp(2.1rem, 4.2vw, 3.0rem);
+    }
+}

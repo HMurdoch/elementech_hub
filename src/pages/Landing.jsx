@@ -50,9 +50,14 @@ export default function Landing() {
                 <h1 className="landing-welcome">Welcome</h1>
 
                 <h2 className="landing-title">
-                    <span>Hugh Murdoch</span>{" "}
-                    <span> - Full-Stack Developer</span>
-                </h2>
+                    {/* Aurora name */}
+                    <span className="aurora-text">Hugh Murdoch</span>
+                </h2><br />
+                <h2 className="landing-subtitle">
+                    {/* Keep the role beside it */}
+                    <span className="landing-role">AI Solutions Architect | Integration Specialist | Fullstack</span>
+                </h2><br />
+
 
                 <p className="landing-sub">
                     Explore technologies, projects, courses, my CV, and the Brain Box forum.

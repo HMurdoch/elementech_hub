@@ -19,31 +19,37 @@ function useTheme() {
         document.documentElement.getAttribute("data-theme") === "red"
             ? "red"
             : "blue";
-
     const [theme, setTheme] = React.useState(getTheme());
-
     useEffect(() => {
         const obs = new MutationObserver(() => setTheme(getTheme()));
-        obs.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+        obs.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ["data-theme"],
+        });
         return () => obs.disconnect();
     }, []);
-
     return theme;
 }
 
-// Extract neat values from your details line
+/* ------------------------------------------------------------------ */
+/* Details parsing (shows only 'Hugh Murdoch' in the Name row)         */
+/* ------------------------------------------------------------------ */
 function parseDetailsLine(str = "") {
-    // Name = everything before first ":" or " - "
-    const nameMatch = str.match(/^\s*([^:-]+)/);
-    const name = (nameMatch && nameMatch[1] ? nameMatch[1].trim() : "").replace(/\s+$/, "");
+    // name = everything before the first separator " - " or " · " (robust fallback to first words)
+    let name = (str.split(/(?:\s[·-]\s)/)[0] || "").trim();
+    if (!name) {
+        const m = str.match(/^\s*([A-Za-z]+(?:\s+[A-Za-z'.-]+){0,3})/);
+        name = (m && m[1]) || "";
+    }
 
     const email = (str.match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i) || [])[0];
-    const dob = (str.match(/\b(19|20)\d{2}[-/](0\d|1[0-2])[-/](0\d|[12]\d|3[01])\b/) || [])[0];
+    const dob =
+        (str.match(/\b(19|20)\d{2}[-/](0\d|1[0-2])[-/](0\d|[12]\d|3[01])\b/) || [])[0];
     const phone = (str.match(/(\+\d[\d\s()/-]{6,})/) || [])[0];
     const nationality = (str.match(/\bSouth African\b/i) || [])[0];
 
     const rows = [];
-    if (name) rows.push({ label: "Name", val: name, ico: "👤" });
+    if (name) rows.push({ label: "Name", val: name, ico: "👤" }); // <- only the name
     if (nationality) rows.push({ label: "Nationality", val: nationality, ico: "🌍" });
     if (dob) rows.push({ label: "DOB", val: dob, ico: "📅" });
     if (phone) rows.push({ label: "Mobile", val: phone, ico: "📱" });
@@ -70,17 +76,6 @@ function SectionTitleBar({ children }) {
         </div>
     );
 }
-
-// A text-only title (for putting *inside* GlowPanel titles so all titles glow the same)
-function TitleText({ children }) {
-    return (
-        <span className="cv-title">
-            <span className="cv-title-dot" />
-            {children}
-        </span>
-    );
-}
-
 
 export default function CV() {
     const [cv, setCv] = useState(null);
@@ -170,102 +165,47 @@ export default function CV() {
         window.print();
     }
 
-    // --- MATRIX / CASCADE TEXT HELPERS ---------------------------------
+    /* ------------------------------------------------------------------ */
+    /* Positions list with "hero" streak animation on the first role      */
+    /* ------------------------------------------------------------------ */
 
-    function FallingText({ text, gap = 1.5, delayPerChar = 0.03 }) {
+    function HeroRoleText({ text }) {
+        const [pos, setPos] = useState(-5); // active color window start
         const chars = useMemo(() => (text ?? "").split(""), [text]);
-        const [runId, setRunId] = useState(0);
 
         useEffect(() => {
-            const id = setInterval(() => setRunId((n) => n + 1), 14000);
+            const id = setInterval(() => {
+                setPos((p) => (p > chars.length ? -5 : p + 1));
+            }, 60);
             return () => clearInterval(id);
-        }, []);
+        }, [chars.length]);
 
         return (
-            <div className="cv-hero">
-                <AnimatePresence mode="sync">
-                    <motion.span
-                        key={runId} // force re-run animation
-                        className="cv-hero-row"
-                        initial="hidden"
-                        animate="show"
-                        exit="hidden"
-                        variants={{
-                            show: { transition: { staggerChildren: delayPerChar } },
-                        }}
-                    >
-                        {chars.map((ch, i) => (
-                            <motion.span
-                                key={`${runId}-${i}`}
-                                className="cv-hero-char"
-                                variants={{
-                                    hidden: { y: -28, opacity: 0, filter: "blur(3px)" },
-                                    show: {
-                                        y: 0,
-                                        opacity: 1,
-                                        filter: "blur(0px)",
-                                        transition: { type: "spring", damping: 20, stiffness: 260 },
-                                    },
-                                }}
-                                style={{ marginRight: ch === " " ? gap : undefined }}
-                            >
-                                {ch}
-                            </motion.span>
-                        ))}
-                    </motion.span>
-                </AnimatePresence>
-            </div>
+            <span className="inline-block font-semibold"
+                style={{ fontSize: "1.08rem", letterSpacing: "0.1px" }}>
+                {chars.map((ch, i) => {
+                    const active = i >= pos && i < pos + 5; // 4 chars behind turn back to white
+                    return (
+                        <span
+                            key={i}
+                            style={{
+                                color: active ? "var(--accent)" : "var(--text-primary)",
+                                textShadow: active ? "0 0 10px var(--accent)" : "none",
+                                transition: "color 80ms linear",
+                            }}
+                        >
+                            {ch}
+                        </span>
+                    );
+                })}
+            </span>
         );
     }
 
-    // Simple parse for your details line
-    function parseDetailsLine(str = "") {
-        const email = (str.match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i) || [])[0];
-        const dob = (str.match(/\b(19|20)\d{2}[-/](0\d|1[0-2])[-/](0\d|[12]\d|3[01])\b/) || [])[0];
-        const phone = (str.match(/(\+\d[\d\s()/-]{6,})/) || [])[0];
-        const name = (str.split(" - ")[0] || "").trim();
-        const nationality = (str.match(/\bSouth African\b/i) || [])[0];
-
-        const rows = [];
-        if (name) rows.push({ label: "Name", val: name, ico: "👤" });
-        if (nationality) rows.push({ label: "Nationality", val: nationality, ico: "🌍" });
-        if (dob) rows.push({ label: "DOB", val: dob, ico: "📅" });
-        if (phone) rows.push({ label: "Mobile", val: phone, ico: "📱" });
-        if (email) rows.push({ label: "Email", val: email, ico: "✉️" });
-        return rows;
-    }
-
-    function SectionHeading({ children }) {
-        return (
-            <div className="cv-heading">
-                <span className="cv-heading-dot" />
-                <span>{children}</span>
-            </div>
-        );
-    }
-
-
-    // tiny pulser to retrigger the "fall" every 8s
-    function useEightSecondCycle() {
-        const [t, setT] = React.useState(0);
-        React.useEffect(() => {
-            const id = setInterval(() => setT((n) => n + 1), 8000);
-            return () => clearInterval(id);
-        }, []);
-        return t;
-    }
-
-
-    /**
-     * PositionsList
-     * Shows each target role on its own line with a cascading slide/fade.
-     * Retriggers every 8s.
-     */
     function PositionsList({ items }) {
         const cleaned = useMemo(() => {
             if (!items) return [];
             if (Array.isArray(items)) return items.filter(Boolean);
-            // your data is a slash-separated line — split on " / "
             return String(items)
                 .split(" / ")
                 .map((s) => s.trim())
@@ -291,7 +231,7 @@ export default function CV() {
                     {cleaned.map((role, i) => (
                         <motion.li
                             key={`${runId}-${i}-${role}`}
-                            className="cv-pos-item"
+                            className={`cv-pos-item ${i === 0 ? "cv-pos-hero" : ""}`}
                             variants={{
                                 hidden: { y: -12, opacity: 0, filter: "blur(3px)" },
                                 show: {
@@ -303,14 +243,13 @@ export default function CV() {
                             }}
                         >
                             <span className="cv-pos-bullet" aria-hidden="true">▸</span>
-                            {role}
+                            {i === 0 ? <HeroRoleText text={role} /> : role}
                         </motion.li>
                     ))}
                 </motion.ul>
             </div>
         );
     }
-
 
     return (
         <div className="space-y-6 print:bg-white print:text-black">
@@ -356,13 +295,15 @@ export default function CV() {
             </div>
 
             {/* Details */}
-            <motion.div initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.45, ease: "easeOut" }}>
+            <motion.div
+                initial={{ opacity: 0, y: 8 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ duration: 0.45, ease: "easeOut" }}
+            >
                 <GlowItem>
                     <div className="cv-section-title">Details</div>
                     <div className="cv-details glow-panel mt-3">
-                        {/* ===== Details ===== */}
-                        {/*<SectionTitleBar>Details</SectionTitleBar>*/}
                         {(() => {
                             const detailRows = parseDetailsLine(details);
                             const cycle = useEightSecondCycle();
@@ -370,7 +311,9 @@ export default function CV() {
                                 <ul key={cycle} className="cv-details-list">
                                     {detailRows.map((r, i) => (
                                         <li className="cv-detail-row" key={r.label} style={{ animationDelay: `${i * 90}ms` }}>
-                                            <span className="cv-detail-ico" aria-hidden>{r.ico}</span>
+                                            <span className="cv-detail-ico" aria-hidden>
+                                                {r.ico}
+                                            </span>
                                             <span className="cv-detail-label">{r.label}</span>
                                             <span className="cv-detail-val">{r.val}</span>
                                         </li>
@@ -378,17 +321,19 @@ export default function CV() {
                                 </ul>
                             );
                         })()}
-
                     </div>
                 </GlowItem>
             </motion.div>
 
             {/* Position Looking For */}
-            <motion.div initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.45, ease: "easeOut", delay: 0.05 }}>
+            <motion.div
+                initial={{ opacity: 0, y: 8 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ duration: 0.45, ease: "easeOut", delay: 0.05 }}
+            >
                 <GlowItem>
                     <div className="cv-section-title">Perfect Positions</div>
-                    {/*<SectionTitleBar>Perfect Positions</SectionTitleBar>*/}
                     <div className="panel-line glow-panel mt-3 cv-details">
                         <PositionsList items={data.positionLookingFor || position} />
                     </div>
@@ -397,10 +342,16 @@ export default function CV() {
 
             {/* Education */}
             {showEdu && (
-                <motion.div initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }}
-                    transition={{ duration: 0.45, ease: "easeOut", delay: 0.1 }}>
+                <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-80px" }}
+                    transition={{ duration: 0.45, ease: "easeOut", delay: 0.1 }}
+                >
                     <GlowItem>
-                        <div className="cv-section-title">Education & Academic Record ({isLoading ? 0 : filteredEducation.length})</div>
+                        <div className="cv-section-title">
+                            Education & Academic Record ({isLoading ? 0 : filteredEducation.length})
+                        </div>
                         <div className="space-y-3 panel-line glow-panel mt-3 cv-details">
                             {isLoading && <div className="text-zinc-400">Loading…</div>}
 
@@ -435,7 +386,9 @@ export default function CV() {
                                                                     {e.qualificationType && (
                                                                         <>
                                                                             <span className="mx-1">-</span>
-                                                                            <span className={`cv-year cv-type--${theme}`}>{e.qualificationType.toUpperCase()}</span>
+                                                                            <span className={`cv-year cv-type--${theme}`}>
+                                                                                {e.qualificationType.toUpperCase()}
+                                                                            </span>
                                                                         </>
                                                                     )}
                                                                 </div>
@@ -452,8 +405,16 @@ export default function CV() {
                                                                         }}
                                                                         title="Open link"
                                                                     >
-                                                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-                                                                            stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                                                                        <svg
+                                                                            width="16"
+                                                                            height="16"
+                                                                            viewBox="0 0 24 24"
+                                                                            fill="none"
+                                                                            stroke="currentColor"
+                                                                            strokeWidth="1.8"
+                                                                            strokeLinecap="round"
+                                                                            strokeLinejoin="round"
+                                                                        >
                                                                             <circle cx="12" cy="12" r="10" />
                                                                             <line x1="2" y1="12" x2="22" y2="12" />
                                                                             <path d="M12 2a15.3 15.3 0 0 1 0 20a15.3 15.3 0 0 1 0-20z" />
@@ -489,8 +450,12 @@ export default function CV() {
 
             {/* Work Experience */}
             {showExp && (
-                <motion.div initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }} //////// {`Work Experience (${isLoading ? 0 : filteredExperience.length})`}
-                    transition={{ duration: 0.45, ease: "easeOut", delay: 0.15 }}>
+                <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-80px" }}
+                    transition={{ duration: 0.45, ease: "easeOut", delay: 0.15 }}
+                >
                     <GlowItem>
                         <div className="cv-section-title">{`Work Experience (${isLoading ? 0 : filteredExperience.length})`}</div>
                         <div className="space-y-3 panel-line glow-panel mt-3 cv-details">
@@ -532,8 +497,16 @@ export default function CV() {
                                                                 }}
                                                                 title="Open link"
                                                             >
-                                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-                                                                    stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                                                                <svg
+                                                                    width="16"
+                                                                    height="16"
+                                                                    viewBox="0 0 24 24"
+                                                                    fill="none"
+                                                                    stroke="currentColor"
+                                                                    strokeWidth="1.8"
+                                                                    strokeLinecap="round"
+                                                                    strokeLinejoin="round"
+                                                                >
                                                                     <circle cx="12" cy="12" r="10" />
                                                                     <line x1="2" y1="12" x2="22" y2="12" />
                                                                     <path d="M12 2a15.3 15.3 0 0 1 0 20a15.3 15.3 0 0 1 0-20z" />
