@@ -35,7 +35,7 @@ export default function CMSCVPanel() {
 
     return (
         <div
-            className="glow-panel rounded-2xl p-3"
+            className="rounded-2xl p-3"
             style={{
                 background: "var(--panel-surface)",
                 border: "1px solid var(--panel-border)",
@@ -47,19 +47,8 @@ export default function CMSCVPanel() {
                     className="text-sm font-semibold tracking-wide"
                     style={{ color: "var(--text-primary)" }}
                 >
-                    <span
-                        style={{
-                            display: "inline-block",
-                            width: 8,
-                            height: 8,
-                            borderRadius: 999,
-                            background: "var(--accent)",
-                            boxShadow: "0 0 12px var(--accent)",
-                            marginRight: 8,
-                            verticalAlign: "middle",
-                        }}
-                    />
-                    CV Editor (JSON)
+
+                    <div className="cv-section-title">JSON CV Editor</div>
                 </h3>
                 {savedAt && (
                     <div className="text-xs" style={{ color: "var(--text-muted)" }}>

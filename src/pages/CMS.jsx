@@ -79,7 +79,8 @@ export default function CMS() {
             transition={{ duration: 0.45, ease: "easeOut" }}
             className="space-y-4"
         >
-            <GlowPanel title="CMS Editor">
+            <GlowPanel>
+                <div className="cv-section-title">CMS Live Editor (Sandboxed)</div><br /><br />
                 {/* Tabs */}
                 <div className="cms-tabs mb-3">
                     {FILES.map((f) => (
@@ -133,7 +134,8 @@ export default function CMS() {
             </GlowPanel>
 
             {active === "cv" && (
-                <GlowPanel title="Curriculum Vitae — Live Editor">
+                <GlowPanel>
+                    <div className="cv-section-title">Curriculum Vitae — Live Editor</div><br /><br />
                     <CMSCVPanel />
                 </GlowPanel>
             )}

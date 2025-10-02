@@ -19,7 +19,8 @@ export default function Courses() {
                 <img src="/images/under_construction.svg" className="w-1/4 h-auto" />
             </div>
 
-            <GlowPanel title="Courses" className="glow-panel">
+            <GlowPanel className="glow-panel">
+                <div className="cv-section-title">Courses</div>
                 <div className="space-y-3">
                     {courses.map(c => (
                         <GlowItem key={c.id}>

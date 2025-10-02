@@ -106,7 +106,9 @@ export default function Technologies() {
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.45, ease: "easeOut" }}
         >
-            <GlowPanel title="Technologies" className="glow-panel">
+            <GlowPanel className="glow-panel">
+                <div className="cv-section-title">Technologies</div>
+
                 <div className="space-y-3">
                     {techs.map((t, i) => (
                         <TechRow key={i} tech={t} />

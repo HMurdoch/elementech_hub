@@ -83,8 +83,9 @@ export default function Projects() {
             transition={{ duration: 0.45, ease: "easeOut" }}
             className="space-y-6"
         >
-            <GlowPanel title="Projects" className="glow-panel">
-                {/* search + filters */}
+            <GlowPanel className="glow-panel">
+                <div className="cv-section-title">Projects</div><br /><br />
+               {/* search + filters */}
                 <div className="mb-3 flex flex-wrap items-center gap-2">
                     <input
                         value={q}

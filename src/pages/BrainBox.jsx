@@ -20,7 +20,8 @@ export default function BrainBox() {
                 <img src="/images/under_construction.svg" className="w-1/4 h-auto" />
             </div>
 
-            <GlowPanel title="Brain Box — Ideas">
+            <GlowPanel>
+                <div className="cv-section-title">Brain Box - Ideas</div>
                 <div className="space-y-3">
                     {ideas.map((idea, i) => (
                         <GlowItem key={i}>
