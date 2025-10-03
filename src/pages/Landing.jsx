@@ -1,21 +1,16 @@
 ﻿// src/pages/Landing.jsx
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
-/**
- * Reads <html data-theme="..."> and updates when it changes.
- * Returns "blue" | "red"
- */
+/** Read <html data-theme="..."> and stay in sync */
 function useTheme() {
     const read = () =>
         document.documentElement.getAttribute("data-theme") === "red"
             ? "red"
             : "blue";
-
     const [theme, setTheme] = useState(read);
-
     useEffect(() => {
         const el = document.documentElement;
-        const obs = new MutationObserver((muts) => {
+        const obs = new MutationObserver(muts => {
             for (const m of muts) {
                 if (m.attributeName === "data-theme") {
                     setTheme(read());
@@ -26,44 +21,30 @@ function useTheme() {
         obs.observe(el, { attributes: true, attributeFilter: ["data-theme"] });
         return () => obs.disconnect();
     }, []);
-
     return theme;
 }
 
-/**
- * Canvas-based “particles write text” hero.
- * Draws the text using a mask and fills it with traveling particles.
- * All canvases have pointer-events: none so the navbar remains fully clickable.
- */
+/** Canvas “particles write text” hero with a faint 1px theme outline */
 function ParticleTextHero({ theme, text = "HUGH MURDOCH\nAI WEBMASTER" }) {
     const hostRef = useRef(null);
 
-    // keep a stable bag of refs for animation state
     const state = useRef({
-        c1: null, // { canvas, ctx }
-        c2: null,
-        c3: null,
+        c1: null, // trails
+        c2: null, // text mask
+        c3: null, // output
         rafId: 0,
         intervalId: 0,
         particles: [],
         frequency: 20,
-        mounted: false,
+        mounted: false
     });
 
-    // theme palette (you can tweak the hues here)
+    // theme palette
     const palette = useMemo(
         () =>
             theme === "red"
-                ? {
-                    big: "#FF5E4C",
-                    small: "#ED413C",
-                    bg: "#0B0B0B",
-                }
-                : {
-                    big: "#42E4FF", // cyanish
-                    small: "#00B7FF", // bright blue
-                    bg: "#070B11",
-                },
+                ? { big: "#FF5E4C", small: "#ED413C", bg: "#0B0B0B", outline: "#ED413C" }
+                : { big: "#42E4FF", small: "#00B7FF", bg: "#070B11", outline: "#00B7FF" },
         [theme]
     );
 
@@ -71,7 +52,6 @@ function ParticleTextHero({ theme, text = "HUGH MURDOCH\nAI WEBMASTER" }) {
         const host = hostRef.current;
         if (!host) return;
 
-        // ----- helpers -----
         const createLayer = () => {
             const canvas = document.createElement("canvas");
             const ctx = canvas.getContext("2d");
@@ -83,22 +63,23 @@ function ParticleTextHero({ theme, text = "HUGH MURDOCH\nAI WEBMASTER" }) {
             return { canvas, ctx };
         };
 
+        const st = state.current;
+
         const fit = () => {
             const { width, height } = host.getBoundingClientRect();
             for (const L of [st.c1, st.c2, st.c3]) {
                 L.canvas.width = Math.max(1, Math.round(width));
                 L.canvas.height = Math.max(1, Math.round(height));
             }
-            // redraw text mask at new size
-            writeText(st.c2, text);
+            writeMask(st.c2, text); // redraw mask at new size
         };
 
-        const writeText = (layer, t) => {
+        // Draw the text mask (fill + hairline stroke) on layer c2
+        const writeMask = (layer, t) => {
             const { canvas, ctx } = layer;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             const lines = t.split("\n");
 
-            // responsive sizing
             const base = Math.max(28, Math.min(canvas.width / 10, 120));
             const lineHeight = Math.round(base * 0.7);
 
@@ -106,7 +87,13 @@ function ParticleTextHero({ theme, text = "HUGH MURDOCH\nAI WEBMASTER" }) {
             ctx.font = `600 ${base}px Montserrat, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif`;
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
-            ctx.fillStyle = "#111"; // text used as mask only
+            ctx.fillStyle = "#111"; // used only as alpha for masking
+            ctx.strokeStyle = palette.outline;
+            /*ctx.lineWidth = 1;*/
+            ctx.globalAlpha = 0.30;   // faint
+            ctx.lineWidth = 1;        // true 1px
+            ctx.lineJoin = "round";
+            ctx.miterLimit = 2;
 
             const midX = canvas.width / 2;
             const midY = canvas.height / 2;
@@ -115,16 +102,37 @@ function ParticleTextHero({ theme, text = "HUGH MURDOCH\nAI WEBMASTER" }) {
 
             lines.forEach((line, i) => {
                 const y = startY + i * lineHeight;
-
-                // Fill text (mask)
                 ctx.fillText(line, midX, y);
+                ctx.strokeText(line, midX, y); // same metrics = same size
+            });
+            ctx.restore();
+        };
 
-                // Outline stroke in theme color
-                ctx.strokeStyle = theme === "red" ? "#ED413C" : "#00B7FF";
-                ctx.lineWidth = 1;
+        // After compositing, lightly stroke the outline on the output
+        const strokeOutline = (layer, t) => {
+            const { canvas, ctx } = layer;
+            const lines = t.split("\n");
+
+            const base = Math.max(28, Math.min(canvas.width / 10, 120));
+            const lineHeight = Math.round(base * 0.7);
+
+            ctx.save();
+            ctx.font = `600 ${base}px Montserrat, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif`; // match writeMask
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.strokeStyle = palette.outline;
+            ctx.globalAlpha = 0.35;     // faint
+            ctx.lineWidth = 1;
+
+            const midX = canvas.width / 2;
+            const midY = canvas.height / 2;
+            const blockH = lineHeight * lines.length;
+            const startY = midY - blockH / 2 + lineHeight / 2;
+
+            lines.forEach((line, i) => {
+                const y = startY + i * lineHeight;
                 ctx.strokeText(line, midX, y);
             });
-
             ctx.restore();
         };
 
@@ -136,7 +144,7 @@ function ParticleTextHero({ theme, text = "HUGH MURDOCH\nAI WEBMASTER" }) {
                 this.x = w / 2;
                 this.y = h / 2;
                 this.a = Math.random() * Math.PI * 2;
-                this.s = 3 + Math.random(); // speed
+                this.s = 3 + Math.random();
                 this.radius = 0.5 + Math.random() * 20;
                 this.color = this.radius > 5 ? palette.big : palette.small;
             }
@@ -167,7 +175,7 @@ function ParticleTextHero({ theme, text = "HUGH MURDOCH\nAI WEBMASTER" }) {
 
         const clearTrail = () => {
             const { ctx, canvas } = st.c1;
-            ctx.globalAlpha = 0.03; // long trail
+            ctx.globalAlpha = 0.03;
             ctx.fillStyle = palette.bg;
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             ctx.globalAlpha = 1;
@@ -181,58 +189,53 @@ function ParticleTextHero({ theme, text = "HUGH MURDOCH\nAI WEBMASTER" }) {
         };
 
         const mask = () => {
-            const src = st.c1;
-            const mask = st.c2;
-            const out = st.c3;
+            const src = st.c1; // trails
+            const mask = st.c2; // text+stroke
+            const out = st.c3; // output
 
-            // paint text mask into output, then keep only trail where mask exists
             out.ctx.clearRect(0, 0, out.canvas.width, out.canvas.height);
             out.ctx.drawImage(mask.canvas, 0, 0);
             out.ctx.globalCompositeOperation = "source-atop";
             out.ctx.drawImage(src.canvas, 0, 0);
             out.ctx.globalCompositeOperation = "source-over";
 
-            // slight blur on the source trail to soften edges
-            blur(src, 2);
+            blur(src, 2); // soften trail a touch
         };
 
         const popolate = () => {
             st.particles.push(
                 new Particle(st.c1.ctx, st.c1.canvas.width, st.c1.canvas.height)
             );
-            // keep list bounded (prevents runaway allocations)
             if (st.particles.length > 1200) st.particles.splice(0, 200);
         };
 
         const tick = () => {
             st.rafId = requestAnimationFrame(tick);
             clearTrail();
-            st.particles = st.particles.filter((p) => p.move());
+            st.particles = st.particles.filter(p => p.move());
             mask();
+            strokeOutline(st.c3, text); // <- draw faint 1px border on top
         };
 
         const mountLayers = () => {
-            host.innerHTML = ""; // reset
+            host.innerHTML = "";
             st.c1 = createLayer();
             st.c2 = createLayer();
             st.c3 = createLayer();
             st.c1.canvas.style.zIndex = "0";
             st.c2.canvas.style.zIndex = "0";
             st.c3.canvas.style.zIndex = "0";
-            // Only output canvas is added to DOM (so we draw “into” it)
-            host.appendChild(st.c3.canvas);
+            host.appendChild(st.c3.canvas); // only output goes in DOM
             fit();
         };
 
-        const st = state.current;
         if (!st.mounted) {
             mountLayers();
             st.intervalId = window.setInterval(popolate, st.frequency);
             st.rafId = requestAnimationFrame(tick);
             st.mounted = true;
         } else {
-            // theme changed — just redraw text + keep anim running
-            writeText(st.c2, text);
+            writeMask(st.c2, text); // theme changed
         }
 
         const onResize = () => fit();
@@ -247,7 +250,7 @@ function ParticleTextHero({ theme, text = "HUGH MURDOCH\nAI WEBMASTER" }) {
             st.particles = [];
             st.mounted = false;
         };
-    }, [palette, text]); // re-run and rebuild when theme palette or text changes
+    }, [palette, text]);
 
     return (
         <div
@@ -255,12 +258,11 @@ function ParticleTextHero({ theme, text = "HUGH MURDOCH\nAI WEBMASTER" }) {
             className="particle-text-hero"
             aria-hidden="true"
             role="img"
-            // Height of the banner area; tweak to taste or make it responsive via CSS
             style={{
                 position: "relative",
                 width: "100%",
                 height: "260px",
-                pointerEvents: "none",
+                pointerEvents: "none"
             }}
         />
     );
@@ -269,7 +271,6 @@ function ParticleTextHero({ theme, text = "HUGH MURDOCH\nAI WEBMASTER" }) {
 export default function Landing() {
     const theme = useTheme();
 
-    // keep the rest of your landing content (image card, etc.)
     const heroImg = useMemo(() => {
         const file =
             theme === "red" ? "elementech_landing_red.png" : "elementech_landing_blue.png";
@@ -278,18 +279,11 @@ export default function Landing() {
 
     return (
         <section className="landing-hero">
-            {/* New particles write-text banner */}
-            <ParticleTextHero
-                theme={theme}
-                text={"HUGH MURDOCH\nAI WEBMASTER"}
-            />
-
-            {/* Optional one-liner under the banner */}
-            <p className="landing-sub" style={{ textAlign: "center", marginTop: "8px" }}>
-                Explore technologies, projects, courses, my CV, and the Brain Box forum.
+            <ParticleTextHero theme={theme} text={"HUGH MURDOCH\nAI WEBMASTER"} />
+            <p className="landing-sub" style={{ textAlign: "center", marginTop: 8 }}>
+                Sufficiently Advanced Technology is Indistinguishable From Magic - Merlin
+                Murdoch 2025
             </p>
-
-            {/* Keep your existing image panel below (unchanged) */}
             <div className="landing-image-shell glow-panel glow-panel--hero">
                 <img
                     key={heroImg}

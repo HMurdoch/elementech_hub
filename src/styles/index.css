@@ -2490,3 +2490,35 @@ html[data-theme="red"] {
     --particle-2: #ed413c;
     --particle-link: #ff6e60;
 }
+
+.hero-text {
+    font-family: "Montserrat", sans-serif;
+    font-size: 100px;
+    font-weight: 700;
+    text-align: center;
+    line-height: 1.2;
+    /* Gradient Fill */
+    background: linear-gradient(to right, var(--hero-gradient-start), var(--hero-gradient-end));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    /* Subtle outline */
+    -webkit-text-stroke: 0.5px var(--hero-outline-color);
+    /* Optional faint glow */
+    text-shadow: 0 0 4px rgba(var(--hero-outline-rgb), 0.4);
+}
+
+/* Theme variables */
+[data-theme="blue"] .hero-text {
+    --hero-gradient-start: #2196f3;
+    --hero-gradient-end: #0d47a1;
+    --hero-outline-color: #2196f3;
+    --hero-outline-rgb: 33, 150, 243; /* RGB for text-shadow */
+}
+
+[data-theme="red"] .hero-text {
+    --hero-gradient-start: #ff5252;
+    --hero-gradient-end: #b71c1c;
+    --hero-outline-color: #ff5252;
+    --hero-outline-rgb: 255, 82, 82;
+}
+
