@@ -2742,3 +2742,147 @@ html[data-theme="red"] {
     color: #ef4444;
     background: currentColor;
 }
+
+/* ---------- Theme color hooks (you already have these—showing defaults) ---------- */
+:root {
+    --brand: #19b5ff; /* blue theme primary */
+    --brand-strong: #48d1ff;
+    --brand-dim: #0a7bb3;
+    --text-soft: rgba(255,255,255,0.82);
+}
+
+html[data-theme="red"] {
+    --brand: #ff3b3b;
+    --brand-strong: #ff6a6a;
+    --brand-dim: #b21919;
+}
+
+/* ---------- Quote hero container ---------- */
+.quote-hero {
+    display: flex;
+    justify-content: center;
+    margin: 12px 0 22px;
+}
+
+.quote-hero__line {
+    color: var(--text-soft);
+    font-size: clamp(1.4rem, 3vw, 1.6rem); /* ← increased ~50% */
+    letter-spacing: 0.25px;
+    text-align: center;
+    text-shadow: 0 0 6px rgba(0,0,0,0.5), 0 0 18px rgba(0,0,0,0.35);
+    margin: 0;
+    line-height: 1.4;
+}
+
+.quote-hero {
+    filter: drop-shadow(0 0 6px var(--brand-dim)) drop-shadow(0 0 10px color-mix(in srgb, var(--brand) 40%, transparent));
+}
+/* ---------- MAGIC: glowing outline + burst inside the letters ---------- */
+.magic-word {
+    position: relative;
+    font-weight: 800;
+    /* outline (subtle, theme-colored) */
+    -webkit-text-stroke: 1px var(--brand);
+    text-shadow: 0 0 6px color-mix(in srgb, var(--brand) 70%, transparent), 0 0 16px color-mix(in srgb, var(--brand) 45%, transparent);
+    /* keep solid fill so readability is great */
+    color: #ffffff;
+    /* small extra kerning for punch */
+    letter-spacing: 0.02em;
+    isolation: isolate; /* ensures pseudo layers blend cleanly */
+}
+
+    /* Rays “inside” the letters via background-clip:text technique */
+    .magic-word::before {
+        content: attr(aria-label);
+        position: absolute;
+        inset: 0;
+        /* Build bursting rays with a conic gradient, then tint with brand colors. */
+        background: conic-gradient( from 0deg, transparent 0 8deg, var(--brand-strong) 8deg 10deg, transparent 10deg 30deg, var(--brand) 30deg 32deg, transparent 32deg 60deg, var(--brand-strong) 60deg 62deg, transparent 62deg 90deg, var(--brand) 90deg 92deg, transparent 92deg 120deg, var(--brand-strong) 120deg 122deg, transparent 122deg 150deg, var(--brand) 150deg 152deg, transparent 152deg 200deg, var(--brand-strong) 200deg 202deg, transparent 202deg 260deg, var(--brand) 260deg 262deg, transparent 262deg 360deg );
+        /* Clip the burst to the text glyphs only */
+        color: transparent;
+        -webkit-background-clip: text;
+        background-clip: text;
+        /* Animate: expand + fade = “burst” */
+        transform-origin: 50% 55%;
+        animation: magic-burst 2.4s ease-out infinite;
+        animation-delay: 0s;
+        /* Run once every 10s: 2.4s playing, 7.6s idle via steps in keyframes (below) */
+    }
+
+@keyframes magic-burst {
+    /* idle window before the burst – remains invisible */
+    0% {
+        opacity: 0;
+        transform: scale(0.85) rotate(0deg);
+    }
+
+    72% {
+        opacity: 0;
+        transform: scale(0.85) rotate(0deg);
+    }
+    /* ~7.2s of idle in a 10s cycle */
+    /* burst starts */
+    76% {
+        opacity: 1;
+        transform: scale(0.98) rotate(12deg);
+    }
+
+    86% {
+        opacity: 0.9;
+        transform: scale(1.06) rotate(22deg);
+    }
+
+    92% {
+        opacity: 0.6;
+        transform: scale(1.12) rotate(32deg);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(1.18) rotate(42deg);
+    }
+}
+
+/* Quick shimmer sweep across MAGIC */
+.magic-word::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, transparent 0%, color-mix(in srgb, var(--brand) 40%, #fff 30%) 45%, color-mix(in srgb, var(--brand) 65%, #fff 40%) 55%, transparent 100%);
+    -webkit-mask-image: linear-gradient(#000, #000); /* show within text */
+    -webkit-mask-clip: text;
+    mask-image: linear-gradient(#000, #000);
+    -webkit-background-clip: text;
+    background-clip: text;
+    mix-blend-mode: screen;
+    opacity: 0;
+    animation: magic-shimmer 2.2s ease-out infinite;
+    animation-delay: 0.3s; /* offset from burst a touch */
+}
+
+@keyframes magic-shimmer {
+    0% {
+        opacity: 0;
+        transform: translateX(-120%) skewX(-8deg);
+    }
+
+    76% {
+        opacity: 0;
+        transform: translateX(-120%) skewX(-8deg);
+    }
+    /* hidden during idle window */
+    86% {
+        opacity: 0.75;
+        transform: translateX(0%) skewX(-8deg);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateX(120%) skewX(-8deg);
+    }
+}
+
+.magic-word:hover::before,
+.magic-word:hover::after {
+    animation-play-state: running;
+}

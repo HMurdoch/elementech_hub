@@ -1,5 +1,6 @@
 ﻿// src/pages/Landing.jsx
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import QuoteHero from "../components/QuoteHero";
 
 /** Read <html data-theme="..."> and stay in sync */
 function useTheme() {
@@ -280,10 +281,7 @@ export default function Landing() {
     return (
         <section className="landing-hero">
             <ParticleTextHero theme={theme} text={"HUGH MURDOCH\nAI WEBMASTER"} />
-            <p className="landing-sub" style={{ textAlign: "center", marginTop: 8 }}>
-                Sufficiently Advanced Technology is Indistinguishable From Magic - Merlin
-                Murdoch 2025
-            </p>
+            <QuoteHero />
             <div className="landing-image-shell glow-panel glow-panel--hero">
                 <img
                     key={heroImg}
