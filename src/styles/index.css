@@ -2764,9 +2764,10 @@ html[data-theme="red"] {
     margin: 12px 0 22px;
 }
 
+/* Base quote styling (keep your existing one, or use this) */
 .quote-hero__line {
     color: var(--text-soft);
-    font-size: clamp(1.4rem, 3vw, 1.6rem); /* ← increased ~50% */
+    font-size: clamp(1.4rem, 3vw, 1.6rem);
     letter-spacing: 0.25px;
     text-align: center;
     text-shadow: 0 0 6px rgba(0,0,0,0.5), 0 0 18px rgba(0,0,0,0.35);
@@ -2885,4 +2886,73 @@ html[data-theme="red"] {
 .magic-word:hover::before,
 .magic-word:hover::after {
     animation-play-state: running;
+}
+
+/* MAGIC: theme-aware base */
+.quote-hero__magic {
+    position: relative;
+    display: inline-block;
+    color: var(--brand); /* blue or red, per theme */
+    font-weight: 800;
+    letter-spacing: 0.3px;
+    /* subtle always-on inner glow so it reads even when pulse is idle */
+    text-shadow: 0 0 4px color-mix(in srgb, var(--brand) 50%, transparent), 0 0 10px color-mix(in srgb, var(--brand) 30%, transparent);
+}
+
+/* MAGIC glow pulse — every 8s */
+.quote-hero__magic::after {
+    /* duplicate the word as a blurred, expanding glow */
+    content: attr(data-content);
+    position: absolute;
+    inset: 0;
+    color: var(--brand);
+    pointer-events: none;
+    transform-origin: 50% 60%;
+    filter: blur(6px);
+    opacity: 0;
+    /* the pulse */
+    animation: magicHalo 8s ease-in-out infinite;
+}
+
+/* The halo expands and fades away */
+@keyframes magicHalo {
+    0%, 58% {
+        transform: scale(1);
+        opacity: 0;
+        filter: blur(6px);
+    }
+
+    62% {
+        transform: scale(1.08);
+        opacity: 0.8;
+        filter: blur(9px);
+    }
+
+    70% {
+        transform: scale(1.16);
+        opacity: 0.55;
+        filter: blur(12px);
+    }
+
+    78% {
+        transform: scale(1.22);
+        opacity: 0.25;
+        filter: blur(14px);
+    }
+
+    100% {
+        transform: scale(1.22);
+        opacity: 0;
+        filter: blur(14px);
+    }
+}
+
+/* Accessibility: respect Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    .quote-hero__magic::after {
+        animation: none;
+        opacity: 0.35; /* keep a steady gentle glow */
+        transform: scale(1.06);
+        filter: blur(8px);
+    }
 }
