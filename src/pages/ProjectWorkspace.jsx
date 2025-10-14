@@ -78,9 +78,9 @@ export default function ProjectWorkspace() {
     const tags = Array.isArray(item.tags) && item.tags.length ? item.tags : [item.tech].filter(Boolean);
     const Panel = ({ title, children }) => (
         <GlowPanel
-            title={title}
             className="rounded-2xl border border-zinc-800/70 bg-zinc-900/70 backdrop-blur p-3 shadow-[0_0_25px_rgba(239,68,68,0.35)]"
         >
+            <div className="cv-section-title">{title}</div><br /><br />
             {children}
         </GlowPanel>
     );
@@ -93,13 +93,13 @@ export default function ProjectWorkspace() {
                 <div className="mb-3 flex items-center justify-between gap-3">
                     <div className="flex items-center gap-2">
                         <Link
-                            to="/technologies"
-                            className="inline-flex items-center gap-2 rounded-lg border border-zinc-800/60 bg-zinc-900/60 px-3 py-1.5 text-sm text-zinc-200 hover:border-red-500/40 hover:text-red-300"
+                            to="/projects"
+                            className="inline-flex items-center gap-2 rounded-lg border border-zinc-800/60 bg-zinc-900/60 px-3 py-1.5 text-sm text-zinc-200 hover:border-[color:var(--accent)] hover:text-[color:var(--accent)]"
                         >
                             ← Back
                         </Link>
                         <h1 className="text-lg font-semibold text-zinc-100">
-                            <span className="text-red-300">
+                            <span style={{ color: "var(--accent)" }}>
                                 {item.tech?.charAt(0).toUpperCase() + item.tech?.slice(1)}
                             </span>{" "}
                             / {item.title}
@@ -109,7 +109,14 @@ export default function ProjectWorkspace() {
                         {tags.map((t) => (
                             <span
                                 key={t}
-                                className="rounded-md border border-red-900/40 bg-red-900/30 px-2 py-0.5 text-xs text-red-200"
+                                style={{
+                                    border: "1px solid color-mix(in srgb, var(--accent) 35%, transparent)",
+                                    background: "color-mix(in srgb, var(--accent) 10%, transparent)",
+                                    color: "var(--accent)",
+                                    borderRadius: "6px",
+                                    padding: "2px 8px",
+                                    fontSize: "0.75rem",
+                                }}
                             >
                                 {t}
                             </span>
@@ -119,10 +126,16 @@ export default function ProjectWorkspace() {
                                 href={item.repoUrl}
                                 target="_blank"
                                 rel="noreferrer"
-                                className="text-sm text-red-300 hover:underline"
+                                style={{
+                                    color: "var(--accent)",
+                                    textDecoration: "none",
+                                }}
+                                onMouseEnter={(e) => (e.target.style.textDecoration = "underline")}
+                                onMouseLeave={(e) => (e.target.style.textDecoration = "none")}
                             >
                                 View repo ↗
                             </a>
+
                         )}
                     </div>
                 </div>

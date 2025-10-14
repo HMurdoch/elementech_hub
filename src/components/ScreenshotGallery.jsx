@@ -28,7 +28,7 @@ export default function ScreenshotGallery({ shots = [vanillaJSScreenshots] }) {
 
     return (
         <div className={panel}>
-            <div className="mb-2 text-sm font-semibold tracking-wide text-red-300">Screenshots</div>
+            <div className="mb-2 text-sm font-semibold tracking-wide text-red-300"></div>
             <div className="grid grid-cols-2 gap-2 md:grid-cols-3">
                 {shots.length ? (
                     shots.map(s => (

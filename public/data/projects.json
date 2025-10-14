@@ -1,5 +1,198 @@
 [
   {
+    "tech": "Integration",
+    "slug": "heliospay-react-dotnet-postgres-api",
+    "title": "Integration POC – HeliosPay (React → .NET API → PostgreSQL) - FRONTEND",
+    "description": "POC showing a React + Vite frontend talking to a C# ASP.NET Core API with EF Core & PostgreSQL. Includes account CRUD, transfers, transactions, and Swagger. Deployed on Render with CI/CD.",
+    "homepageUrl": "https://elementech-projects-heliospay.onrender.com/",
+    "repoUrl": "https://github.com/HMurdoch/elementech-projects-heliospay",
+    "tags": [ "React", "TypeScript", "C#", ".NET", "ASP.NET Core", "PostgreSQL", "EF Core", "Vite", "Render", "CI/CD" ],
+    "files": [
+      {
+        "type": "folder",
+        "name": "heliospay",
+        "path": "/",
+        "children": [
+          {
+            "type": "folder",
+            "name": "frontend",
+            "path": "frontend",
+            "children": [
+              {
+                "type": "file",
+                "name": "vite.config.ts",
+                "path": "frontend/vite.config.ts",
+                "language": "ts",
+                "code": "import { defineConfig } from 'vite';\nimport react from '@vitejs/plugin-react';\nexport default defineConfig({ plugins: [react()], server: { port: 3000 } });"
+              },
+              {
+                "type": "file",
+                "name": ".env.production",
+                "path": "frontend/.env.production",
+                "language": "dotenv",
+                "code": "VITE_API_BASE=https://elementech-projects-heliospay-dotnet-api.onrender.com"
+              },
+              {
+                "type": "file",
+                "name": "client.ts",
+                "path": "frontend/src/api/client.ts",
+                "language": "ts",
+                "code": "import axios from 'axios';\nconst api = axios.create({ baseURL: `${import.meta.env.VITE_API_BASE}/api` });\nexport default api;"
+              },
+              {
+                "type": "file",
+                "name": "AccountsPanel.tsx",
+                "path": "frontend/src/components/AccountsPanel.tsx",
+                "language": "tsx",
+                "code": "/* Uses AccountsApi & TransfersApi to list accounts and post transfers. UI polished with full-height pane and overflow-only scrolling. */"
+              },
+              {
+                "type": "file",
+                "name": "ui.css",
+                "path": "frontend/src/styles/ui.css",
+                "language": "css",
+                "code": "/* Full-height 2-col layout; left list scrolls only when overflowing (flex/min-height:0 pattern). See project styles. */"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "screenshots": [
+      {
+        "id": "s1",
+        "src": "/images/heliospay/heliospay-accounts.png",
+        "caption": "Accounts list with transfer panel"
+      },
+      {
+        "id": "s2",
+        "src": "/images/heliospay/heliospay-swagger.png",
+        "caption": "Swagger UI for the API"
+      },
+      {
+        "id": "s3",
+        "src": "/images/heliospay/heliospay-render.png",
+        "caption": "Render deployment (Docker + Static Site)"
+      }
+    ]
+  },
+  {
+    "tech": "Integration",
+    "slug": "heliospay-react-dotnet-postgres-frontend",
+    "title": "Integration POC – HeliosPay (React → .NET API → PostgreSQL) - Swagger API",
+    "description": "POC showing a React + Vite frontend talking to a C# ASP.NET Core API with EF Core & PostgreSQL. Includes account CRUD, transfers, transactions, and Swagger. Deployed on Render with CI/CD.",
+    "homepageUrl": "https://elementech-projects-heliospay-dotnet-api.onrender.com/swagger",
+    "repoUrl": "https://github.com/HMurdoch/elementech-projects-heliospay",
+    "tags": [ "React", "TypeScript", "C#", ".NET", "ASP.NET Core", "PostgreSQL", "EF Core", "Vite", "Render", "CI/CD" ],
+    "files": [
+      {
+        "type": "folder",
+        "name": "heliospay",
+        "path": "/",
+        "children": [
+          {
+            "type": "folder",
+            "name": "backend",
+            "path": "backend",
+            "children": [
+              {
+                "type": "folder",
+                "name": "HelioPay.API",
+                "path": "backend/HelioPay.API",
+                "children": [
+                  {
+                    "type": "file",
+                    "name": "Program.cs",
+                    "path": "backend/HelioPay.API/Program.cs",
+                    "language": "csharp",
+                    "code": "// ASP.NET Core bootstrap with Swagger & CORS\nvar builder = WebApplication.CreateBuilder(args);\nbuilder.Services.AddControllers();\nbuilder.Services.AddEndpointsApiExplorer();\nbuilder.Services.AddSwaggerGen();\n// CORS: allow frontend & swagger\nbuilder.Services.AddCors(o => o.AddPolicy(\"app\", p => p\n    .WithOrigins(\"https://elementech-projects-heliospay.onrender.com\",\n                 \"https://elementech-projects-heliospay-dotnet-api.onrender.com\")\n    .AllowAnyHeader().AllowAnyMethod()));\nvar app = builder.Build();\napp.UseCors(\"app\");\napp.UseSwagger(); app.UseSwaggerUI();\napp.MapControllers();\napp.Run();"
+                  },
+                  {
+                    "type": "file",
+                    "name": "TransactionsController.cs",
+                    "path": "backend/HelioPay.API/Controllers/TransactionsController.cs",
+                    "language": "csharp",
+                    "code": "// Simplified excerpt\n[ApiController]\n[Route(\"api/[controller]\")]\npublic class TransactionsController : ControllerBase {\n  [HttpGet]\n  public Task<IEnumerable<TransactionDto>> List([FromQuery]Guid? accountId) { /* ... */ return Task.FromResult(Enumerable.Empty<TransactionDto>()); }\n  [HttpPost]\n  public Task<IActionResult> Create(CreateTx dto) { /* ... */ return Task.FromResult<IActionResult>(Ok()); }\n}"
+                  },
+                  {
+                    "type": "file",
+                    "name": "Dockerfile",
+                    "path": "backend/HelioPay.API/Dockerfile",
+                    "language": "dockerfile",
+                    "code": "# build\nFROM mcr.microsoft.com/dotnet/sdk:8.0 AS build\nWORKDIR /src\nCOPY ./ ../\nWORKDIR /src/backend/HelioPay.API\nRUN dotnet publish HelioPay.API.csproj -c Release -o /app\n\n# run\nFROM mcr.microsoft.com/dotnet/aspnet:8.0\nWORKDIR /app\nCOPY --from=build /app ./\nENV ASPNETCORE_URLS=http://0.0.0.0:${PORT}\nCMD [\"bash\",\"-lc\",\"dotnet HelioPay.API.dll --urls http://0.0.0.0:$PORT\"]"
+                  },
+                  {
+                    "type": "file",
+                    "name": "render.yaml",
+                    "path": "backend/render.yaml",
+                    "language": "yaml",
+                    "code": "services:\n  - type: web\n    name: elementech-projects-heliospay-dotnet-api\n    env: docker\n    plan: free\n    rootDir: backend/HelioPay.API\n    dockerfilePath: backend/HelioPay.API/Dockerfile"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "screenshots": [
+      {
+        "id": "s1",
+        "src": "/images/heliospay/heliospay-accounts.png",
+        "caption": "Accounts list with transfer panel"
+      },
+      {
+        "id": "s2",
+        "src": "/images/heliospay/heliospay-swagger.png",
+        "caption": "Swagger UI for the API"
+      },
+      {
+        "id": "s3",
+        "src": "/images/heliospay/heliospay-render.png",
+        "caption": "Render deployment (Docker + Static Site)"
+      }
+    ]
+  },
+  {
+    "tech": "react",
+    "slug": "react-essentials",
+    "title": "React Essentials",
+    "description": "Key React patterns & hooks",
+    "homepageUrl": "https://example.com/essentials",
+    "repoUrl": "",
+    "tags": [ "React", "Patterns" ],
+    "files": [
+      {
+        "type": "folder",
+        "name": "react_essentials",
+        "path": "technologies/react_essentials",
+        "children": [
+          {
+            "type": "folder",
+            "name": "src",
+            "path": "technologies/react_essentials/src",
+            "children": [
+              {
+                "type": "file",
+                "name": "Counter.jsx",
+                "path": "technologies/react_essentials/src/Counter.jsx",
+                "language": "jsx",
+                "code": "import {useState} from 'react'; export default function Counter(){const [c,setC]=useState(0); return <button onClick={()=>setC(c+1)}>Count {c}</button>;}"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "screenshots": [
+      {
+        "id": "s1",
+        "src": "/images/essentials-1.png",
+        "caption": "Counter"
+      }
+    ]
+  },
+  {
     "tech": "react",
     "slug": "vanilla-js-example",
     "title": "Vanilla JS Example",
@@ -141,45 +334,6 @@
             ]
           }
         ]
-      }
-    ]
-  },
-  {
-    "tech": "react",
-    "slug": "react-essentials",
-    "title": "React Essentials",
-    "description": "Key React patterns & hooks",
-    "homepageUrl": "https://example.com/essentials",
-    "repoUrl": "",
-    "tags": [ "React", "Patterns" ],
-    "files": [
-      {
-        "type": "folder",
-        "name": "react_essentials",
-        "path": "technologies/react_essentials",
-        "children": [
-          {
-            "type": "folder",
-            "name": "src",
-            "path": "technologies/react_essentials/src",
-            "children": [
-              {
-                "type": "file",
-                "name": "Counter.jsx",
-                "path": "technologies/react_essentials/src/Counter.jsx",
-                "language": "jsx",
-                "code": "import {useState} from 'react'; export default function Counter(){const [c,setC]=useState(0); return <button onClick={()=>setC(c+1)}>Count {c}</button>;}"
-              }
-            ]
-          }
-        ]
-      }
-    ],
-    "screenshots": [
-      {
-        "id": "s1",
-        "src": "/images/essentials-1.png",
-        "caption": "Counter"
       }
     ]
   }
