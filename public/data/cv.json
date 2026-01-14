@@ -1,6 +1,6 @@
 {
   "details": "Hugh Murdoch · South African · DOB: 1979-01-22 · +27 (0)63 627 7091 · hughmurdoch@gmail.com",
-  "position": "Acting Head of Research & Development / Full Stack Developer / AI Specialist Developer / Software Engineering Leader",
+  "position": "AI Webmaster / Head of R&D / Full Stack Developer / AI Specialist Developer / Software Engineering Leader",
   "education": [
     {
       "course": "Masters Organizational and Business Psychology",
@@ -311,7 +311,7 @@
   "experience": [
     {
       "company": "Trialogue Knowledge Hub NPO Directory & CharitySA (Department of Social Development (DSD))",
-      "title": "Acting Head Research & Development",
+      "title": "AI Webmaster",
       "from": "2025-06",
       "to": "Present",
       "description": "As Acting Head of Research & Development (current Head of Research and Development is on Sabbatical) for Trialogue's Knowledge Hub and CharitySA platforms, I help lead the full technology strategy, modernization, and digital transformation initiatives for two of South Africa's largest non-profit information ecosystems. My role combines hands-on technical direction, solution architecture, and leadership of cross-functional teams responsible for delivering scalable, secure, and AI-enhanced platforms.\n\nTechnology Strategy & Delivery Governance\n• Define and execute the IT roadmap across web, integration, and automation platforms, ensuring alignment with organizational goals and donor expectations.\n• Introduced modern SDLC governance, CI/CD pipelines, and DevOps alignment using Azure DevOps, GitHub Actions, and SonarQube to improve delivery cadence, traceability, and audit readiness.\n• Lead sprint planning, resource allocation, and Agile ceremonies (Scrum & Kanban hybrids) ensuring consistent release cycles and quality output.\n\nPlatform Modernisation & Systems Integration\n• Oversaw modernization of legacy PHP and ASP.NET platforms into .NET Core, React, and PostgreSQL ecosystems hosted on Azure App Services.\n• Directed the redevelopment of CharitySA's directory and Knowledge Hub portals into API-driven, cloud-native architectures enabling automated data synchronization across microsites.\n• Led migration from manual ETL workflows to automated AI-assisted ingestion pipelines, streamlining content validation and indexing.\n• Implemented API-based integration between the Knowledge Hub, partner portals, and analytics systems — replacing legacy SFTP/file-driven solutions.",
@@ -322,7 +322,7 @@
     },
     {
       "company": "Trialogue Knowledge Hub NPO Directory & CharitySA (Department of Social Development (DSD))",
-      "title": "Research & Development Specialist Consultant (Part Time Consultant) - Pro Bono",
+      "title": "Head of R&D",
       "from": "2020-01",
       "to": "2025-05",
       "description": "",

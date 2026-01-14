@@ -375,7 +375,7 @@ export default function CV() {
                                                 {(e.years || e.qualificationType || clickable) && (
                                                     <div className="cv-row">
                                                         <div className="cv-title">
-                                                            <span className="font-semibold">{e.course}</span>
+                                                            <span className="font-semibold" style={{ color: "#60a5fa" }}>{e.course}</span>
                                                             {e.institute && <span className="text-zinc-400"> - {e.institute}</span>}
                                                         </div>
 
