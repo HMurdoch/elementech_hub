@@ -465,6 +465,11 @@ export default function CV() {
                                 filteredExperience.map((w, i) => {
                                     const clickable = isHttp(w.sourcelink);
                                     const onOpen = () => clickable && openExternal(w.sourcelink);
+                                    
+                                    // Check if this is a combined position (show only title/date for second entry)
+                                    const isCombinedSecondary = w.combinedPosition && i > 0 && 
+                                        filteredExperience[i - 1]?.company === w.company &&
+                                        filteredExperience[i - 1]?.combinedPosition;
 
                                     return (
                                         <GlowItem
@@ -476,46 +481,60 @@ export default function CV() {
                                             onKeyDown={clickable ? (ev) => ev.key === "Enter" && onOpen() : undefined}
                                             aria-label={clickable ? `Open ${w.company} website` : undefined}
                                         >
-                                            <div className="cv-row">
-                                                <div className="cv-title">
-                                                    <span className="font-semibold">{w.company}</span>
-                                                    {w.title && <span className="text-zinc-400"> - {w.title}</span>}
-                                                </div>
-
-                                                <div className="cv-right flex items-center gap-2">
-                                                    <div className="cv-date text-sm font-semibold" style={{ color: "var(--accent)" }}>
-                                                        {formatRange(w.from, w.to)}
+                                            {!isCombinedSecondary ? (
+                                                <div className="cv-row">
+                                                    <div className="cv-title">
+                                                        <span className="font-semibold" style={{ color: "#60a5fa" }}>{w.company}</span>
+                                                        {w.title && <span className="text-zinc-400"> - {w.title}</span>}
                                                     </div>
 
-                                                    <div className="cv-link-slot w-7 flex justify-center">
-                                                        {w.sourcelink && (
-                                                            <button
-                                                                className="cv-link-btn"
-                                                                onClick={(ev) => {
-                                                                    ev.stopPropagation();
-                                                                    openExternal(w.sourcelink);
-                                                                }}
-                                                                title="Open link"
-                                                            >
-                                                                <svg
-                                                                    width="16"
-                                                                    height="16"
-                                                                    viewBox="0 0 24 24"
-                                                                    fill="none"
-                                                                    stroke="currentColor"
-                                                                    strokeWidth="1.8"
-                                                                    strokeLinecap="round"
-                                                                    strokeLinejoin="round"
+                                                    <div className="cv-right flex items-center gap-2">
+                                                        <div className="cv-date text-sm font-semibold" style={{ color: "var(--accent)" }}>
+                                                            {formatRange(w.from, w.to)}
+                                                        </div>
+
+                                                        <div className="cv-link-slot w-7 flex justify-center">
+                                                            {w.sourcelink && (
+                                                                <button
+                                                                    className="cv-link-btn"
+                                                                    onClick={(ev) => {
+                                                                        ev.stopPropagation();
+                                                                        openExternal(w.sourcelink);
+                                                                    }}
+                                                                    title="Open link"
                                                                 >
-                                                                    <circle cx="12" cy="12" r="10" />
-                                                                    <line x1="2" y1="12" x2="22" y2="12" />
-                                                                    <path d="M12 2a15.3 15.3 0 0 1 0 20a15.3 15.3 0 0 1 0-20z" />
-                                                                </svg>
-                                                            </button>
-                                                        )}
+                                                                    <svg
+                                                                        width="16"
+                                                                        height="16"
+                                                                        viewBox="0 0 24 24"
+                                                                        fill="none"
+                                                                        stroke="currentColor"
+                                                                        strokeWidth="1.8"
+                                                                        strokeLinecap="round"
+                                                                        strokeLinejoin="round"
+                                                                    >
+                                                                        <circle cx="12" cy="12" r="10" />
+                                                                        <line x1="2" y1="12" x2="22" y2="12" />
+                                                                        <path d="M12 2a15.3 15.3 0 0 1 0 20a15.3 15.3 0 0 1 0-20z" />
+                                                                    </svg>
+                                                                </button>
+                                                            )}
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            ) : (
+                                                <div className="cv-row mt-3">
+                                                    <div className="cv-title">
+                                                        <span className="text-zinc-400">{w.title}</span>
+                                                    </div>
+                                                    <div className="cv-right flex items-center gap-2">
+                                                        <div className="cv-date text-sm font-semibold" style={{ color: "var(--accent)" }}>
+                                                            {formatRange(w.from, w.to)}
+                                                        </div>
+                                                        <div className="cv-link-slot w-7"></div>
+                                                    </div>
+                                                </div>
+                                            )}
 
                                             {w.description && (
                                                 <div className="mt-1 text-sm text-zinc-300">
