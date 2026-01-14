@@ -98,7 +98,7 @@ export default function ProjectWorkspace() {
                         >
                             ← Back
                         </Link>
-                        <h1 className="text-lg font-semibold text-zinc-100">
+                        <h1 className="text-sm font-semibold text-zinc-100">
                             <span style={{ color: "var(--accent)" }}>
                                 {item.tech?.charAt(0).toUpperCase() + item.tech?.slice(1)}
                             </span>{" "}
