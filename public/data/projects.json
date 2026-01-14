@@ -230,6 +230,13 @@
             "children": [
               {
                 "type": "file",
+                "name": "counter.js",
+                "path": "technologies/vanilla_js/src/counter.js",
+                "language": "javascript",
+                "code": "export function setupCounter(element) {\n  let counter = 0\n  const setCounter = (count) => {\n    counter = count\n    element.innerHTML = `count is ${counter}`\n  }\n  element.addEventListener('click', () => setCounter(counter + 1))\n  setCounter(0);\n}"
+              },
+              {
+                "type": "file",
                 "name": "main.js",
                 "path": "technologies/vanilla_js/src/main.js",
                 "language": "javascript",
