@@ -176,7 +176,7 @@ export default function CV() {
         useEffect(() => {
             const id = setInterval(() => {
                 setPos((p) => (p > chars.length ? -5 : p + 1));
-            }, 60);
+            }, 100); // Slowed down from 60ms to 100ms
             return () => clearInterval(id);
         }, [chars.length]);
 
@@ -191,6 +191,39 @@ export default function CV() {
                             style={{
                                 color: active ? "var(--accent)" : "var(--text-primary)",
                                 textShadow: active ? "0 0 10px var(--accent)" : "none",
+                                transition: "color 80ms linear",
+                            }}
+                        >
+                            {ch}
+                        </span>
+                    );
+                })}
+            </span>
+        );
+    }
+
+    // Blue text with white strobe effect for education degree titles
+    function DegreeStrobeText({ text }) {
+        const [pos, setPos] = useState(-5);
+        const chars = useMemo(() => (text ?? "").split(""), [text]);
+
+        useEffect(() => {
+            const id = setInterval(() => {
+                setPos((p) => (p > chars.length ? -5 : p + 1));
+            }, 60);
+            return () => clearInterval(id);
+        }, [chars.length]);
+
+        return (
+            <span className="inline-block font-semibold">
+                {chars.map((ch, i) => {
+                    const active = i >= pos && i < pos + 5;
+                    return (
+                        <span
+                            key={i}
+                            style={{
+                                color: active ? "#ffffff" : "#60a5fa", // white strobe over blue text
+                                textShadow: active ? "0 0 10px #ffffff" : "none",
                                 transition: "color 80ms linear",
                             }}
                         >
@@ -375,7 +408,12 @@ export default function CV() {
                                                 {(e.years || e.qualificationType || clickable) && (
                                                     <div className="cv-row">
                                                         <div className="cv-title">
-                                                            <span className="font-semibold" style={{ color: "#60a5fa" }}>{e.course}</span>
+                                                            {(e.qualificationType?.toLowerCase().includes('degree') || 
+                                                              e.qualificationType?.toLowerCase().includes('honors')) ? (
+                                                                <DegreeStrobeText text={e.course} />
+                                                            ) : (
+                                                                <span className="font-semibold" style={{ color: "#60a5fa" }}>{e.course}</span>
+                                                            )}
                                                             {e.institute && <span className="text-zinc-400"> - {e.institute}</span>}
                                                         </div>
 
