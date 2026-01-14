@@ -517,7 +517,26 @@ export default function CV() {
                                                 </div>
                                             </div>
 
-                                            {w.description && <div className="mt-1 text-sm text-zinc-300">{w.description}</div>}
+                                            {w.description && (
+                                                <div className="mt-1 text-sm text-zinc-300">
+                                                    {w.description.split('\n').map((line, idx) => {
+                                                        const trimmed = line.trim();
+                                                        if (!trimmed) return <div key={idx} className="h-2"></div>;
+                                                        
+                                                        const isBullet = trimmed.startsWith('•');
+                                                        
+                                                        return (
+                                                            <div 
+                                                                key={idx} 
+                                                                className={isBullet ? "pl-8" : ""}
+                                                                style={{ marginBottom: isBullet ? '0' : '0.5rem' }}
+                                                            >
+                                                                {trimmed}
+                                                            </div>
+                                                        );
+                                                    })}
+                                                </div>
+                                            )}
 
                                             {Array.isArray(w.duties) && w.duties.length > 0 && (
                                                 <details className="mt-2">
