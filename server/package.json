@@ -1,0 +1,20 @@
+{
+  "name": "elementech-hub-server",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Backend API for Elementech Hub",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js",
+    "migrate": "node scripts/migrate-from-json.js",
+    "migrate:all": "node scripts/migrate-all-data.js",
+    "scan:projects": "node scripts/scan-and-update-project-files.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "pg": "^8.11.3"
+  }
+}
