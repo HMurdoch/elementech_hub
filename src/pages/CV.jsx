@@ -176,7 +176,7 @@ export default function CV() {
         useEffect(() => {
             const id = setInterval(() => {
                 setPos((p) => (p > chars.length ? -5 : p + 1));
-            }, 60);
+            }, 100); // Slowed down from 60ms to 100ms
             return () => clearInterval(id);
         }, [chars.length]);
 
@@ -191,6 +191,39 @@ export default function CV() {
                             style={{
                                 color: active ? "var(--accent)" : "var(--text-primary)",
                                 textShadow: active ? "0 0 10px var(--accent)" : "none",
+                                transition: "color 80ms linear",
+                            }}
+                        >
+                            {ch}
+                        </span>
+                    );
+                })}
+            </span>
+        );
+    }
+
+    // Blue text with white strobe effect for education degree titles
+    function DegreeStrobeText({ text }) {
+        const [pos, setPos] = useState(-5);
+        const chars = useMemo(() => (text ?? "").split(""), [text]);
+
+        useEffect(() => {
+            const id = setInterval(() => {
+                setPos((p) => (p > chars.length ? -5 : p + 1));
+            }, 60);
+            return () => clearInterval(id);
+        }, [chars.length]);
+
+        return (
+            <span className="inline-block font-semibold">
+                {chars.map((ch, i) => {
+                    const active = i >= pos && i < pos + 5;
+                    return (
+                        <span
+                            key={i}
+                            style={{
+                                color: active ? "#ffffff" : "#60a5fa", // white strobe over blue text
+                                textShadow: active ? "0 0 10px #ffffff" : "none",
                                 transition: "color 80ms linear",
                             }}
                         >
@@ -375,7 +408,12 @@ export default function CV() {
                                                 {(e.years || e.qualificationType || clickable) && (
                                                     <div className="cv-row">
                                                         <div className="cv-title">
-                                                            <span className="font-semibold">{e.course}</span>
+                                                            {(e.qualificationType?.toLowerCase().includes('degree') || 
+                                                              e.qualificationType?.toLowerCase().includes('honors')) ? (
+                                                                <DegreeStrobeText text={e.course} />
+                                                            ) : (
+                                                                <span className="font-semibold" style={{ color: "#60a5fa" }}>{e.course}</span>
+                                                            )}
                                                             {e.institute && <span className="text-zinc-400"> - {e.institute}</span>}
                                                         </div>
 
@@ -465,6 +503,21 @@ export default function CV() {
                                 filteredExperience.map((w, i) => {
                                     const clickable = isHttp(w.sourcelink);
                                     const onOpen = () => clickable && openExternal(w.sourcelink);
+                                    
+                                    // Check if this is a combined position (skip rendering second entry, will be shown in first)
+                                    const isCombinedSecondary = w.combinedPosition && i > 0 && 
+                                        filteredExperience[i - 1]?.company === w.company &&
+                                        filteredExperience[i - 1]?.combinedPosition;
+                                    
+                                    // Skip rendering the second combined entry entirely
+                                    if (isCombinedSecondary) return null;
+                                    
+                                    // Check if next entry is a combined position
+                                    const hasNextCombined = w.combinedPosition && i < filteredExperience.length - 1 &&
+                                        filteredExperience[i + 1]?.company === w.company &&
+                                        filteredExperience[i + 1]?.combinedPosition;
+                                    
+                                    const nextEntry = hasNextCombined ? filteredExperience[i + 1] : null;
 
                                     return (
                                         <GlowItem
@@ -478,7 +531,7 @@ export default function CV() {
                                         >
                                             <div className="cv-row">
                                                 <div className="cv-title">
-                                                    <span className="font-semibold">{w.company}</span>
+                                                    <span className="font-semibold" style={{ color: "#60a5fa" }}>{w.company}</span>
                                                     {w.title && <span className="text-zinc-400"> - {w.title}</span>}
                                                 </div>
 
@@ -516,8 +569,43 @@ export default function CV() {
                                                     </div>
                                                 </div>
                                             </div>
+                                            
+                                            {/* Show second combined position title/date directly underneath */}
+                                            {nextEntry && (
+                                                <div className="cv-row mt-2">
+                                                    <div className="cv-title">
+                                                        <span className="font-semibold" style={{ color: "#60a5fa" }}>{nextEntry.company}</span>
+                                                        {nextEntry.title && <span className="text-zinc-400"> - {nextEntry.title}</span>}
+                                                    </div>
+                                                    <div className="cv-right flex items-center gap-2">
+                                                        <div className="cv-date text-sm font-semibold" style={{ color: "var(--accent)" }}>
+                                                            {formatRange(nextEntry.from, nextEntry.to)}
+                                                        </div>
+                                                        <div className="cv-link-slot w-7"></div>
+                                                    </div>
+                                                </div>
+                                            )}
 
-                                            {w.description && <div className="mt-1 text-sm text-zinc-300">{w.description}</div>}
+                                            {w.description && (
+                                                <div className="mt-1 text-sm text-zinc-300">
+                                                    {w.description.split('\n').map((line, idx) => {
+                                                        const trimmed = line.trim();
+                                                        if (!trimmed) return <div key={idx} className="h-2"></div>;
+                                                        
+                                                        const isBullet = trimmed.startsWith('•');
+                                                        
+                                                        return (
+                                                            <div 
+                                                                key={idx} 
+                                                                className={isBullet ? "pl-8" : ""}
+                                                                style={{ marginBottom: isBullet ? '0' : '0.5rem' }}
+                                                            >
+                                                                {trimmed}
+                                                            </div>
+                                                        );
+                                                    })}
+                                                </div>
+                                            )}
 
                                             {Array.isArray(w.duties) && w.duties.length > 0 && (
                                                 <details className="mt-2">

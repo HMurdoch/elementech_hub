@@ -34,7 +34,7 @@ export default function App() {
             <>
             <ParticlesBackground />
             <NavBar />
-            <main className="relative z-10 mx-auto max-w-[1400px] px-4 py-6">
+            <main className="relative z-10 mx-auto max-w-[1694px] px-4 py-6">
                 <Suspense fallback={<Fallback />}>
                     <Routes>
                         <Route path="/" element={<Landing />} />
