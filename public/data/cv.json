@@ -10,6 +10,14 @@
       "subjects": [],
       "sourcelink": ""
     },
+        {
+      "course": "Postgraduate BSc. Honors – AI & Machine Learning NQF8",
+      "institute": "School of Open Learning (SOL) University of Delhi",
+      "years": "2013-2014",
+      "qualificationType": "BSc Honors Degree",
+      "subjects": [],
+      "sourcelink": ""
+    },
     {
       "course": "The Complete AI Guide: Learn ChatGPT, Generative AI & More",
       "institute": "Online Course",
@@ -164,18 +172,18 @@
       "sourcelink": ""
     },
     {
-      "course": "Postgraduate Honors – Applied Psychology NQF8",
-      "institute": "Cognitive Learning Solutions",
+      "course": "Postgraduate Bachelors Honors – Applied Psychology NQF8",
+      "institute": "Cognitive Learning Solutions/School of Open Learning (SOL) University of Delhi",
       "years": "2013-2014",
-      "qualificationType": "Honors Degree",
+      "qualificationType": "BSc Honors Degree",
       "subjects": [],
       "sourcelink": ""
     },
     {
-      "course": "Postgraduate Honors - CAR (Certification in Management: Automotive Retail) NQF8",
+      "course": "Postgraduate Bacherlors Honors - CAR (Certification in Management: Automotive Retail) NQF8",
       "institute": "Rhodes Business School",
       "years": "2011-2012",
-      "qualificationType": "Honors Degree",
+      "qualificationType": "BSc Honors Degree",
       "subjects": [
         "Personal Mastery",
         "Finance",
@@ -310,26 +318,23 @@
   ],
   "experience": [
     {
-      "company": "Trialogue Knowledge Hub NPO Directory & CharitySA (Department of Social Development (DSD))",
-      "title": "Acting Head Research & Development",
-      "from": "2025-06",
+      "company": "Elementech Digital Solutions",
+      "title": "Solutions Architect/AI Webmaster/Jack and Master of All Trades",
+      "from": "2025-05",
       "to": "Present",
-      "description": "As Research and Development Specialist Consultant and now Acting Head of Research & Development (current Head of Research and Development is on Sabbatical) for Trialogue's Knowledge Hub and CharitySA platforms, I help lead the full technology strategy, modernization, and digital transformation initiatives for two of South Africa's largest non-profit information ecosystems. My role combines hands-on technical direction, solution architecture, and leadership of cross-functional teams responsible for platform development, QA, and DevOps — ensuring scalable, secure, and integrated systems that serve organizations in the NPO sector.\n\nTechnology Strategy & Delivery Governance\n• Define and execute the IT roadmap across web, integration, and automation platforms, ensuring alignment with organizational goals and donor expectations.\n• Introduced modern SDLC governance, CI/CD pipelines, and DevOps alignment using Azure DevOps, GitHub Actions, and SonarQube to improve delivery cadence, traceability, and audit readiness.\n• Lead sprint planning, resource allocation, and Agile ceremonies (Scrum & Kanban hybrids) ensuring consistent release cycles and quality output.\n\nPlatform Modernisation & Systems Integration\n• Oversaw modernization of legacy PHP and ASP.NET platforms into .NET Core, React, and PostgreSQL ecosystems hosted on Azure App Services.\n• Directed the redevelopment of CharitySA's directory and Knowledge Hub portals into API-driven, cloud-native architectures enabling automated data synchronization across microsites.\n• Led migration from manual ETL workflows to automated AI-assisted ingestion pipelines, streamlining content validation and indexing.\n• Implemented API-based integration between the Knowledge Hub, partner portals, and analytics systems — replacing legacy SFTP/file-driven solutions.\n\nQuality Assurance and Continuous Improvement\n• Established a comprehensive QA function, including manual and automated testing frameworks integrated into CI/CD pipelines.\n• Introduced automated regression testing suites using Selenium, Postman, and Playwright, achieving 85% test coverage across critical endpoints.\n• Developed QA reporting dashboards to measure platform stability, build quality, and test coverage improvements over time.\n• Ensured compliance with secure coding standards and alignment with ISO 27001 and data protection frameworks.\n\nAI, Automation & Innovation\n• Championed the introduction of AI-driven content enrichment and data intelligence, using Azure Cognitive Services for document classification, keyword tagging, and natural language summarization of NPO data.\n• Deployed Azure AI Vision and Document Intelligence proof-of-concepts to automate data extraction and validation for charity profiles.\n• Implemented automation pipelines for data ingestion, testing, and deployment, reducing release times by over 40%.\n\nProject & People Management\n• Oversee a multi-disciplinary self-managing team of developers, QA engineers, DevOps specialists, and content analysts.\n• Oversee performance management, recruitment, mentoring, and career development aligned with organizational objectives.\n• Collaborate with product managers and stakeholders on feature roadmaps, risk management, and resource planning.\n\nHosting, Security & Compliance\n• Manage cloud infrastructure across Azure and AWS, ensuring availability, scalability, and backup continuity.\n• Implemented identity and access management aligned with best practices from prior experience in financial and enterprise environments (CloudBadger / Standard Bank).\n• Drive cybersecurity awareness, vulnerability scanning, and patch management programs across all systems.\n\nKey Achievements\n• Modernized Legacy Systems — Transformed two major NPO platforms from legacy static websites to dynamic, API-based, Azure-hosted ecosystems with integrated microsite management and automation.\n• Established QA Maturity — Built the organization's first dedicated QA team and processes, leading to improved release quality and faster incident resolution.\n• AI Integration Success — Delivered multiple AI-based POCs adopted for production use, including automated classification and summarization of NPO data, contributing to faster onboarding and richer directory insights.\n• Cross-System Automation — Automated key workflows such as NPO validation, reporting generation, and partner data synchronization, freeing significant staff capacity for higher-value tasks.\n• Stakeholder & Partnership Enablement — Strengthened collaboration with data partners, donors, and content providers through standardized APIs and enhanced reporting dashboards.",
+      "description": "As Founder and Lead Solutions Architect at Elementech Digital Solutions, I operate as a hands-on architect, engineer, and product builder responsible for designing, developing, and scaling end-to-end digital platforms and ventures, including the conception and build of Metal Link. My role spans full-stack engineering, AI integration, platform architecture, and digital operations — effectively bridging strategy, execution, and innovation.\n\nSolutions Architecture & Platform Engineering\n• Design and implement end-to-end architectures across frontend (React, Next.js), backend (C#, Node.js), and data layers (PostgreSQL), ensuring scalable, secure, and maintainable systems.\n• Architect API-first, cloud-native platforms with clear separation of concerns across presentation, service, and data tiers.\n• Define system integration patterns, authentication strategies, and data flows across distributed services and third-party platforms.\n\nAI, Automation & Digital Innovation\n• Integrate AI capabilities into platforms using modern LLMs and automation pipelines, enabling intelligent workflows, content generation, and decision support.\n• Develop AI-assisted tooling for data enrichment, validation, and user interaction, enhancing platform usability and reducing manual effort.\n• Rapidly prototype and iterate on new digital products and features, validating concepts from idea through to production.\n\nAI Webmaster & Digital Ownership\n• Own and manage full web ecosystems including hosting, deployment, SEO, performance optimisation, and uptime.\n• Configure and maintain web servers (Nginx), domains, SSL, and cloud infrastructure across VPS and cloud environments.\n• Ensure high-performance, secure, and resilient web platforms through monitoring, optimisation, and continuous improvement.\n\nProduct Development & Venture Building (Metal Link)\n• Conceptualised and developed Metal Link as a digital platform, defining product vision, architecture, and technical execution.\n• Translate business ideas into working systems, including UI/UX design, backend services, and deployment pipelines.\n• Iterate on product-market fit through continuous development, experimentation, and refinement.\n\nDevOps, Deployment & Infrastructure\n• Implement CI/CD pipelines and automated deployment strategies using modern tooling and cloud platforms.\n• Manage environments across development, staging, and production, ensuring stability and rapid release cycles.\n• Optimise infrastructure for cost, performance, and scalability within constrained resource environments.\n\nFull-Stack Execution & Problem Solving\n• Operate as a \"0-to-1\" builder, capable of taking systems from concept to production independently.\n• Solve complex technical challenges across the entire stack, from UI/UX to backend logic and infrastructure.\n• Continuously evaluate and adopt new technologies to improve delivery speed, capability, and innovation.\n\nKey Achievements\n• Built and launched multiple full-stack platforms and experimental products under Elementech, including Metal Link.\n• Established a repeatable approach to rapidly designing and deploying modern web applications with integrated AI capabilities.\n• Delivered production-ready systems under resource constraints, demonstrating adaptability, speed, and end-to-end ownership.",
       "duties": [],
       "technologies": [],
-      "sourcelink": "",
-      "combinedPosition": true
-    },
-    {
+      "sourcelink": ""
+    },    {
       "company": "Trialogue Knowledge Hub NPO Directory & CharitySA (Department of Social Development (DSD))",
-      "title": "Research & Development Specialist Consultant (Part Time Consultant) - Pro Bono",
-      "from": "2020-01",
-      "to": "2025-05",
-      "description": "",
+      "title": "Solutions Architect/AI Webmaster",
+      "from": "2020-03",
+      "to": "Present",
+      "description": "As Solutions Architect/AI Webmaster for Trialogue's Knowledge Hub and CharitySA platforms, I help lead the full technology strategy, modernization, and digital transformation initiatives for two of South Africa's largest non-profit information ecosystems. My role combines hands-on technical direction, solution architecture, and leadership of cross-functional teams responsible for platform development, QA, and DevOps — ensuring scalable, secure, and integrated systems that serve organizations in the NPO sector.\n\nTechnology Strategy & Delivery Governance\n• Define and execute the IT roadmap across web, integration, and automation platforms, ensuring alignment with organizational goals and donor expectations.\n• Introduced modern SDLC governance, CI/CD pipelines, and DevOps alignment using Azure DevOps, GitHub Actions, and SonarQube to improve delivery cadence, traceability, and audit readiness.\n• Lead sprint planning, resource allocation, and Agile ceremonies (Scrum & Kanban hybrids) ensuring consistent release cycles and quality output.\n\nPlatform Modernisation & Systems Integration\n• Oversaw modernization of legacy PHP and ASP.NET platforms into .NET Core, React, and PostgreSQL ecosystems hosted on Azure App Services.\n• Directed the redevelopment of CharitySA's directory and Knowledge Hub portals into API-driven, cloud-native architectures enabling automated data synchronization across microsites.\n• Led migration from manual ETL workflows to automated AI-assisted ingestion pipelines, streamlining content validation and indexing.\n• Implemented API-based integration between the Knowledge Hub, partner portals, and analytics systems — replacing legacy SFTP/file-driven solutions.\n\nQuality Assurance and Continuous Improvement\n• Established a comprehensive QA function, including manual and automated testing frameworks integrated into CI/CD pipelines.\n• Introduced automated regression testing suites using Selenium, Postman, and Playwright, achieving 85% test coverage across critical endpoints.\n• Developed QA reporting dashboards to measure platform stability, build quality, and test coverage improvements over time.\n• Ensured compliance with secure coding standards and alignment with ISO 27001 and data protection frameworks.\n\nAI, Automation & Innovation\n• Championed the introduction of AI-driven content enrichment and data intelligence, using Azure Cognitive Services for document classification, keyword tagging, and natural language summarization of NPO data.\n• Deployed Azure AI Vision and Document Intelligence proof-of-concepts to automate data extraction and validation for charity profiles.\n• Implemented automation pipelines for data ingestion, testing, and deployment, reducing release times by over 40%.\n\nProject & People Management\n• Oversee a multi-disciplinary self-managing team of developers, QA engineers, DevOps specialists, and content analysts.\n• Oversee performance management, recruitment, mentoring, and career development aligned with organizational objectives.\n• Collaborate with product managers and stakeholders on feature roadmaps, risk management, and resource planning.\n\nHosting, Security & Compliance\n• Manage cloud infrastructure across Azure and AWS, ensuring availability, scalability, and backup continuity.\n• Implemented identity and access management aligned with best practices from prior experience in financial and enterprise environments (CloudBadger / Standard Bank).\n• Drive cybersecurity awareness, vulnerability scanning, and patch management programs across all systems.\n\nKey Achievements\n• Modernized Legacy Systems — Transformed two major NPO platforms from legacy static websites to dynamic, API-based, Azure-hosted ecosystems with integrated microsite management and automation.\n• Established QA Maturity — Built the organization's first dedicated QA team and processes, leading to improved release quality and faster incident resolution.\n• AI Integration Success — Delivered multiple AI-based POCs adopted for production use, including automated classification and summarization of NPO data, contributing to faster onboarding and richer directory insights.\n• Cross-System Automation — Automated key workflows such as NPO validation, reporting generation, and partner data synchronization, freeing significant staff capacity for higher-value tasks.\n• Stakeholder & Partnership Enablement — Strengthened collaboration with data partners, donors, and content providers through standardized APIs and enhanced reporting dashboards.",
       "duties": [],
       "technologies": [],
-      "sourcelink": "",
-      "combinedPosition": true
+      "sourcelink": ""
     },
     {
       "company": "CloudBadger (Standard Bank and Outsurance)",
