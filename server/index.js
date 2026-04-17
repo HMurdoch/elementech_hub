@@ -1,6 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import pool from './db/connection.js';
 import { getProjectFileTree, getFileContent } from './utils/file-scanner.js';
 
@@ -9,9 +11,14 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 // Middleware
 app.use(cors());
 app.use(express.json());
+// Serve static files from the built Vite app
+app.use(express.static(path.join(__dirname, '../dist')));
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
@@ -255,6 +262,12 @@ app.get('/api/brainbox', async (req, res) => {
         console.error('Error fetching brainbox:', error);
         res.status(500).json({ error: 'Failed to fetch brainbox ideas' });
     }
+});
+
+// Catch-all: Serve index.html for client-side routing
+// This must come after all API routes
+app.use((req, res) => {
+    res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
 
 // Start server
